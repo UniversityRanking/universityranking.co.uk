@@ -79,14 +79,25 @@ title: Home
     align-items: center;
   }
 
-  .tabulator .tabulator-header .tabulator-col {
-    background-color: white !important;
-    color: #3b0a66 !important;
-    border: none !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.tabulator .tabulator-header .tabulator-col {
+  background-color: white !important;
+  border: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add this directly underneath */
+.tabulator .tabulator-header .tabulator-col .tabulator-col-title {
+  color: #3b0a66 !important;
+  font-weight: bold;
+  font-size: 1.4rem;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .tabulator-col-title {
   width: 100%;
