@@ -67,19 +67,6 @@ title: Home
     margin: 0 auto;
   }
 
-  /* Search Bar Style */
-  .tabulator-search-bar {
-    margin: 1rem 0;
-  }
-
-  #provider-search {
-    width: 100%;
-    font-size: 1.4rem;
-    padding: 0.8rem 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-
   /* Tabulator Table */
   .tabulator {
     border: none !important;
@@ -145,6 +132,15 @@ title: Home
   .tabulator-row:nth-child(even) {
     background-color: #f5effa;
   }
+
+  /* Optional: Style the built-in filter */
+  .tabulator-header-filter input {
+    font-size: 1.4rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
 </style>
 
 <section class="hero">
@@ -164,12 +160,6 @@ title: Home
 
 <section class="table-section">
   <div class="container">
-
-    <!-- ✅ Search Box Appears Here -->
-    <div class="tabulator-search-bar">
-      <input id="provider-search" type="text" placeholder="Search universities...">
-    </div>
-
     <div id="ranking-table"></div>
   </div>
 </section>
@@ -183,16 +173,17 @@ title: Home
       columns: [
         { title: "2024", field: "2024", width: 80, hozAlign: "center", headerSort: false },
         { title: "2023", field: "2023", width: 80, hozAlign: "center", headerSort: false },
-        { title: "Provider", field: "Provider", widthGrow: 3, headerSort: false },
+        {
+          title: "Provider",
+          field: "Provider",
+          widthGrow: 3,
+          headerSort: false,
+          headerFilter: "input",
+          headerFilterPlaceholder: "Search universities...",
+          headerFilterLiveFilter: true
+        },
         { title: "Score", field: "2024 Score", width: 100, hozAlign: "center", headerSort: false }
       ],
-    });
-
-    // ✅ Hook up search box to filter "Provider"
-    const searchBox = document.getElementById("provider-search");
-    searchBox.addEventListener("keyup", function () {
-      const query = searchBox.value;
-      table.setFilter("Provider", "like", query);
     });
   });
 </script>
