@@ -3,6 +3,10 @@ layout: default
 title: Home
 ---
 
+<!-- Load Tabulator -->
+<link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
+<script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
+
 <section class="hero" style="background-color: #3b0a66; color: white; padding: 2rem 0;">
   <div class="container" style="max-width: 750px; margin: 0 auto; text-align: center;">
     <h1 style="margin: 0 0 1rem;">2025 Top 5 Universities by past students</h1>
@@ -57,8 +61,8 @@ title: Home
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    new Tabulator("#ranking-table", {
-     ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
+    const table = new Tabulator("#ranking-table", {
+      ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
       height: "600px",
       layout: "fitColumns",
       columns: [
@@ -75,6 +79,10 @@ title: Home
           row.getElement().style.backgroundColor = "white";
         }
       }
+    });
+
+    table.on("dataLoadError", function(error){
+      console.error("Tabulator data loading error:", error);
     });
   });
 </script>
