@@ -35,22 +35,25 @@ title: Home
     margin-bottom: 1rem;
   }
 
-  .hero label,
-  .hero select {
-    display: inline-block;
-    vertical-align: middle;
-  }
+ .hero label {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-right: 1rem;
+  display: inline-block;
+  vertical-align: middle;
+}
 
-  .hero select {
-    font-size: 1.1rem;
-    padding: 0.7rem 1.2rem;
-    border: none;
-    border-radius: 0.4rem;
-    background: white;
-    color: #3b0a66;
-    font-weight: bold;
-    margin-left: 0.5rem;
-  }
+.hero select {
+  font-size: 2rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: white;
+  color: #3b0a66;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: middle;
+}
 
   /* Table Section */
   .table-section {
@@ -100,12 +103,17 @@ title: Home
     box-shadow: none !important;
   }
 
-  /* Align "Provider" header and cell text to left */
-  .tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
-    justify-content: flex-start !important;
-    text-align: left !important;
-    padding-left: 0.75rem !important;
-  }
+/* Force "Provider" title and cell left-aligned */
+.tabulator .tabulator-header .tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
+  justify-content: flex-start !important;
+  text-align: left !important;
+  padding-left: 1rem !important;
+}
+
+.tabulator-cell[tabulator-field="Provider"] {
+  text-align: left !important;
+  padding-left: 1rem !important;
+}
 
   .tabulator-cell[tabulator-field="Provider"] {
     text-align: left !important;
