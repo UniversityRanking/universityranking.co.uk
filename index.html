@@ -59,7 +59,7 @@ title: Home
     border: none !important;
     font-size: 1.6rem;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
   }
 
   .tabulator-header {
@@ -69,12 +69,15 @@ title: Home
     font-size: 1.4rem;
   }
 
+  .tabulator .tabulator-header .tabulator-col,
+  .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
+    color: white !important;
+    text-align: center;
+  }
+
   .tabulator-header .tabulator-col {
     background-color: #3b0a66 !important;
-    color: white !important;
     border: none !important;
-    text-align: center;
-    padding: 1rem 0;
   }
 
   .tabulator-col-title {
