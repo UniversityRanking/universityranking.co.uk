@@ -51,15 +51,15 @@ title: Home
       responsiveLayout: "collapse",
       height: "auto",
       columns: [
-        { title: "2024", field: "2024", width: 80, hozAlign: "center" },
-        { title: "2023", field: "2023", width: 80, hozAlign: "center" },
-        { title: "Provider", field: "Provider", widthGrow: 3 },
-        { title: "2024 Score", field: "2024 Score", width: 100, hozAlign: "center" }
+        { title: "2024", field: "2024", width: 80, hozAlign: "center", headerSort: false },
+        { title: "2023", field: "2023", width: 80, hozAlign: "center", headerSort: false },
+        { title: "Provider", field: "Provider", widthGrow: 3, headerSort: false },
+        { title: "2024 Score", field: "2024 Score", width: 100, hozAlign: "center", headerSort: false }
       ],
       rowFormatter: function(row) {
         const element = row.getElement();
         const index = row.getPosition();
-        element.style.fontSize = "1.1rem";
+        element.style.fontSize = "2rem";
         element.style.paddingTop = "10px";
         element.style.paddingBottom = "10px";
         element.style.border = "none";
@@ -71,10 +71,13 @@ title: Home
         headers.forEach((header, index) => {
           header.style.backgroundColor = "#3b0a66";
           header.style.color = "white";
-          header.style.fontSize = "1.1rem";
+          header.style.fontSize = "1.5rem";
           header.style.border = "none";
           if (index === 0) header.style.borderTopLeftRadius = "10px";
           if (index === headers.length - 1) header.style.borderTopRightRadius = "10px";
+        });
+        document.querySelectorAll('.tabulator-row').forEach(row => {
+          row.style.border = "none";
         });
       }
     });
