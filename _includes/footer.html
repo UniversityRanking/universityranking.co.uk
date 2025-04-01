@@ -1,23 +1,24 @@
-
-<footer class="site-footer">
-  <div class="footer-column">
-    <img src="{{ '/assets/images/logo.png' | relative_url }}" alt="University Rankings Logo" class="footer-logo" style="max-height: 50px;" />
-  </div>
-  <div class="footer-column">
-    <h4>Recent Posts</h4>
-    <ul>
-      {% for post in site.posts limit:3 %}
-      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="footer-column">
-    <h4>Explore</h4>
-    <ul>
-      <li><a href="/about">About</a></li>
-      <li><a href="/faq">FAQ</a></li>
-      <li><a href="/contact">Contact</a></li>
-      <li><a href="/privacy">Privacy</a></li>
-    </ul>
+<footer class="site-footer" style="background-color: #3b0a66; color: white;">
+  <div class="container" style="max-width: 750px; margin: 0 auto; display: flex; justify-content: space-between; gap: 2rem; padding: 2rem 1rem;">
+    <div class="footer-column" style="flex: 1;">
+      <img src="{{ '/assets/images/logo-t.png' | relative_url }}" alt="University Ranking Logo" style="width: 200px; height: auto;" />
+    </div>
+    <div class="footer-column" style="flex: 1;">
+      <h4>Recent Posts</h4>
+      <ul style="list-style: none; padding: 0;">
+        {% for post in site.posts limit:3 %}
+        <li><a href="{{ post.url }}" style="color: white; text-decoration: none;">{{ post.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="footer-column" style="flex: 1;">
+      <h4>Explore</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="/about" style="color: white; text-decoration: none;">About</a></li>
+        <li><a href="/faq" style="color: white; text-decoration: none;">FAQ</a></li>
+        <li><a href="/contact" style="color: white; text-decoration: none;">Contact</a></li>
+        <li><a href="/privacy" style="color: white; text-decoration: none;">Privacy</a></li>
+      </ul>
+    </div>
   </div>
 </footer>
