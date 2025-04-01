@@ -17,30 +17,26 @@ body {
   padding: 2rem 0;
 }
 
-.hero-content {
+.hero-flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.hero-text {
+.hero-left {
   flex: 1 1 60%;
 }
 
-.hero-text h1 {
-  margin-top: 0;
-}
-
-.hero-graphic {
-  flex: 1 1 30%;
+.hero-right {
+  flex: 1 1 35%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .image-placeholder {
-  width: 120px;
+  width: 150px;
   height: 120px;
   background-color: white;
   color: #3b0a66;
@@ -49,6 +45,14 @@ body {
   justify-content: center;
   font-weight: bold;
   text-align: center;
+  border-radius: 6px;
+}
+
+.hero-left select {
+  display: block;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
 }
 
 .table-wrapper {
@@ -62,13 +66,14 @@ body {
 
 .blog-preview {
   background: #f9f9f9;
-  padding: 2rem 0;
+  padding: 3rem 0 2rem;
 }
 
 .blog-cards {
   display: flex;
   overflow-x: auto;
   gap: 1rem;
+  margin-top: 1rem;
 }
 
 .blog-card {
@@ -80,7 +85,7 @@ body {
 
 .methodology-preview {
   background: #f4f4f4;
-  padding: 2rem 0;
+  padding: 3rem 0;
 }
 
 .fade-block {
@@ -103,7 +108,32 @@ body {
   background: linear-gradient(to bottom, rgba(244,244,244,0), #f4f4f4);
 }
 
-/* Footer columns */
+.site-header {
+  background: #3b0a66;
+  color: white;
+  padding: 1rem 0;
+}
+
+.site-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.site-header nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 .site-footer {
   background: #3b0a66;
   color: white;
@@ -116,6 +146,7 @@ body {
 .footer-column {
   flex: 1;
   min-width: 200px;
+  padding: 0 1rem;
 }
 
 .footer-column ul {
