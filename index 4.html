@@ -1,0 +1,133 @@
+---
+layout: default
+title: Home
+---
+
+<!-- Load Tabulator -->
+<link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
+<script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
+
+<style>
+  body {
+    font-family: 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #333;
+  }
+
+  .hero {
+    background-color: #3b0a66;
+    color: white;
+    padding: 3rem 1rem 1rem;
+    text-align: center;
+  }
+
+  .hero .container {
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero select {
+    font-size: 1.1rem;
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 0.4rem;
+    background: white;
+    color: #3b0a66;
+    font-weight: bold;
+  }
+
+  .table-section {
+    background: white;
+    padding: 0;
+    margin-top: -2rem;
+  }
+
+  .table-section .container {
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  .tabulator {
+    border: none !important;
+    font-size: 1.6rem;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+  }
+
+  .tabulator-header {
+    background-color: #3b0a66 !important;
+    color: white !important;
+    font-weight: bold;
+    font-size: 1.4rem;
+  }
+
+  .tabulator-header .tabulator-col {
+    background-color: #3b0a66 !important;
+    color: white !important;
+    border: none !important;
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .tabulator-col-title {
+    width: 100%;
+    text-align: center;
+  }
+
+  .tabulator-cell {
+    border: none !important;
+    padding: 1rem 0.75rem !important;
+  }
+
+  .tabulator-row:nth-child(odd) {
+    background-color: #f3f3f3;
+  }
+
+  .tabulator-row {
+    font-size: 1.5rem;
+  }
+</style>
+
+<section class="hero">
+  <div class="container">
+    <h1>2025 Top 5 Universities by past students</h1>
+    <div style="margin-bottom: 1rem;">
+      <label for="subject-select" style="font-size: 1rem; margin-right: 0.5rem;">Choose a subject:</label>
+      <select id="subject-select">
+        <option value="">All Subjects</option>
+        <option value="Law">Law</option>
+        <option value="Engineering">Engineering</option>
+        <option value="Medicine">Medicine</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<section class="table-section">
+  <div class="container">
+    <div id="ranking-table"></div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const table = new Tabulator("#ranking-table", {
+      ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
+      layout: "fitColumns",
+      responsiveLayout: "collapse",
+      columns: [
+        { title: "2024", field: "2024", width: 80, hozAlign: "center", headerSort: false },
+        { title: "2023", field: "2023", width: 80, hozAlign: "center", headerSort: false },
+        { title: "Provider", field: "Provider", widthGrow: 3, headerSort: false },
+        { title: "2024 Score", field: "2024 Score", width: 100, hozAlign: "center", headerSort: false }
+      ],
+    });
+  });
+</script>
