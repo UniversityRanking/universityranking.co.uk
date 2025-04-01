@@ -58,7 +58,7 @@ title: Home
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     new Tabulator("#ranking-table", {
-      ajaxURL: "/assets/tables/MainTable.json",
+     ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
       height: "600px",
       layout: "fitColumns",
       columns: [
