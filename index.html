@@ -34,6 +34,12 @@ title: Home
     margin-bottom: 1rem;
   }
 
+  .hero label,
+  .hero select {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
   .hero select {
     font-size: 1.1rem;
     padding: 0.7rem 1.2rem;
@@ -42,11 +48,12 @@ title: Home
     background: white;
     color: #3b0a66;
     font-weight: bold;
+    margin-left: 0.5rem;
   }
 
   .table-section {
     background: white;
-    margin-top: -5rem; /* Pull table further into purple */
+    margin-top: -5rem;
     padding-bottom: 3rem;
   }
 
@@ -68,12 +75,18 @@ title: Home
     font-weight: bold;
     font-size: 1.4rem;
     border-radius: 12px 12px 0 0;
+    height: 60px !important; /* Match row height */
+    display: flex;
+    align-items: center;
   }
 
   .tabulator .tabulator-header .tabulator-col {
     background-color: white !important;
     color: #3b0a66 !important;
     border: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .tabulator-col-title {
