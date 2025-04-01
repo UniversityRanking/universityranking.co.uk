@@ -16,10 +16,11 @@ title: Home
     color: #333;
   }
 
+  /* Hero Section */
   .hero {
     background-color: #3b0a66;
     color: white;
-    padding: 3rem 1rem 6rem;
+    padding: 3rem 1rem 6rem; /* Increased bottom padding to extend purple behind dropdown */
     text-align: center;
     position: relative;
   }
@@ -51,9 +52,10 @@ title: Home
     margin-left: 0.5rem;
   }
 
+  /* Table Section */
   .table-section {
     background: white;
-    margin-top: -5.2rem; /* Reduced overlap so it doesn't hide dropdown */
+    margin-top: -5.2rem; /* Pull table into purple */
     padding-bottom: 3rem;
   }
 
@@ -69,54 +71,54 @@ title: Home
     border-radius: 12px 12px 0 0;
   }
 
-.tabulator .tabulator-header .tabulator-col {
-  background-color: white !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-}
+  /* Header Column Container */
+  .tabulator .tabulator-header .tabulator-col {
+    background-color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
 
-.tabulator .tabulator-header .tabulator-col .tabulator-col-title {
-  color: #3b0a66 !important;
-  background-color: white !important;
-  font-weight: bold !important;
-  font-size: 1.4rem !important;
-  text-align: center !important;
-  width: 100% !important;
-  height: 60px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0 0.5rem !important;
-  box-shadow: none !important;
-  border: none !important;
-}
+  /* Header Title Text */
+  .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
+    color: #3b0a66 !important;
+    background-color: white !important;
+    font-weight: bold !important;
+    font-size: 1.4rem !important;
+    text-align: center !important;
+    width: 100% !important;
+    height: 60px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 0.5rem !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
 
-.tabulator .tabulator-header .tabulator-col:last-child {
-  border-right: none !important;
-}
+  /* Align "Provider" header text to left */
+  .tabulator .tabulator-header .tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
+    justify-content: flex-start !important;
+    padding-left: 1rem !important;
+    text-align: left !important;
+  }
 
-.tabulator .tabulator-header .tabulator-col:nth-child(3) .tabulator-col-title {
-  justify-content: flex-start !important;
-  padding-left: 1rem !important;
-  text-align: left !important;
-}
-  
+  /* Table cell styles */
   .tabulator-cell {
     border: none !important;
     padding: 1rem 0.75rem !important;
+  }
+
+  .tabulator-row {
+    font-size: 1.5rem;
   }
 
   .tabulator-row:nth-child(odd) {
     background-color: #ffffff;
   }
 
-.tabulator-row:nth-child(even) {
-  background-color: #f5effa; /* Light purple */
-}
-  
-  .tabulator-row {
-    font-size: 1.5rem;
+  .tabulator-row:nth-child(even) {
+    background-color: #f5effa; /* Light purple */
   }
 </style>
 
