@@ -28,8 +28,6 @@ title: Home
   </div>
 </section>
 
-
-
 <section class="blog-preview" style="background: #f9f9f9; padding: 3rem 1rem;">
   <div class="container" style="max-width: 750px; margin: 0 auto;">
     <h2>Recent Articles</h2>
@@ -51,6 +49,7 @@ title: Home
       layout: "fitColumns",
       autoResize: true,
       responsiveLayout: "collapse",
+      height: "auto",
       columns: [
         { title: "2024", field: "2024", width: 80, hozAlign: "center" },
         { title: "2023", field: "2023", width: 80, hozAlign: "center" },
@@ -60,16 +59,23 @@ title: Home
       rowFormatter: function(row) {
         const element = row.getElement();
         const index = row.getPosition();
-        element.style.fontSize = "1rem";
-        element.style.padding = "0.6rem 0";
+        element.style.fontSize = "1.1rem";
+        element.style.paddingTop = "10px";
+        element.style.paddingBottom = "10px";
         element.style.border = "none";
-        element.style.backgroundColor = index % 2 === 0 ? "#f9f9f9" : "white";
-        if (index === 0) {
-          element.style.borderTopLeftRadius = "10px";
-          element.style.borderTopRightRadius = "10px";
-          element.style.backgroundColor = "#3b0a66";
-          element.style.color = "white";
-        }
+        element.style.backgroundColor = index % 2 === 0 ? "#f6f6f6" : "white";
+      },
+      headerVisible: true,
+      renderComplete: function() {
+        const headers = document.querySelectorAll(".tabulator-header .tabulator-col");
+        headers.forEach((header, index) => {
+          header.style.backgroundColor = "#3b0a66";
+          header.style.color = "white";
+          header.style.fontSize = "1.1rem";
+          header.style.border = "none";
+          if (index === 0) header.style.borderTopLeftRadius = "10px";
+          if (index === headers.length - 1) header.style.borderTopRightRadius = "10px";
+        });
       }
     });
 
