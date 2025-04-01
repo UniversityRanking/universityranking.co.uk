@@ -98,6 +98,17 @@ title: Home
     border: none !important;
   }
 
+  /* Align "Provider" header and cell text */
+.tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
+  justify-content: flex-start !important;
+  padding-left: 0.75rem !important;
+  text-align: left !important;
+}
+
+.tabulator-cell[tabulator-field="Provider"] {
+  text-align: left !important;
+  padding-left: 0.75rem !important;
+}
   /* Align "Provider" header text to left */
   .tabulator .tabulator-header .tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
     justify-content: flex-start !important;
