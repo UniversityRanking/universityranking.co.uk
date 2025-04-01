@@ -20,7 +20,7 @@ title: Home
   .hero {
     background-color: #3b0a66;
     color: white;
-    padding: 3rem 1rem 6rem; /* Extend purple behind dropdown */
+    padding: 3rem 1rem 6rem;
     text-align: center;
     position: relative;
   }
@@ -35,36 +35,49 @@ title: Home
     margin-bottom: 1rem;
   }
 
- .hero label {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-right: 1rem;
-  display: inline-block;
-  vertical-align: middle;
-}
+  .hero label {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-right: 1rem;
+    display: inline-block;
+    vertical-align: middle;
+  }
 
-.hero select {
-  font-size: 2rem;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 0.4rem;
-  background: white;
-  color: #3b0a66;
-  font-weight: bold;
-  display: inline-block;
-  vertical-align: middle;
-}
+  .hero select {
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.4rem;
+    background: white;
+    color: #3b0a66;
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: middle;
+  }
 
   /* Table Section */
   .table-section {
     background: white;
-    margin-top: -5.2rem; /* Pull table into purple */
+    margin-top: -5.2rem;
     padding-bottom: 3rem;
   }
 
   .table-section .container {
     max-width: 750px;
     margin: 0 auto;
+  }
+
+  /* Search Bar Style */
+  .tabulator-search-bar {
+    margin: 1rem 0;
+  }
+
+  #provider-search {
+    width: 100%;
+    font-size: 1.4rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
   }
 
   /* Tabulator Table */
@@ -75,7 +88,6 @@ title: Home
     border-radius: 12px 12px 0 0;
   }
 
-  /* Header Section */
   .tabulator-header {
     border-bottom: none !important;
   }
@@ -103,122 +115,13 @@ title: Home
     box-shadow: none !important;
   }
 
----
-layout: default
-title: Home
----
-
-<!-- Load Tabulator -->
-<link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
-<script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
-
-<style>
-  body {
-    font-family: 'Helvetica Neue', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-    color: #333;
+  /* Align "Provider" header and cell */
+  .tabulator .tabulator-header .tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding-left: 0.75rem !important;
+    margin-left: -0.1rem !important;
   }
-
-  /* Hero Section */
-  .hero {
-    background-color: #3b0a66;
-    color: white;
-    padding: 3rem 1rem 6rem; /* Extend purple behind dropdown */
-    text-align: center;
-    position: relative;
-  }
-
-  .hero .container {
-    max-width: 750px;
-    margin: 0 auto;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-
- .hero label {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-right: 1rem;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.hero select {
-  font-size: 2rem;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 0.4rem;
-  background: white;
-  color: #3b0a66;
-  font-weight: bold;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-  /* Table Section */
-  .table-section {
-    background: white;
-    margin-top: -5.2rem; /* Pull table into purple */
-    padding-bottom: 3rem;
-  }
-
-  .table-section .container {
-    max-width: 750px;
-    margin: 0 auto;
-  }
-
-  /* Tabulator Table */
-  .tabulator {
-    border: none !important;
-    font-size: 1.6rem;
-    overflow: hidden;
-    border-radius: 12px 12px 0 0;
-  }
-
-  /* Header Section */
-  .tabulator-header {
-    border-bottom: none !important;
-  }
-
-  .tabulator .tabulator-header .tabulator-col {
-    background-color: white !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-  }
-
-  .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
-    color: #3b0a66 !important;
-    background-color: white !important;
-    font-weight: bold !important;
-    font-size: 1.4rem !important;
-    width: 100% !important;
-    height: 60px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    padding: 0 0.5rem !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-
-/* Force "Provider" title and cell left-aligned */
-.tabulator .tabulator-header .tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
-  justify-content: flex-start !important;
-  text-align: left !important;
-  padding-left: 1rem !important;
-}
-
-.tabulator-cell[tabulator-field="Provider"] {
-  text-align: left !important;
-  padding-left: 1rem !important;
-}
 
   .tabulator-cell[tabulator-field="Provider"] {
     text-align: left !important;
@@ -240,7 +143,7 @@ title: Home
   }
 
   .tabulator-row:nth-child(even) {
-    background-color: #f5effa; /* Light purple */
+    background-color: #f5effa;
   }
 </style>
 
@@ -248,7 +151,7 @@ title: Home
   <div class="container">
     <h1>2025 Top 5 Universities by past students</h1>
     <div style="margin-bottom: 1rem;">
-      <label for="subject-select" style="font-size: 1rem; margin-right: 0.5rem;">Choose a subject:</label>
+      <label for="subject-select">Choose a subject:</label>
       <select id="subject-select">
         <option value="">All Subjects</option>
         <option value="Law">Law</option>
@@ -261,6 +164,12 @@ title: Home
 
 <section class="table-section">
   <div class="container">
+
+    <!-- ✅ Search Box Appears Here -->
+    <div class="tabulator-search-bar">
+      <input id="provider-search" type="text" placeholder="Search universities...">
+    </div>
+
     <div id="ranking-table"></div>
   </div>
 </section>
@@ -278,66 +187,12 @@ title: Home
         { title: "Score", field: "2024 Score", width: 100, hozAlign: "center", headerSort: false }
       ],
     });
-  });
-</script>
 
-  .tabulator-cell[tabulator-field="Provider"] {
-    text-align: left !important;
-    padding-left: 0.75rem !important;
-  }
-
-  /* Table Body */
-  .tabulator-cell {
-    border: none !important;
-    padding: 1rem 0.75rem !important;
-  }
-
-  .tabulator-row {
-    font-size: 1.5rem;
-  }
-
-  .tabulator-row:nth-child(odd) {
-    background-color: #ffffff;
-  }
-
-  .tabulator-row:nth-child(even) {
-    background-color: #f5effa; /* Light purple */
-  }
-</style>
-
-<section class="hero">
-  <div class="container">
-    <h1>2025 Top 5 Universities by past students</h1>
-    <div style="margin-bottom: 1rem;">
-      <label for="subject-select" style="font-size: 1rem; margin-right: 0.5rem;">Choose a subject:</label>
-      <select id="subject-select">
-        <option value="">All Subjects</option>
-        <option value="Law">Law</option>
-        <option value="Engineering">Engineering</option>
-        <option value="Medicine">Medicine</option>
-      </select>
-    </div>
-  </div>
-</section>
-
-<section class="table-section">
-  <div class="container">
-    <div id="ranking-table"></div>
-  </div>
-</section>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const table = new Tabulator("#ranking-table", {
-      ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
-      layout: "fitColumns",
-      responsiveLayout: "collapse",
-      columns: [
-        { title: "2024", field: "2024", width: 80, hozAlign: "center", headerSort: false },
-        { title: "2023", field: "2023", width: 80, hozAlign: "center", headerSort: false },
-        { title: "Provider", field: "Provider", widthGrow: 3, headerSort: false },
-        { title: "Score", field: "2024 Score", width: 100, hozAlign: "center", headerSort: false }
-      ],
+    // ✅ Hook up search box to filter "Provider"
+    const searchBox = document.getElementById("provider-search");
+    searchBox.addEventListener("keyup", function () {
+      const query = searchBox.value;
+      table.setFilter("Provider", "like", query);
     });
   });
 </script>
