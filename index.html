@@ -53,7 +53,7 @@ title: Home
 
   .table-section {
     background: white;
-    margin-top: -4.6rem; /* Reduced overlap so it doesn't hide dropdown */
+    margin-top: -5.8rem; /* Reduced overlap so it doesn't hide dropdown */
     padding-bottom: 3rem;
   }
 
@@ -94,6 +94,11 @@ title: Home
 
 .tabulator .tabulator-header .tabulator-col:last-child {
   border-right: none !important;
+}
+
+.tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
+  justify-content: flex-start !important;
+  padding-left: 1rem !important;
 }
   
   .tabulator-cell {
