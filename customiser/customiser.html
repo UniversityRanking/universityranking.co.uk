@@ -192,22 +192,25 @@ title: Customiser
           weights[input.name] = parseInt(input.value) * 25;
         });
 
-        subjectData.forEach(row => {
-          let total = 0;
-          let count = 0;
-          questions.forEach(q => {
-            if (row[q] !== undefined && typeof row[q] === 'number') {
-              const weightFactor = 1 + (weights[q] || 0) / 100;
-              total += row[q] * weightFactor;
-              count++;
-            }
-          });
-          row.weightedScore = count ? total / count : 0;
-        });
+        // Calculate original ranks FIRST before weighting changes subjectData
+const original = [...subjectData].sort((a, b) => b.AVERAGE - a.AVERAGE);
+original.forEach((row, idx) => defaultRanks[row.Provider] = idx + 1);
 
-        const sorted = [...subjectData].sort((a, b) => b.weightedScore - a.weightedScore);
-        const original = [...subjectData].sort((a, b) => b.AVERAGE - a.AVERAGE);
-        original.forEach((row, idx) => defaultRanks[row.Provider] = idx + 1);
+// Now calculate the weighted scores
+subjectData.forEach(row => {
+  let total = 0;
+  let count = 0;
+  questions.forEach(q => {
+    if (row[q] !== undefined && typeof row[q] === 'number') {
+      const weightFactor = 1 + (weights[q] || 0) / 100;
+      total += row[q] * weightFactor;
+      count++;
+    }
+  });
+  row.weightedScore = count ? total / count : 0;
+});
+
+const sorted = [...subjectData].sort((a, b) => b.weightedScore - a.weightedScore);
 
 const resultsHTML = `
   <table class="results-table">
