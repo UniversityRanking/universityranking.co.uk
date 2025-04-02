@@ -1,0 +1,238 @@
+---
+layout: default
+title: Customiser
+---
+
+<!-- Load Tabulator for future proofing -->
+<link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
+<script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
+
+<style>
+  body {
+    font-family: 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #333;
+  }
+
+  .hero {
+    background-color: #3b0a66;
+    padding: 5rem 1rem 6rem 1rem;
+    text-align: center;
+    color: white;
+  }
+
+  .customiser-section {
+    background-color: #f5f5ff;
+    margin-top: -4rem;
+    padding: 4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .customiser-container {
+    max-width: 1000px;
+    width: 100%;
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  table.customiser-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.3rem;
+  }
+
+  .customiser-table th, .customiser-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+  }
+
+  .customiser-table th {
+    background-color: #fff;
+    text-align: left;
+  }
+
+  .slider-input {
+    width: 100%;
+  }
+
+  .score-green { color: #2e7d32; font-weight: bold; }
+  .score-orange { color: #ef6c00; font-weight: bold; }
+  .score-red { color: #c62828; font-weight: bold; }
+
+  .results-table {
+    width: 100%;
+    margin-top: 2rem;
+    border-collapse: collapse;
+  }
+  .results-table th, .results-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+
+  select {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+  }
+
+  .submit-button {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    background-color: #3b0a66;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+</style>
+
+<section class="hero">
+  <h2 class="compare-title">Customise Your Subject Ranking</h2>
+</section>
+
+<section class="customiser-section">
+  <div class="customiser-container">
+    <label for="subject-selector"><strong>Select Subject Area:</strong></label>
+    <select id="subject-selector">
+      <option value="">-- Select a Subject --</option>
+    </select>
+
+    <table class="customiser-table" id="question-weight-table">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Importance</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <button class="submit-button" onclick="calculateRankings()">Submit</button>
+
+    <table class="results-table" id="results-table" style="display:none">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Change</th>
+          <th>University</th>
+          <th>Weighted Score</th>
+          <th>Original Score</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+  let allData = [];
+  let subjectDataMap = {};
+  let questions = [];
+
+  fetch("../assets/tables/All-Subjects-Formatted.json")
+    .then(res => res.json())
+    .then(data => {
+      allData = data;
+      const subjects = Array.from(new Set(data.map(d => d.Subject))).sort();
+      const dropdown = document.getElementById("subject-selector");
+      subjects.forEach(sub => {
+        const option = document.createElement("option");
+        option.value = sub;
+        option.textContent = sub;
+        dropdown.appendChild(option);
+      });
+
+      const sample = data.find(d => d.Subject);
+      questions = Object.keys(sample).filter(k => /^Q\d+/.test(k)).map(k => ({
+        key: k,
+        label: sample[k]
+      }));
+
+      const tbody = document.querySelector("#question-weight-table tbody");
+      questions.forEach((q, i) => {
+        const row = document.createElement("tr");
+        const labelCell = document.createElement("td");
+        labelCell.textContent = `${q.key}: ${q.label}`;
+        const sliderCell = document.createElement("td");
+        const slider = document.createElement("input");
+        slider.type = "range";
+        slider.min = -50;
+        slider.max = 50;
+        slider.step = 25;
+        slider.value = 0;
+        slider.className = "slider-input";
+        slider.dataset.q = q.key;
+        sliderCell.appendChild(slider);
+        row.appendChild(labelCell);
+        row.appendChild(sliderCell);
+        tbody.appendChild(row);
+      });
+    });
+
+  function calculateRankings() {
+    const subject = document.getElementById("subject-selector").value;
+    if (!subject) return;
+    const sliders = document.querySelectorAll(".slider-input");
+    const weights = {};
+    sliders.forEach(slider => weights[slider.dataset.q] = parseInt(slider.value));
+
+    const filtered = allData.filter(d => d.Subject === subject);
+    const scored = filtered.map((row, idx) => {
+      let total = 0;
+      let count = 0;
+      questions.forEach(q => {
+        if (typeof row[q.key] === 'number') {
+          const weight = 1 + weights[q.key] / 100;
+          total += row[q.key] * weight;
+          count++;
+        }
+      });
+      return {
+        Provider: row.Provider,
+        weighted: Math.round(total / count),
+        original: Math.round(row.AVERAGE),
+        index: idx
+      };
+    });
+
+    const ranked = [...scored].sort((a, b) => b.weighted - a.weighted).map((r, i) => ({
+      ...r,
+      newRank: i + 1
+    }));
+
+    ranked.forEach(r => {
+      const originalIndex = scored.findIndex(s => s.Provider === r.Provider);
+      r.change = (originalIndex + 1) - r.newRank;
+    });
+
+    const tbody = document.querySelector("#results-table tbody");
+    tbody.innerHTML = "";
+    ranked.forEach(r => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${r.newRank}</td>
+        <td>${r.change > 0 ? '+' + r.change : r.change}</td>
+        <td>${r.Provider}</td>
+        <td class="${getColorClass(r.weighted)}">${r.weighted}%</td>
+        <td>${r.original}%</td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    document.getElementById("results-table").style.display = "table";
+  }
+
+  function getColorClass(val) {
+    if (val >= 85) return "score-green";
+    if (val >= 70) return "score-orange";
+    return "score-red";
+  }
+</script>
