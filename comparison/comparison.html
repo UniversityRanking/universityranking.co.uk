@@ -156,14 +156,42 @@ title: Compare
         });
       });
 
+      const questionTextMap = {
+        Q01: "How good are teaching staff at explaining things?",
+        Q02: "How often do teaching staff make the subject engaging?",
+        Q03: "How often is the course intellectually stimulating?",
+        Q04: "How often does your course challenge you to achieve your best work?",
+        Q05: "To what extent have you had the chance to explore ideas and concepts in depth?",
+        Q06: "How well does your course introduce subjects and skills in a way that builds on what you have already learned?",
+        Q07: "To what extent have you had the chance to bring together information and ideas from different topics?",
+        Q08: "How well have teaching staff supported your learning?",
+        Q09: "How clearly have teaching staff explained course content?",
+        Q10: "How fair has assessment been?",
+        Q11: "How well have assessments allowed you to demonstrate what you’ve learned?",
+        Q12: "How helpful has feedback been on your work?",
+        Q13: "How clear has guidance been about marking criteria?",
+        Q14: "How well organised is your course?",
+        Q15: "How well have teaching staff communicated with students about changes?",
+        Q16: "How clearly has your timetable been communicated?",
+        Q17: "How easy has it been to access subject-specific resources (e.g. equipment, facilities)?",
+        Q18: "How easy has it been to access IT resources and facilities?",
+        Q19: "How easy has it been to access library resources?",
+        Q20: "How well have students’ views about the course been heard?",
+        Q21: "How clear has it been that student feedback on the course is acted on?",
+        Q22: "How well communicated were changes made in response to student feedback?",
+        Q23: "How well have students' unions represented students’ academic interests?",
+        Q24: "How well is your university supporting your learning?",
+        Q25: "How well are your academic skills being developed?",
+        Q26: "How well does your university support your mental wellbeing?"
+      };
+
       const sample = data.find(r => r.Subject);
-questions = Object.keys(sample)
-  .filter(k => /^Q\d+/.test(k))
-  .map(k => ({
-    key: k,
-    label: k // Just display "Q01", "Q02", etc. — or use a manual map if needed
-  }));
-      }));
+      questions = Object.keys(sample)
+        .filter(k => /^Q\d+/.test(k))
+        .map(k => ({
+          key: k,
+          label: questionTextMap[k] || k
+        }));
 
       renderEmptyTable();
 
