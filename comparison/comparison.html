@@ -17,8 +17,8 @@ title: Compare
   }
 
   .compare-section {
+    padding: 2rem 1rem 4rem;
     background-color: #f5effa;
-    padding: 3rem 1rem;
   }
 
   .compare-section .container {
@@ -26,42 +26,51 @@ title: Compare
     margin: 0 auto;
   }
 
-  .dropdowns {
+  .compare-controls {
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
     margin-bottom: 2rem;
     flex-wrap: wrap;
-    gap: 1rem;
   }
 
-  .dropdown {
-    flex: 1 1 30%;
+  .compare-controls .dropdown-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
-  select {
+  .compare-controls label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .compare-controls select {
     font-size: 1.4rem;
     padding: 0.5rem;
-    width: 100%;
     border-radius: 6px;
     border: 1px solid #ccc;
   }
 
-  table {
+  table.compare-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 1.4rem;
-    background-color: white;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
   }
 
-  th, td {
-    padding: 1rem;
-    border: 1px solid #ddd;
+  table.compare-table th,
+  table.compare-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #ddd;
     text-align: center;
   }
 
-  th {
-    background-color: #3b0a66;
-    color: white;
+  table.compare-table th:first-child,
+  table.compare-table td:first-child {
+    text-align: left;
   }
 
   .score-green {
@@ -82,115 +91,134 @@ title: Compare
 
 <section class="compare-section">
   <div class="container">
-    <h1>Compare Universities</h1>
-    <div class="dropdowns" id="dropdowns"></div>
-    <div id="compare-table"></div>
+    <h1>Compare University Scores</h1>
+
+    <div class="compare-controls">
+      <div class="dropdown-group">
+        <label for="subject1">Subject 1</label>
+        <select id="subject1"></select>
+        <label for="uni1">University 1</label>
+        <select id="uni1" disabled></select>
+      </div>
+
+      <div class="dropdown-group">
+        <label for="subject2">Subject 2</label>
+        <select id="subject2"></select>
+        <label for="uni2">University 2</label>
+        <select id="uni2" disabled></select>
+      </div>
+
+      <div class="dropdown-group">
+        <label for="subject3">Subject 3</label>
+        <select id="subject3"></select>
+        <label for="uni3">University 3</label>
+        <select id="uni3" disabled></select>
+      </div>
+    </div>
+
+    <table class="compare-table" id="compare-table">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th id="col1-header">-</th>
+          <th id="col2-header">-</th>
+          <th id="col3-header">-</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </div>
 </section>
 
 <script>
-const subjects = [
-  "Accounting", "Adult nursing", "Aeronautical and aerospace engineering", "Architecture", "Business studies", "Computer science", "Economics", "Education", "Law", "Marketing", "Mathematics", "Psychology", "Sociology", "Zoology"
-];
-
 let allData = [];
+let questions = [];
 
-function createDropdowns() {
-  const container = document.getElementById("dropdowns");
-  for (let i = 0; i < 3; i++) {
-    const div = document.createElement("div");
-    div.className = "dropdown";
-    div.innerHTML = `
-      <select id="subject-${i}" onchange="loadUniversities(${i})">
-        <option value="">Select subject</option>
-        ${subjects.map(s => `<option value="${s}">${s}</option>`).join('')}
-      </select>
-      <select id="uni-${i}" onchange="updateComparison()">
-        <option value="">Select university</option>
-      </select>
-    `;
-    container.appendChild(div);
-  }
-}
-
-function loadUniversities(index) {
-  const subject = document.getElementById(`subject-${index}`).value;
-  const uniSelect = document.getElementById(`uni-${index}`);
-  uniSelect.innerHTML = '<option value="">Select university</option>';
-  const subjectData = allData.filter(row => row.Subject === subject);
-  subjectData.forEach(row => {
-    const option = document.createElement("option");
-    option.value = row.Provider;
-    option.textContent = row.Provider;
-    uniSelect.appendChild(option);
+function populateSubjects() {
+  const subjects = [...new Set(allData.map(row => row.Subject))].sort();
+  const dropdowns = ["subject1", "subject2", "subject3"];
+  dropdowns.forEach(id => {
+    const select = document.getElementById(id);
+    select.innerHTML = `<option value="">Select subject</option>` +
+      subjects.map(s => `<option value="${s}">${s}</option>`).join('');
   });
-  updateComparison();
 }
 
-function updateComparison() {
-  const selected = [];
-  for (let i = 0; i < 3; i++) {
-    const subject = document.getElementById(`subject-${i}`).value;
-    const uni = document.getElementById(`uni-${i}`).value;
-    if (subject && uni) {
-      const match = allData.find(row => row.Subject === subject && row.Provider === uni);
-      if (match) selected.push(match);
-    }
-  }
+function updateUniversities(subjectId, uniId) {
+  const subject = document.getElementById(subjectId).value;
+  const uniSelect = document.getElementById(uniId);
 
-  if (selected.length === 0) {
-    document.getElementById("compare-table").innerHTML = "";
+  if (!subject) {
+    uniSelect.innerHTML = "<option value=''>Select subject first</option>";
+    uniSelect.disabled = true;
     return;
   }
 
-  const questions = Object.keys(selected[0]).filter(k => k.startsWith("Q"));
-  const questionText = {
-    Q01: "Staff are good at explaining things",
-    Q02: "Staff have made the subject interesting",
-    Q03: "The course is intellectually stimulating",
-    Q04: "My course has challenged me to achieve my best work",
-    Q05: "My course has provided me with opportunities to explore ideas or concepts in depth",
-    Q06: "My course has provided me with opportunities to bring information and ideas together from different topics",
-    Q07: "My course has provided me with opportunities to apply what I have learnt",
-    Q08: "The criteria used in marking have been clear in advance",
-    Q09: "Marking and assessment has been fair",
-    Q10: "Feedback on my work has been timely",
-    Q11: "I have received helpful comments on my work",
-    Q12: "I have been able to contact staff when I needed to",
-    Q13: "I have received sufficient advice and guidance in relation to my course",
-    Q14: "Good advice was available when I needed to make study choices",
-    Q15: "The course is well organised and running smoothly",
-    Q16: "The timetable works efficiently for me",
-    Q17: "Any changes in the course or teaching have been communicated effectively",
-    Q18: "The IT resources and facilities provided have supported my learning well",
-    Q19: "The library resources (e.g. books, online services and learning spaces) have supported my learning well",
-    Q20: "I have been able to access course-specific resources (e.g. equipment, facilities, software, collections) when I needed to",
-    Q21: "I feel part of a community of staff and students",
-    Q22: "I have had the right opportunities to work with other students as part of my course",
-    Q23: "I think my course has had a positive impact on my learning",
-    Q24: "I feel a sense of belonging to my course",
-    Q25: "I am happy with the quality of the course",
-    Q26: "I am happy with the mental wellbeing support available"
-  };
+  const unis = allData.filter(row => row.Subject === subject).map(row => row.Provider);
+  uniSelect.innerHTML = "<option value=''>Select university</option>" +
+    [...new Set(unis)].sort().map(u => `<option value="${u}">${u}</option>`).join('');
+  uniSelect.disabled = false;
+}
 
-  let html = `<table><thead><tr><th>Question</th>${selected.map(s => `<th>${s.Provider}</th>`).join('')}</tr></thead><tbody>`;
+function getColorClass(val) {
+  if (val >= 85) return "score-green";
+  if (val >= 70) return "score-orange";
+  return "score-red";
+}
+
+function renderTable() {
+  const tbody = document.querySelector("#compare-table tbody");
+  tbody.innerHTML = "";
+
+  const selections = [
+    { subject: subject1.value, uni: uni1.value, col: 1 },
+    { subject: subject2.value, uni: uni2.value, col: 2 },
+    { subject: subject3.value, uni: uni3.value, col: 3 },
+  ];
+
+  const selectedData = selections.map(sel =>
+    allData.find(row => row.Subject === sel.subject && row.Provider === sel.uni)
+  );
+
   questions.forEach(q => {
-    html += `<tr><td>${questionText[q] || q}</td>`;
-    selected.forEach(s => {
-      const val = Math.round(s[q]);
-      const cls = val >= 85 ? "score-green" : val >= 70 ? "score-orange" : "score-red";
-      html += `<td class="${cls}">${val}%</td>`;
+    const row = document.createElement("tr");
+    const label = q + ": " + allData.find(r => r[q] !== undefined)?.[q + "_label"] || q;
+    row.innerHTML = `<td>${label}</td>`;
+
+    selectedData.forEach(data => {
+      if (!data) {
+        row.innerHTML += `<td>-</td>`;
+        return;
+      }
+      const val = Math.round(data[q]);
+      row.innerHTML += `<td class="${getColorClass(val)}">${val}%</td>`;
     });
-    html += `</tr>`;
+
+    tbody.appendChild(row);
   });
-  html += `</tbody></table>`;
-  document.getElementById("compare-table").innerHTML = html;
+
+  document.getElementById("col1-header").textContent = uni1.value || "-";
+  document.getElementById("col2-header").textContent = uni2.value || "-";
+  document.getElementById("col3-header").textContent = uni3.value || "-";
 }
 
 fetch("../assets/tables/All-Subjects-Formatted.json")
   .then(res => res.json())
-  .then(json => {
-    allData = json;
-    createDropdowns();
+  .then(data => {
+    allData = data;
+    questions = Object.keys(data[0]).filter(k => /^Q\d+/.test(k));
+    populateSubjects();
   });
+
+["subject1", "subject2", "subject3"].forEach((sid, i) => {
+  const uid = `uni${i + 1}`;
+  document.getElementById(sid).addEventListener("change", () => {
+    updateUniversities(sid, uid);
+    renderTable();
+  });
+});
+
+["uni1", "uni2", "uni3"].forEach(id => {
+  document.getElementById(id).addEventListener("change", renderTable);
+});
 </script>
