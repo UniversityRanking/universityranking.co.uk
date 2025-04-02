@@ -25,7 +25,7 @@ title: Compare
 
   .compare-section {
     background-color: #f5f5ff;
-    margin-top: -8rem;
+    margin-top: -4rem;
     padding: 4rem 1rem 4rem 1rem;
     display: flex;
     flex-direction: column;
@@ -191,7 +191,7 @@ title: Compare
     questions.forEach(q => {
       const tr = document.createElement("tr");
       const labelCell = document.createElement("td");
-      labelCell.textContent = `${q.key}: ${q.label}`;
+      labelCell.textContent = `${q.key}: ${q.label.replace(/:.*$/, "")}`;
       tr.appendChild(labelCell);
       for (let i = 0; i < 3; i++) {
         const cell = document.createElement("td");
