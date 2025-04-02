@@ -106,15 +106,13 @@ title: Subject
   document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const selectedSubject = urlParams.get('subject');
-    
-    if (!selectedSubject) return;
+
     const titleElement = document.getElementById("subject-title");
-    if (titleElement) {
+    if (selectedSubject && titleElement) {
       titleElement.textContent = `${selectedSubject} Rankings`;
     }
-  }
-                            
-    fetch("../assets/tables/All-Subjects-Formatted.json")
+
+    fetch("{{ '/assets/tables/All-Subjects-Formatted.json' | relative_url }}")
       .then(response => response.json())
       .then(data => {
         const filtered = data.filter(row => row.Subject === selectedSubject);
@@ -130,6 +128,9 @@ title: Subject
             { title: "Score", field: "AVERAGE", width: 100, hozAlign: "center" }
           ]
         });
+      })
+      .catch(error => {
+        console.error("Failed to fetch or parse JSON:", error);
       });
   });
 </script>
