@@ -145,8 +145,14 @@ title: Subject
 
   .modal-table th, .modal-table td {
     padding: 0.6rem;
-    text-align: left;
     border-bottom: 1px solid #ccc;
+  }
+
+  .modal-table td:nth-child(2),
+  .modal-table td:nth-child(3),
+  .modal-table th:nth-child(2),
+  .modal-table th:nth-child(3) {
+    text-align: center;
   }
 </style>
 
@@ -171,8 +177,8 @@ title: Subject
       <thead>
         <tr>
           <th>Question</th>
-          <th id="top-provider-label">Top Score</th>
-          <th>Selected Uni</th>
+          <th id="top-provider-label">Top University</th>
+          <th id="selected-provider-label">Selected University</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -237,7 +243,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         document.getElementById("modal-university-name").textContent = `Comparison: ${uniData.Provider}`;
-        document.getElementById("top-provider-label").textContent = `Top (${topUni.Provider})`;
+        document.getElementById("top-provider-label").textContent = `Top University (${topUni.Provider})`;
+        document.getElementById("selected-provider-label").textContent = `${uniData.Provider}`;
         document.getElementById("university-modal").style.display = "block";
       });
     });
