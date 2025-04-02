@@ -3,7 +3,7 @@ layout: default
 title: Compare
 ---
 
-<!-- Load Tabulator (optional, not used here but kept for consistency) -->
+<!-- Load Tabulator (not needed here but retained for consistency) -->
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
 <script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
 
@@ -16,50 +16,53 @@ title: Compare
     color: #333;
   }
 
-  .hero {
-    background-color: #3b0a66;
-    color: white;
-    padding: 3rem 1rem 6rem;
-    text-align: center;
-    position: relative;
-  }
-
-  .hero .container {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
-  }
-
   .compare-section {
     background-color: #f5f5ff;
     margin-top: -5rem;
-    padding-bottom: 3rem;
-    padding-top: 0;
+    padding: 10rem 1rem 4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .compare-title {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: -6rem;
+    margin-bottom: 2rem;
+    z-index: 2;
+    position: relative;
   }
 
   .compare-table {
     width: 1000px;
-    margin: 0 auto;
     border-collapse: collapse;
     font-size: 1.4rem;
-    border-radius: 16px 16px 0 0;
-    overflow: hidden;
     background: white;
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
   }
 
   .compare-table th,
   .compare-table td {
     padding: 1rem;
-    text-align: center;
     border-bottom: 1px solid #ddd;
+    text-align: center;
+    vertical-align: top;
   }
 
   .compare-table th {
     background-color: #fff;
     font-weight: bold;
+    text-align: center;
+  }
+
+  .compare-table td:first-child,
+  .compare-table th:first-child {
+    text-align: left;
   }
 
   .compare-table select {
@@ -72,110 +75,158 @@ title: Compare
     color: #2e7d32;
     font-weight: bold;
   }
+
   .score-orange {
     color: #ef6c00;
     font-weight: bold;
   }
+
   .score-red {
     color: #c62828;
     font-weight: bold;
   }
 </style>
 
-<section class="hero">
-  <div class="container">
-    <h1>Compare University Scores</h1>
-  </div>
-</section>
-
 <section class="compare-section">
-  <table class="compare-table" id="compare-table">
+  <div class="compare-title">Compare University Scores</div>
+  <table class="compare-table">
     <thead>
       <tr>
         <th>Question</th>
         <th>
-          <select class="subject-select"></select><br>
-          <select class="university-select" disabled></select>
+          <select class="subject-select" data-index="0">
+            <option value="">Select subject</option>
+          </select><br>
+          <select class="university-select" data-index="0" disabled>
+            <option value="">Select university</option>
+          </select>
         </th>
         <th>
-          <select class="subject-select"></select><br>
-          <select class="university-select" disabled></select>
+          <select class="subject-select" data-index="1">
+            <option value="">Select subject</option>
+          </select><br>
+          <select class="university-select" data-index="1" disabled>
+            <option value="">Select university</option>
+          </select>
         </th>
         <th>
-          <select class="subject-select"></select><br>
-          <select class="university-select" disabled></select>
+          <select class="subject-select" data-index="2">
+            <option value="">Select subject</option>
+          </select><br>
+          <select class="university-select" data-index="2" disabled>
+            <option value="">Select university</option>
+          </select>
         </th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="compare-tbody">
+      <!-- Questions and scores inserted here -->
+    </tbody>
   </table>
 </section>
 
 <script>
-  const tableBody = document.querySelector("#compare-table tbody");
-  const subjectDropdowns = document.querySelectorAll(".subject-select");
-  const universityDropdowns = document.querySelectorAll(".university-select");
-  let allData = [];
+  const questionOrder = [];
+  const questionMap = {};
+  const allData = [];
+  const selectedUnis = [null, null, null];
 
   fetch("../assets/tables/All-Subjects-Formatted.json")
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data => {
-      allData = data;
-      const questions = Object.keys(data[0]).filter(key => key.startsWith("Q"));
-
-      // Unique subjects
-      const subjects = [...new Set(data.map(row => row.Subject))].sort();
-
-      subjectDropdowns.forEach((select, idx) => {
-        select.innerHTML = '<option value="">Select subject</option>' +
-          subjects.map(sub => `<option value="${sub}">${sub}</option>`).join("");
-
-        select.addEventListener("change", () => {
-          const subject = select.value;
-          const uniSelect = universityDropdowns[idx];
-
-          if (subject) {
-            const universities = data.filter(r => r.Subject === subject).map(r => r.Provider).sort();
-            uniSelect.disabled = false;
-            uniSelect.innerHTML = '<option value="">Select university</option>' +
-              universities.map(u => `<option value="${u}">${u}</option>`).join("");
-          } else {
-            uniSelect.disabled = true;
-            uniSelect.innerHTML = '<option value="">Select university</option>';
+      data.forEach(row => {
+        allData.push(row);
+        Object.keys(row).forEach(key => {
+          if (key.startsWith("Q") && !(key in questionMap)) {
+            questionOrder.push(key);
+            questionMap[key] = row[key.replace(/Q\d+: /, '')];
           }
-
-          updateScores();
         });
-
-        universityDropdowns[idx].addEventListener("change", updateScores);
       });
 
-      // Build initial table with only question text
-      questions.forEach(q => {
-        const row = document.createElement("tr");
-        const label = data[0][q + "_Label"] || q; // fallback if label missing
-        row.innerHTML = `<td>${q}: ${label}</td><td>–</td><td>–</td><td>–</td>`;
-        tableBody.appendChild(row);
+      const uniqueSubjects = [...new Set(allData.map(row => row.Subject))].sort();
+      document.querySelectorAll('.subject-select').forEach(select => {
+        uniqueSubjects.forEach(subject => {
+          const opt = document.createElement('option');
+          opt.value = subject;
+          opt.textContent = subject;
+          select.appendChild(opt);
+        });
       });
+
+      renderTable();
     });
 
-  function updateScores() {
-    const rows = tableBody.querySelectorAll("tr");
+  function renderTable() {
+    const tbody = document.getElementById("compare-tbody");
+    tbody.innerHTML = "";
+    questionOrder.forEach(q => {
+      const tr = document.createElement("tr");
+      const tdQuestion = document.createElement("td");
+      tdQuestion.textContent = `${q}: ${questionMap[q]}`;
+      tr.appendChild(tdQuestion);
 
-    universityDropdowns.forEach((uniSelect, colIdx) => {
-      const uni = uniSelect.value;
-      const subject = subjectDropdowns[colIdx].value;
-      const record = allData.find(r => r.Provider === uni && r.Subject === subject);
+      for (let i = 0; i < 3; i++) {
+        const td = document.createElement("td");
+        if (selectedUnis[i]) {
+          const value = selectedUnis[i][q];
+          if (typeof value === "number") {
+            const rounded = Math.round(value);
+            td.textContent = rounded + "%";
+            td.className = rounded >= 85 ? "score-green" : rounded >= 70 ? "score-orange" : "score-red";
+          } else {
+            td.textContent = "–";
+          }
+        } else {
+          td.textContent = "–";
+        }
+        tr.appendChild(td);
+      }
 
-      rows.forEach((row, qIdx) => {
-        const cell = row.children[colIdx + 1];
-        if (!record) return cell.innerHTML = "–";
-
-        const qKey = Object.keys(record).filter(k => k.startsWith("Q"))[qIdx];
-        const val = Math.round(record[qKey]);
-        const colorClass = val >= 85 ? 'score-green' : val >= 70 ? 'score-orange' : 'score-red';
-        cell.innerHTML = `<span class="${colorClass}">${val}%</span>`;
-      });
+      tbody.appendChild(tr);
     });
   }
+
+  document.querySelectorAll('.subject-select').forEach(subjectSelect => {
+    subjectSelect.addEventListener('change', function () {
+      const index = parseInt(this.dataset.index);
+      const uniSelect = document.querySelector(`.university-select[data-index='${index}']`);
+      uniSelect.innerHTML = '<option value="">Select university</option>';
+      uniSelect.disabled = true;
+      selectedUnis[index] = null;
+
+      const chosenSubject = this.value;
+      if (!chosenSubject) {
+        renderTable();
+        return;
+      }
+
+      const filtered = allData.filter(row => row.Subject === chosenSubject);
+      filtered.forEach(row => {
+        const opt = document.createElement('option');
+        opt.value = row.Provider;
+        opt.textContent = row.Provider;
+        uniSelect.appendChild(opt);
+      });
+
+      uniSelect.disabled = false;
+    });
+  });
+
+  document.querySelectorAll('.university-select').forEach(uniSelect => {
+    uniSelect.addEventListener('change', function () {
+      const index = parseInt(this.dataset.index);
+      const subject = document.querySelector(`.subject-select[data-index='${index}']`).value;
+      const uni = this.value;
+
+      if (!uni || !subject) {
+        selectedUnis[index] = null;
+        renderTable();
+        return;
+      }
+
+      selectedUnis[index] = allData.find(row => row.Subject === subject && row.Provider === uni);
+      renderTable();
+    });
+  });
 </script>
