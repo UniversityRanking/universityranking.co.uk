@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const subject = this.value;
       if (subject) {
         const encoded = encodeURIComponent(subject);
-        window.location.href = `/subject/subject.html?subject=${encoded}`;
+        window.location.href = `/universityranking.co.uk/subject/subject.html?subject=${encoded}`;
       }
     });
   }
