@@ -206,34 +206,37 @@ document.addEventListener('DOMContentLoaded', function () {
           { title: "Score", field: "AVERAGE", width: 100, hozAlign: "center" }
         ],
         rowClick: function(e, row) {
-          const uniData = row.getData();
-          const tbody = document.querySelector("#modal-comparison-table tbody");
-          tbody.innerHTML = "";
+  const uniData = row.getData();
+  const tbody = document.querySelector("#modal-comparison-table tbody");
+  tbody.innerHTML = "";
 
-          questions.forEach(q => {
-            const questionLabel = q; // Or map to a prettier name if needed
-            const topScore = Math.round(topUni[q]) + "%";
-            const uniScore = Math.round(uniData[q]) + "%";
+  questions.forEach(q => {
+    const questionLabel = q;
+    const topVal = Math.round(topUni[q]);
+    const uniVal = Math.round(uniData[q]);
 
-            const getColorClass = val => {
-              if (val >= 85) return "score-green";
-              if (val >= 70) return "score-orange";
-              return "score-red";
-            };
+    const topScore = topVal + "%";
+    const uniScore = uniVal + "%";
 
-            const rowHTML = `
-              <tr>
-                <td>${questionLabel}</td>
-                <td class="${getColorClass(topUni[q])}">${topScore}</td>
-                <td class="${getColorClass(uniData[q])}">${uniScore}</td>
-              </tr>
-            `;
-            tbody.insertAdjacentHTML("beforeend", rowHTML);
-          });
+    const getColorClass = val => {
+      if (val >= 85) return "score-green";
+      if (val >= 70) return "score-orange";
+      return "score-red";
+    };
 
-          document.getElementById("modal-university-name").textContent = `Comparison: ${uniData.Provider}`;
-          document.getElementById("university-modal").style.display = "block";
-        }
+    const rowHTML = `
+      <tr>
+        <td>${questionLabel}</td>
+        <td class="${getColorClass(topVal)}">${topScore}</td>
+        <td class="${getColorClass(uniVal)}">${uniScore}</td>
+      </tr>
+    `;
+    tbody.insertAdjacentHTML("beforeend", rowHTML);
+  });
+
+  document.getElementById("modal-university-name").textContent = `Comparison: ${uniData.Provider}`;
+  document.getElementById("university-modal").style.display = "block";
+}
       });
     });
 });
