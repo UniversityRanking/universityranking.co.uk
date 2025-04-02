@@ -108,7 +108,7 @@ title: Subject
     padding: 2rem;
     border-radius: 10px;
     max-width: 90%;
-    width: 700px;
+    width: 900px;
     max-height: 80vh;
     overflow-y: auto;
     position: relative;
@@ -171,7 +171,7 @@ title: Subject
       <thead>
         <tr>
           <th>Question</th>
-          <th>Top Score</th>
+          <th id="top-provider-label">Top Score</th>
           <th>Selected Uni</th>
         </tr>
       </thead>
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         document.getElementById("modal-university-name").textContent = `Comparison: ${uniData.Provider}`;
-        document.getElementById("university-modal").style.display = "block";
+        document.getElementById("top-provider-label").textContent = `Top (${topUni.Provider})`;
       });
     });
 });
