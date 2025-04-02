@@ -141,63 +141,6 @@ title: Home
     border: 1px solid #ccc;
     width: 100%;
   }
-  .blog-carousel {
-  padding: 3rem 1rem;
-  background: #f7f7f7;
-}
-
-.carousel-container {
-  position: relative;
-  max-width: 750px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-.carousel-track {
-  display: flex;
-  gap: 1rem;
-  transition: transform 0.3s ease;
-}
-
-.carousel-card {
-  min-width: calc(100% / 3 - 1rem);
-  background: white;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  flex-shrink: 0;
-}
-
-.carousel-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-.carousel-card p {
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
-}
-
-.carousel-card a {
-  color: #3b0a66;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.carousel-next {
-  position: absolute;
-  top: 50%;
-  right: -0.5rem;
-  transform: translateY(-50%);
-  background: #3b0a66;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-size: 1.5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
 </style>
 
 <section class="hero">
@@ -219,39 +162,6 @@ title: Home
   <div class="container">
     <div id="ranking-table"></div>
   </div>
-  <section class="blog-carousel">
-  <div class="carousel-container">
-    <div class="carousel-track" id="carousel-track">
-      <!-- Repeat this block 5 times for your articles -->
-      <div class="carousel-card">
-        <h3>Blog Title 1</h3>
-        <p>Short summary or intro to the blog post...</p>
-        <a href="#">Read more →</a>
-      </div>
-      <div class="carousel-card">
-        <h3>Blog Title 2</h3>
-        <p>Quick teaser text for blog post 2...</p>
-        <a href="#">Read more →</a>
-      </div>
-      <div class="carousel-card">
-        <h3>Blog Title 3</h3>
-        <p>More useful stuff for students and rankings...</p>
-        <a href="#">Read more →</a>
-      </div>
-      <div class="carousel-card">
-        <h3>Blog Title 4</h3>
-        <p>This one’s further down the carousel...</p>
-        <a href="#">Read more →</a>
-      </div>
-      <div class="carousel-card">
-        <h3>Blog Title 5</h3>
-        <p>The final one (but could loop!)</p>
-        <a href="#">Read more →</a>
-      </div>
-    </div>
-    <button class="carousel-next" id="carousel-next">→</button>
-  </div>
-</section>
 </section>
 
 <script>
@@ -276,10 +186,4 @@ title: Home
       ],
     });
   });
-  // Carousel logic
-document.getElementById("carousel-next").addEventListener("click", function () {
-  const track = document.getElementById("carousel-track");
-  const scrollAmount = track.children[0].offsetWidth + 16; // width + gap
-  track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-});
 </script>
