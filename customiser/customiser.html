@@ -15,36 +15,40 @@ title: Customiser
     color: #333;
   }
 
-  .customiser-container {
-    padding: 4rem 1rem;
-    max-width: 1000px;
-    margin: 0 auto;
-    background-color: #f5f5ff;
-    border-radius: 12px;
-    margin-top: -5rem;
-border-radius: 20px;
-box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  .hero {
+    background-color: #3b0a66;
+    padding: 4rem 1rem 2rem 1rem;
+    text-align: center;
+    color: white;
   }
 
-  h2 {
-    text-align: center;
-    color: #3b0a66;
+  .customiser-title {
     font-size: 2.2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
   .form-group {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 2rem;
     font-size: 1.6rem;
+    margin-bottom: 1rem;
   }
 
   #subject-select {
-    padding: 0.5rem 1rem;
     font-size: 1.4rem;
-    width: 300px;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+  }
+
+  .customiser-container {
+    padding: 2rem 1rem 4rem 1rem;
+    max-width: 1000px;
+    margin: -3rem auto 0 auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   }
 
   .question-table {
@@ -52,17 +56,26 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     border-collapse: collapse;
     font-size: 1.4rem;
     margin-top: 2rem;
-      text-align: left;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
 
-  .question-table th, .question-table td {
+  .question-table th,
+  .question-table td {
     border: 1px solid #ccc;
     padding: 0.75rem;
-    text-align: center;
   }
 
   .question-table th {
     background-color: #eee;
+    text-align: center;
+  }
+
+  .question-table td:first-child {
+    text-align: left;
+    color: #333;
   }
 
   .slider {
@@ -78,10 +91,6 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     border-radius: 5px;
     cursor: pointer;
     margin-top: 2rem;
-    display: none;
-  }
-
-  .submit-btn:enabled {
     display: inline-block;
   }
 
@@ -92,7 +101,8 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     font-size: 1.4rem;
   }
 
-  .results-table th, .results-table td {
+  .results-table th,
+  .results-table td {
     border: 1px solid #ccc;
     padding: 0.75rem;
     text-align: center;
@@ -101,29 +111,6 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   .results-table th {
     background-color: #eee;
   }
-  .hero {
-  background-color: #3b0a66;
-  padding: 4rem 1rem 6rem 1rem;
-  text-align: center;
-  color: white;
-}
-
-.customiser-title {
-  font-size: 2.2rem;
-  margin-bottom: 2rem;
-}
-
-.form-group {
-  justify-content: center;
-  font-size: 1.6rem;
-  margin-top: -1rem;
-}
-
-#subject-select {
-  font-size: 1.4rem;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-}
 </style>
 
 <div class="hero">
@@ -134,8 +121,10 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.05);
       <option value="">-- Select a Subject --</option>
     </select>
   </div>
+</div>
 
-  <form id="weights-form" style="display:none">
+<div class="customiser-container">
+  <form id="weights-form">
     <table class="question-table">
       <thead>
         <tr>
@@ -154,7 +143,6 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 
 <script>
   let allData = [];
-  let subjectDataMap = {};
   let defaultRanks = {};
   let questions = [];
 
@@ -178,18 +166,14 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.05);
       subjectSelect.addEventListener("change", () => {
         const selected = subjectSelect.value;
         if (!selected) return;
-        document.getElementById("weights-form").style.display = "block";
 
         const tbody = document.getElementById("question-body");
         tbody.innerHTML = "";
 
         questions.forEach(q => {
           const tr = document.createElement("tr");
-
           const tdLabel = document.createElement("td");
-          tdLabel.textContent = q;
-          tr.appendChild(tdLabel);
-
+          tdLabel.textContent = sample[q];
           const tdInput = document.createElement("td");
           const slider = document.createElement("input");
           slider.type = "range";
@@ -200,13 +184,10 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.05);
           slider.className = "slider";
           slider.name = q;
           tdInput.appendChild(slider);
+          tr.appendChild(tdLabel);
           tr.appendChild(tdInput);
-
           tbody.appendChild(tr);
         });
-
-        document.getElementById("submit-btn").disabled = false;
-        document.getElementById("submit-btn").style.display = "inline-block";
       });
 
       document.getElementById("weights-form").addEventListener("submit", function(e) {
@@ -219,73 +200,69 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.05);
           weights[input.name] = parseInt(input.value) * 25;
         });
 
-        // Calculate original ranks FIRST before weighting changes subjectData
-// Recalculate original scores from questions only (with neutral weights)
-subjectData.forEach(row => {
-  let total = 0;
-  let count = 0;
-  questions.forEach(q => {
-    if (row[q] !== undefined && typeof row[q] === 'number') {
-      total += row[q];
-      count++;
-    }
-  });
-  row.originalScore = count ? total / count : 0;
-});
+        subjectData.forEach(row => {
+          let total = 0;
+          let count = 0;
+          questions.forEach(q => {
+            if (row[q] !== undefined && typeof row[q] === 'number') {
+              total += row[q];
+              count++;
+            }
+          });
+          row.originalScore = count ? total / count : 0;
+        });
 
-// Build default rank map based on recalculated original scores
-const originalSorted = [...subjectData].sort((a, b) => b.originalScore - a.originalScore);
-originalSorted.forEach((row, idx) => defaultRanks[row.Provider] = idx + 1);
+        const originalSorted = [...subjectData].sort((a, b) => b.originalScore - a.originalScore);
+        originalSorted.forEach((row, idx) => defaultRanks[row.Provider] = idx + 1);
 
-// Now calculate the weighted scores
-subjectData.forEach(row => {
-  let total = 0;
-  let count = 0;
-  questions.forEach(q => {
-    if (row[q] !== undefined && typeof row[q] === 'number') {
-      const weightFactor = 1 + (weights[q] || 0) / 100;
-      total += row[q] * weightFactor;
-      count++;
-    }
-  });
-  row.weightedScore = count ? total / count : 0;
-});
+        subjectData.forEach(row => {
+          let total = 0;
+          let count = 0;
+          questions.forEach(q => {
+            if (row[q] !== undefined && typeof row[q] === 'number') {
+              const weightFactor = 1 + (weights[q] || 0) / 100;
+              total += row[q] * weightFactor;
+              count++;
+            }
+          });
+          row.weightedScore = count ? total / count : 0;
+        });
 
-const sorted = [...subjectData].sort((a, b) => b.weightedScore - a.weightedScore);
+        const sorted = [...subjectData].sort((a, b) => b.weightedScore - a.weightedScore);
 
-const resultsHTML = `
-  <table class="results-table">
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Change</th>
-        <th>University</th>
-        <th>Weighted Score</th>
-        <th>Original Score</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${sorted.map((row, i) => {
-        const newRank = i + 1;
-        const originalRank = defaultRanks[row.Provider];
-        const diff = originalRank - newRank;
-        const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
-        const weighted = typeof row.weightedScore === 'number' ? row.weightedScore.toFixed(2) + "%" : "–";
-        const original = typeof row.originalScore === 'number' ? row.originalScore.toFixed(2) + "%" : "–";
+        const resultsHTML = `
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Change</th>
+                <th>University</th>
+                <th>Weighted Score</th>
+                <th>Original Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${sorted.map((row, i) => {
+                const newRank = i + 1;
+                const originalRank = defaultRanks[row.Provider];
+                const diff = originalRank - newRank;
+                const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
+                const weighted = typeof row.weightedScore === 'number' ? row.weightedScore.toFixed(2) + "%" : "–";
+                const original = typeof row.originalScore === 'number' ? row.originalScore.toFixed(2) + "%" : "–";
 
-        return `
-          <tr>
-            <td>${newRank}</td>
-            <td>${changeText}</td>
-            <td>${row.Provider}</td>
-            <td>${weighted}</td>
-            <td>${original}</td>
-          </tr>
+                return `
+                  <tr>
+                    <td>${newRank}</td>
+                    <td>${changeText}</td>
+                    <td>${row.Provider}</td>
+                    <td>${weighted}</td>
+                    <td>${original}</td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>
         `;
-      }).join("")}
-    </tbody>
-  </table>
-`;
         document.getElementById("results").innerHTML = resultsHTML;
       });
     });
