@@ -1,0 +1,196 @@
+---
+layout: default
+title: Compare
+---
+
+<!-- Load Tabulator -->
+<link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
+<script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
+
+<style>
+  body {
+    font-family: 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #333;
+  }
+
+  .compare-section {
+    background-color: #f5effa;
+    padding: 3rem 1rem;
+  }
+
+  .compare-section .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .dropdowns {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .dropdown {
+    flex: 1 1 30%;
+  }
+
+  select {
+    font-size: 1.4rem;
+    padding: 0.5rem;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.4rem;
+    background-color: white;
+  }
+
+  th, td {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+
+  th {
+    background-color: #3b0a66;
+    color: white;
+  }
+
+  .score-green {
+    color: #2e7d32;
+    font-weight: bold;
+  }
+
+  .score-orange {
+    color: #ef6c00;
+    font-weight: bold;
+  }
+
+  .score-red {
+    color: #c62828;
+    font-weight: bold;
+  }
+</style>
+
+<section class="compare-section">
+  <div class="container">
+    <h1>Compare Universities</h1>
+    <div class="dropdowns" id="dropdowns"></div>
+    <div id="compare-table"></div>
+  </div>
+</section>
+
+<script>
+const subjects = [
+  "Accounting", "Adult nursing", "Aeronautical and aerospace engineering", "Architecture", "Business studies", "Computer science", "Economics", "Education", "Law", "Marketing", "Mathematics", "Psychology", "Sociology", "Zoology"
+];
+
+let allData = [];
+
+function createDropdowns() {
+  const container = document.getElementById("dropdowns");
+  for (let i = 0; i < 3; i++) {
+    const div = document.createElement("div");
+    div.className = "dropdown";
+    div.innerHTML = `
+      <select id="subject-${i}" onchange="loadUniversities(${i})">
+        <option value="">Select subject</option>
+        ${subjects.map(s => `<option value="${s}">${s}</option>`).join('')}
+      </select>
+      <select id="uni-${i}" onchange="updateComparison()">
+        <option value="">Select university</option>
+      </select>
+    `;
+    container.appendChild(div);
+  }
+}
+
+function loadUniversities(index) {
+  const subject = document.getElementById(`subject-${index}`).value;
+  const uniSelect = document.getElementById(`uni-${index}`);
+  uniSelect.innerHTML = '<option value="">Select university</option>';
+  const subjectData = allData.filter(row => row.Subject === subject);
+  subjectData.forEach(row => {
+    const option = document.createElement("option");
+    option.value = row.Provider;
+    option.textContent = row.Provider;
+    uniSelect.appendChild(option);
+  });
+  updateComparison();
+}
+
+function updateComparison() {
+  const selected = [];
+  for (let i = 0; i < 3; i++) {
+    const subject = document.getElementById(`subject-${i}`).value;
+    const uni = document.getElementById(`uni-${i}`).value;
+    if (subject && uni) {
+      const match = allData.find(row => row.Subject === subject && row.Provider === uni);
+      if (match) selected.push(match);
+    }
+  }
+
+  if (selected.length === 0) {
+    document.getElementById("compare-table").innerHTML = "";
+    return;
+  }
+
+  const questions = Object.keys(selected[0]).filter(k => k.startsWith("Q"));
+  const questionText = {
+    Q01: "Staff are good at explaining things",
+    Q02: "Staff have made the subject interesting",
+    Q03: "The course is intellectually stimulating",
+    Q04: "My course has challenged me to achieve my best work",
+    Q05: "My course has provided me with opportunities to explore ideas or concepts in depth",
+    Q06: "My course has provided me with opportunities to bring information and ideas together from different topics",
+    Q07: "My course has provided me with opportunities to apply what I have learnt",
+    Q08: "The criteria used in marking have been clear in advance",
+    Q09: "Marking and assessment has been fair",
+    Q10: "Feedback on my work has been timely",
+    Q11: "I have received helpful comments on my work",
+    Q12: "I have been able to contact staff when I needed to",
+    Q13: "I have received sufficient advice and guidance in relation to my course",
+    Q14: "Good advice was available when I needed to make study choices",
+    Q15: "The course is well organised and running smoothly",
+    Q16: "The timetable works efficiently for me",
+    Q17: "Any changes in the course or teaching have been communicated effectively",
+    Q18: "The IT resources and facilities provided have supported my learning well",
+    Q19: "The library resources (e.g. books, online services and learning spaces) have supported my learning well",
+    Q20: "I have been able to access course-specific resources (e.g. equipment, facilities, software, collections) when I needed to",
+    Q21: "I feel part of a community of staff and students",
+    Q22: "I have had the right opportunities to work with other students as part of my course",
+    Q23: "I think my course has had a positive impact on my learning",
+    Q24: "I feel a sense of belonging to my course",
+    Q25: "I am happy with the quality of the course",
+    Q26: "I am happy with the mental wellbeing support available"
+  };
+
+  let html = `<table><thead><tr><th>Question</th>${selected.map(s => `<th>${s.Provider}</th>`).join('')}</tr></thead><tbody>`;
+  questions.forEach(q => {
+    html += `<tr><td>${questionText[q] || q}</td>`;
+    selected.forEach(s => {
+      const val = Math.round(s[q]);
+      const cls = val >= 85 ? "score-green" : val >= 70 ? "score-orange" : "score-red";
+      html += `<td class="${cls}">${val}%</td>`;
+    });
+    html += `</tr>`;
+  });
+  html += `</tbody></table>`;
+  document.getElementById("compare-table").innerHTML = html;
+}
+
+fetch("../assets/tables/All-Subjects-Formatted.json")
+  .then(res => res.json())
+  .then(json => {
+    allData = json;
+    createDropdowns();
+  });
+</script>
