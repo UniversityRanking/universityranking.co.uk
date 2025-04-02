@@ -203,13 +203,13 @@ title: Compare
           uniSelect.disabled = !subject;
 
           if (subject && subjectDataMap[subject]) {
-            const providers = new Set(subjectDataMap[subject].map(row => row.Provider));
-            providers.forEach(provider => {
-              const opt = document.createElement("option");
-              opt.value = provider;
-              opt.textContent = provider;
-              uniSelect.appendChild(opt);
-            });
+const providers = [...new Set(subjectDataMap[subject].map(row => row.Provider))].sort();
+providers.forEach(provider => {
+  const opt = document.createElement("option");
+  opt.value = provider;
+  opt.textContent = provider;
+  uniSelect.appendChild(opt);
+});
           }
 
           uniSelect.dispatchEvent(new Event("change"));
