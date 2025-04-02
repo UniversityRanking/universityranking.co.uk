@@ -193,7 +193,7 @@ title: Compare
     questions.forEach(q => {
       const tr = document.createElement("tr");
       const labelCell = document.createElement("td");
-      labelCell.textContent = `${q.key}: ${q.label.replace(/:.*$/, "")}`;
+      labelCell.textContent = q.label;
       tr.appendChild(labelCell);
       for (let i = 0; i < 3; i++) {
         const cell = document.createElement("td");
@@ -210,7 +210,7 @@ title: Compare
     questions.forEach(q => {
       const tr = document.createElement("tr");
       const labelCell = document.createElement("td");
-      labelCell.textContent = `${q.key}: ${q.label}`;
+      labelCell.textContent = q.label;
       tr.appendChild(labelCell);
 
       [1, 2, 3].forEach(i => {
