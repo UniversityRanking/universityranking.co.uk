@@ -117,12 +117,12 @@ title: Customiser
     background-color: #eee;
   }
 
-  .rank-up {
-    background-color: #e0f7e9;
+  .row-up {
+    background-color: #d4f7dc;
   }
 
-  .rank-down {
-    background-color: #fde0e0;
+  .row-down {
+    background-color: #fddddd;
   }
 </style>
 
@@ -191,9 +191,12 @@ title: Customiser
     .then(res => res.json())
     .then(data => {
       allData = data;
-      const subjectSelect = document.getElementById("subject-select");
-      const subjects = [...new Set(data.map(row => row.Subject))].sort();
 
+      const subjectSelect = document.getElementById("subject-select");
+      const tbody = document.getElementById("question-body");
+      const btn = document.getElementById("submit-btn");
+
+      const subjects = [...new Set(data.map(row => row.Subject))].sort();
       subjects.forEach(subject => {
         const option = document.createElement("option");
         option.value = subject;
@@ -204,11 +207,13 @@ title: Customiser
       const sample = data.find(r => r.Subject);
       questions = Object.keys(sample).filter(k => /^Q\d+/.test(k));
 
-      const tbody = document.getElementById("question-body");
+      // Always visible: populate question table once
+      tbody.innerHTML = "";
       questions.forEach(q => {
         const tr = document.createElement("tr");
         const tdLabel = document.createElement("td");
         tdLabel.textContent = questionTextMap[q] || q;
+
         const tdInput = document.createElement("td");
         const slider = document.createElement("input");
         slider.type = "range";
@@ -219,6 +224,7 @@ title: Customiser
         slider.className = "slider";
         slider.name = q;
         slider.disabled = true;
+
         tdInput.appendChild(slider);
         tr.appendChild(tdLabel);
         tr.appendChild(tdInput);
@@ -227,7 +233,7 @@ title: Customiser
 
       subjectSelect.addEventListener("change", () => {
         const selected = subjectSelect.value;
-        document.getElementById("submit-btn").style.display = selected ? "inline-block" : "none";
+        btn.style.display = selected ? "inline-block" : "none";
         document.querySelectorAll("input.slider").forEach(slider => {
           slider.disabled = !selected;
         });
@@ -244,10 +250,9 @@ title: Customiser
         });
 
         subjectData.forEach(row => {
-          let total = 0;
-          let count = 0;
+          let total = 0, count = 0;
           questions.forEach(q => {
-            if (row[q] !== undefined && typeof row[q] === 'number') {
+            if (typeof row[q] === 'number') {
               total += row[q];
               count++;
             }
@@ -259,10 +264,9 @@ title: Customiser
         originalSorted.forEach((row, idx) => defaultRanks[row.Provider] = idx + 1);
 
         subjectData.forEach(row => {
-          let total = 0;
-          let count = 0;
+          let total = 0, count = 0;
           questions.forEach(q => {
-            if (row[q] !== undefined && typeof row[q] === 'number') {
+            if (typeof row[q] === 'number') {
               const weightFactor = 1 + (weights[q] || 0) / 100;
               total += row[q] * weightFactor;
               count++;
@@ -288,7 +292,8 @@ title: Customiser
                 const originalRank = defaultRanks[row.Provider];
                 const diff = originalRank - newRank;
                 const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
-                const rowClass = diff > 0 ? "rank-up" : diff < 0 ? "rank-down" : "";
+                const rowClass = diff > 0 ? "row-up" : diff < 0 ? "row-down" : "";
+
                 return `
                   <tr class="${rowClass}">
                     <td>${newRank}</td>
