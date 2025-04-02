@@ -209,7 +209,7 @@ title: Customiser
         questions.forEach(q => {
           const tr = document.createElement("tr");
           const tdLabel = document.createElement("td");
-          tdLabel.textContent = `${q}: ${questionTextMap[q] || q}`;
+          tdLabel.textContent = questionTextMap[q] || q;
           const tdInput = document.createElement("td");
           const slider = document.createElement("input");
           slider.type = "range";
