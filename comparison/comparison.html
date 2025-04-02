@@ -3,7 +3,7 @@ layout: default
 title: Compare
 ---
 
-<!-- Load Tabulator (not needed here but retained for consistency) -->
+<!-- Load Tabulator (not needed now but kept for consistency) -->
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
 <script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
 
@@ -19,7 +19,7 @@ title: Compare
   .compare-section {
     background-color: #f5f5ff;
     margin-top: -5rem;
-    padding: 10rem 1rem 4rem 1rem;
+    padding: 12rem 1rem 4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +29,6 @@ title: Compare
     color: white;
     font-size: 2rem;
     font-weight: bold;
-    text-align: center;
     margin-top: -6rem;
     margin-bottom: 2rem;
     z-index: 2;
@@ -43,7 +42,7 @@ title: Compare
     background: white;
     border-radius: 20px 20px 0 0;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   }
 
   .compare-table th,
@@ -51,18 +50,12 @@ title: Compare
     padding: 1rem;
     border-bottom: 1px solid #ddd;
     text-align: center;
-    vertical-align: top;
   }
 
   .compare-table th {
     background-color: #fff;
     font-weight: bold;
     text-align: center;
-  }
-
-  .compare-table td:first-child,
-  .compare-table th:first-child {
-    text-align: left;
   }
 
   .compare-table select {
@@ -75,12 +68,10 @@ title: Compare
     color: #2e7d32;
     font-weight: bold;
   }
-
   .score-orange {
     color: #ef6c00;
     font-weight: bold;
   }
-
   .score-red {
     color: #c62828;
     font-weight: bold;
@@ -89,144 +80,154 @@ title: Compare
 
 <section class="compare-section">
   <div class="compare-title">Compare University Scores</div>
+
   <table class="compare-table">
     <thead>
       <tr>
         <th>Question</th>
         <th>
-          <select class="subject-select" data-index="0">
+          <select id="subject-1">
             <option value="">Select subject</option>
           </select><br>
-          <select class="university-select" data-index="0" disabled>
+          <select id="university-1" disabled>
             <option value="">Select university</option>
           </select>
         </th>
         <th>
-          <select class="subject-select" data-index="1">
+          <select id="subject-2">
             <option value="">Select subject</option>
           </select><br>
-          <select class="university-select" data-index="1" disabled>
+          <select id="university-2" disabled>
             <option value="">Select university</option>
           </select>
         </th>
         <th>
-          <select class="subject-select" data-index="2">
+          <select id="subject-3">
             <option value="">Select subject</option>
           </select><br>
-          <select class="university-select" data-index="2" disabled>
+          <select id="university-3" disabled>
             <option value="">Select university</option>
           </select>
         </th>
       </tr>
     </thead>
-    <tbody id="compare-tbody">
-      <!-- Questions and scores inserted here -->
+    <tbody id="compare-body">
+      <!-- Questions and scores will be inserted here -->
     </tbody>
   </table>
 </section>
 
 <script>
-  const questionOrder = [];
-  const questionMap = {};
-  const allData = [];
-  const selectedUnis = [null, null, null];
+  const subjects = new Set();
+  const subjectDataMap = {};
+  let questions = [];
 
   fetch("../assets/tables/All-Subjects-Formatted.json")
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
+      // Extract unique subjects and map by subject
       data.forEach(row => {
-        allData.push(row);
-        Object.keys(row).forEach(key => {
-          if (key.startsWith("Q") && !(key in questionMap)) {
-            questionOrder.push(key);
-            questionMap[key] = row[key.replace(/Q\d+: /, '')];
+        subjects.add(row.Subject);
+        if (!subjectDataMap[row.Subject]) {
+          subjectDataMap[row.Subject] = [];
+        }
+        subjectDataMap[row.Subject].push(row);
+      });
+
+      // Sort subjects alphabetically
+      const sortedSubjects = Array.from(subjects).sort();
+
+      // Populate subject dropdowns
+      [1, 2, 3].forEach(i => {
+        const subjectSelect = document.getElementById(`subject-${i}`);
+        sortedSubjects.forEach(sub => {
+          const option = document.createElement("option");
+          option.value = sub;
+          option.textContent = sub;
+          subjectSelect.appendChild(option);
+        });
+      });
+
+      // Extract questions from one of the entries
+      const sample = data.find(r => r.Subject);
+      questions = Object.keys(sample).filter(k => /^Q\d+/.test(k)).map(k => ({
+        key: k,
+        label: sample[k.replace(/\D/g, "")] || sample[k]
+      }));
+
+      renderEmptyTable();
+
+      // Set up subject change handlers
+      [1, 2, 3].forEach(i => {
+        document.getElementById(`subject-${i}`).addEventListener("change", e => {
+          const subject = e.target.value;
+          const uniSelect = document.getElementById(`university-${i}`);
+          uniSelect.innerHTML = '<option value="">Select university</option>';
+          uniSelect.disabled = !subject;
+
+          if (subject && subjectDataMap[subject]) {
+            subjectDataMap[subject].forEach(row => {
+              const opt = document.createElement("option");
+              opt.value = row.Provider;
+              opt.textContent = row.Provider;
+              uniSelect.appendChild(opt);
+            });
           }
-        });
-      });
 
-      const uniqueSubjects = [...new Set(allData.map(row => row.Subject))].sort();
-      document.querySelectorAll('.subject-select').forEach(select => {
-        uniqueSubjects.forEach(subject => {
-          const opt = document.createElement('option');
-          opt.value = subject;
-          opt.textContent = subject;
-          select.appendChild(opt);
+          uniSelect.dispatchEvent(new Event("change"));
         });
-      });
 
-      renderTable();
+        document.getElementById(`university-${i}`).addEventListener("change", updateTable);
+      });
     });
 
-  function renderTable() {
-    const tbody = document.getElementById("compare-tbody");
+  function renderEmptyTable() {
+    const tbody = document.getElementById("compare-body");
     tbody.innerHTML = "";
-    questionOrder.forEach(q => {
+    questions.forEach(q => {
       const tr = document.createElement("tr");
-      const tdQuestion = document.createElement("td");
-      tdQuestion.textContent = `${q}: ${questionMap[q]}`;
-      tr.appendChild(tdQuestion);
-
+      const labelCell = document.createElement("td");
+      labelCell.textContent = `${q.key}: ${q.label}`;
+      tr.appendChild(labelCell);
       for (let i = 0; i < 3; i++) {
-        const td = document.createElement("td");
-        if (selectedUnis[i]) {
-          const value = selectedUnis[i][q];
-          if (typeof value === "number") {
-            const rounded = Math.round(value);
-            td.textContent = rounded + "%";
-            td.className = rounded >= 85 ? "score-green" : rounded >= 70 ? "score-orange" : "score-red";
-          } else {
-            td.textContent = "–";
-          }
-        } else {
-          td.textContent = "–";
-        }
-        tr.appendChild(td);
+        const cell = document.createElement("td");
+        cell.textContent = "–";
+        tr.appendChild(cell);
       }
-
       tbody.appendChild(tr);
     });
   }
 
-  document.querySelectorAll('.subject-select').forEach(subjectSelect => {
-    subjectSelect.addEventListener('change', function () {
-      const index = parseInt(this.dataset.index);
-      const uniSelect = document.querySelector(`.university-select[data-index='${index}']`);
-      uniSelect.innerHTML = '<option value="">Select university</option>';
-      uniSelect.disabled = true;
-      selectedUnis[index] = null;
+  function updateTable() {
+    const tbody = document.getElementById("compare-body");
+    tbody.innerHTML = "";
+    questions.forEach(q => {
+      const tr = document.createElement("tr");
+      const labelCell = document.createElement("td");
+      labelCell.textContent = `${q.key}: ${q.label}`;
+      tr.appendChild(labelCell);
 
-      const chosenSubject = this.value;
-      if (!chosenSubject) {
-        renderTable();
-        return;
-      }
+      [1, 2, 3].forEach(i => {
+        const subject = document.getElementById(`subject-${i}`).value;
+        const uni = document.getElementById(`university-${i}`).value;
+        const cell = document.createElement("td");
 
-      const filtered = allData.filter(row => row.Subject === chosenSubject);
-      filtered.forEach(row => {
-        const opt = document.createElement('option');
-        opt.value = row.Provider;
-        opt.textContent = row.Provider;
-        uniSelect.appendChild(opt);
+        if (subject && uni && subjectDataMap[subject]) {
+          const entry = subjectDataMap[subject].find(row => row.Provider === uni);
+          if (entry && entry[q.key]) {
+            const val = Math.round(entry[q.key]);
+            cell.textContent = `${val}%`;
+            cell.className = val >= 85 ? "score-green" : val >= 70 ? "score-orange" : "score-red";
+          } else {
+            cell.textContent = "–";
+          }
+        } else {
+          cell.textContent = "–";
+        }
+        tr.appendChild(cell);
       });
 
-      uniSelect.disabled = false;
+      tbody.appendChild(tr);
     });
-  });
-
-  document.querySelectorAll('.university-select').forEach(uniSelect => {
-    uniSelect.addEventListener('change', function () {
-      const index = parseInt(this.dataset.index);
-      const subject = document.querySelector(`.subject-select[data-index='${index}']`).value;
-      const uni = this.value;
-
-      if (!uni || !subject) {
-        selectedUnis[index] = null;
-        renderTable();
-        return;
-      }
-
-      selectedUnis[index] = allData.find(row => row.Subject === subject && row.Provider === uni);
-      renderTable();
-    });
-  });
+  }
 </script>
