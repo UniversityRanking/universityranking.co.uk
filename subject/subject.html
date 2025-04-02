@@ -88,65 +88,66 @@ title: Subject
   .tabulator-row:nth-child(even) {
     background-color: #f5effa;
   }
-/* Modal styling */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.6);
-}
 
-.modal-content {
-  background-color: #fff;
-  margin: auto;
-  padding: 2rem;
-  border-radius: 10px;
-  max-width: 90%;
-  width: 700px;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
+  /* Modal styling */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+  }
 
-.modal-close {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
+  .modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 90%;
+    width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
-.score-green {
-  color: #2e7d32; /* green */
-  font-weight: bold;
-}
-.score-orange {
-  color: #ef6c00; /* orange */
-  font-weight: bold;
-}
-.score-red {
-  color: #c62828; /* red */
-  font-weight: bold;
-}
+  .modal-close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
 
-.modal-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 1.4rem;
-}
+  .score-green {
+    color: #2e7d32; /* green */
+    font-weight: bold;
+  }
+  .score-orange {
+    color: #ef6c00; /* orange */
+    font-weight: bold;
+  }
+  .score-red {
+    color: #c62828; /* red */
+    font-weight: bold;
+  }
 
-.modal-table th, .modal-table td {
-  padding: 0.6rem;
-  text-align: left;
-  border-bottom: 1px solid #ccc;
-}
+  .modal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.4rem;
+  }
+
+  .modal-table th, .modal-table td {
+    padding: 0.6rem;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
 </style>
 
 <section class="hero">
@@ -192,70 +193,52 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
       const filtered = data.filter(row => row.Subject === selectedSubject);
       const sorted = filtered.sort((a, b) => a.Rank - b.Rank);
-      const topUni = sorted[0]; // top-ranked university for this subject
+      const topUni = sorted[0];
+      const questions = Object.keys(topUni).filter(key => key.startsWith("Q"));
 
-      const questions = Object.keys(topUni).filter(key => key.startsWith("Q")); // Q01, Q02, etc.
+      const table = new Tabulator("#subject-table", {
+        data: sorted,
+        layout: "fitColumns",
+        responsiveLayout: "collapse",
+        columns: [
+          { title: "Rank", field: "Rank", width: 80, hozAlign: "center" },
+          { title: "University", field: "Provider", widthGrow: 3 },
+          { title: "Score", field: "AVERAGE", width: 100, hozAlign: "center" }
+        ]
+      });
 
-     const table = new Tabulator("#subject-table", {
-  data: sorted,
-  layout: "fitColumns",
-  responsiveLayout: "collapse",
-  columns: [
-    { title: "Rank", field: "Rank", width: 80, hozAlign: "center" },
-    { title: "University", field: "Provider", widthGrow: 3 },
-    { title: "Score", field: "AVERAGE", width: 100, hozAlign: "center" }
-  ]
-});
+      table.on("rowClick", function (e, row) {
+        const uniData = row.getData();
+        const tbody = document.querySelector("#modal-comparison-table tbody");
+        tbody.innerHTML = "";
 
-// 🔁 Handle row click separately
-table.on("rowClick", function (e, row) {
-  const uniData = row.getData();
-  const tbody = document.querySelector("#modal-comparison-table tbody");
-  tbody.innerHTML = "";
+        questions.forEach(q => {
+          const questionLabel = q;
+          const topVal = Math.round(topUni[q]);
+          const uniVal = Math.round(uniData[q]);
 
-  questions.forEach(q => {
-    const questionLabel = q;
-    const topVal = Math.round(topUni[q]);
-    const uniVal = Math.round(uniData[q]);
+          const topScore = topVal + "%";
+          const uniScore = uniVal + "%";
 
-    const topScore = topVal + "%";
-    const uniScore = uniVal + "%";
+          const getColorClass = val => {
+            if (val >= 85) return "score-green";
+            if (val >= 70) return "score-orange";
+            return "score-red";
+          };
 
-    const getColorClass = val => {
-      if (val >= 85) return "score-green";
-      if (val >= 70) return "score-orange";
-      return "score-red";
-    };
+          const rowHTML = `
+            <tr>
+              <td>${questionLabel}</td>
+              <td class="${getColorClass(topVal)}">${topScore}</td>
+              <td class="${getColorClass(uniVal)}">${uniScore}</td>
+            </tr>
+          `;
+          tbody.insertAdjacentHTML("beforeend", rowHTML);
+        });
 
-    const rowHTML = `
-      <tr>
-        <td>${questionLabel}</td>
-        <td class="${getColorClass(topVal)}">${topScore}</td>
-        <td class="${getColorClass(uniVal)}">${uniScore}</td>
-      </tr>
-    `;
-    tbody.insertAdjacentHTML("beforeend", rowHTML);
-  });
-
-  document.getElementById("modal-university-name").textContent = `Comparison: ${uniData.Provider}`;
-  document.getElementById("university-modal").style.display = "block";
-});
-
-    const rowHTML = `
-      <tr>
-        <td>${questionLabel}</td>
-        <td class="${getColorClass(topVal)}">${topScore}</td>
-        <td class="${getColorClass(uniVal)}">${uniScore}</td>
-      </tr>
-    `;
-    tbody.insertAdjacentHTML("beforeend", rowHTML);
-  });
-
-  document.getElementById("modal-university-name").textContent = `Comparison: ${uniData.Provider}`;
-  document.getElementById("university-modal").style.display = "block";
-}
+        document.getElementById("modal-university-name").textContent = `Comparison: ${uniData.Provider}`;
+        document.getElementById("university-modal").style.display = "block";
       });
     });
 });
 </script>
-
