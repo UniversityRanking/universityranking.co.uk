@@ -90,6 +90,12 @@ title: Subject
   }
 </style>
 
+<section class="hero">
+  <div class="container">
+    <h1 id="subject-title">Subject Rankings</h1>
+  </div>
+</section>
+
 <section class="table-section">
   <div class="container">
     <div id="subject-table"></div>
@@ -100,9 +106,14 @@ title: Subject
   document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const selectedSubject = urlParams.get('subject');
-
+    
     if (!selectedSubject) return;
-
+    const titleElement = document.getElementById("subject-title");
+    if (titleElement) {
+      titleElement.textContent = `${selectedSubject} Rankings`;
+    }
+  }
+                            
     fetch("../assets/tables/All-Subjects-Formatted.json")
       .then(response => response.json())
       .then(data => {
