@@ -125,15 +125,15 @@ title: Subject
   }
 
   .score-green {
-    color: #2e7d32; /* green */
+    color: #2e7d32;
     font-weight: bold;
   }
   .score-orange {
-    color: #ef6c00; /* orange */
+    color: #ef6c00;
     font-weight: bold;
   }
   .score-red {
-    color: #c62828; /* red */
+    color: #c62828;
     font-weight: bold;
   }
 
@@ -238,6 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.getElementById("modal-university-name").textContent = `Comparison: ${uniData.Provider}`;
         document.getElementById("top-provider-label").textContent = `Top (${topUni.Provider})`;
+        document.getElementById("university-modal").style.display = "block";
       });
     });
 });
