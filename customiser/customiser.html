@@ -193,8 +193,22 @@ title: Customiser
         });
 
         // Calculate original ranks FIRST before weighting changes subjectData
-const original = [...subjectData].sort((a, b) => b.AVERAGE - a.AVERAGE);
-original.forEach((row, idx) => defaultRanks[row.Provider] = idx + 1);
+// Recalculate original scores from questions only (with neutral weights)
+subjectData.forEach(row => {
+  let total = 0;
+  let count = 0;
+  questions.forEach(q => {
+    if (row[q] !== undefined && typeof row[q] === 'number') {
+      total += row[q];
+      count++;
+    }
+  });
+  row.originalScore = count ? total / count : 0;
+});
+
+// Build default rank map based on recalculated original scores
+const originalSorted = [...subjectData].sort((a, b) => b.originalScore - a.originalScore);
+originalSorted.forEach((row, idx) => defaultRanks[row.Provider] = idx + 1);
 
 // Now calculate the weighted scores
 subjectData.forEach(row => {
@@ -230,7 +244,7 @@ const resultsHTML = `
         const diff = originalRank - newRank;
         const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
         const weighted = typeof row.weightedScore === 'number' ? row.weightedScore.toFixed(2) + "%" : "–";
-        const original = typeof row.AVERAGE === 'number' ? row.AVERAGE.toFixed(2) + "%" : "–";
+        const original = typeof row.originalScore === 'number' ? row.originalScore.toFixed(2) + "%" : "–";
 
         return `
           <tr>
