@@ -209,36 +209,39 @@ title: Customiser
         const original = [...subjectData].sort((a, b) => b.AVERAGE - a.AVERAGE);
         original.forEach((row, idx) => defaultRanks[row.Provider] = idx + 1);
 
-        const resultsHTML = `
-          <table class="results-table">
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Change</th>
-                <th>University</th>
-                <th>Weighted Score</th>
-                <th>Original Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${sorted.map((row, i) => {
-                const newRank = i + 1;
-                const originalRank = defaultRanks[row.Provider];
-                const diff = originalRank - newRank;
-                const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
-                return `
-                  <tr>
-                    <td>${newRank}</td>
-                    <td>${changeText}</td>
-                    <td>${row.Provider}</td>
-                    <td>${Math.round(row.weightedScore)}%</td>
-                    <td>${Math.round(row.AVERAGE)}%</td>
-                  </tr>
-                `;
-              }).join("")}
-            </tbody>
-          </table>
+const resultsHTML = `
+  <table class="results-table">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Change</th>
+        <th>University</th>
+        <th>Weighted Score</th>
+        <th>Original Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${sorted.map((row, i) => {
+        const newRank = i + 1;
+        const originalRank = defaultRanks[row.Provider];
+        const diff = originalRank - newRank;
+        const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
+        const weighted = typeof row.weightedScore === 'number' ? row.weightedScore.toFixed(2) + "%" : "–";
+        const original = typeof row.AVERAGE === 'number' ? row.AVERAGE.toFixed(2) + "%" : "–";
+
+        return `
+          <tr>
+            <td>${newRank}</td>
+            <td>${changeText}</td>
+            <td>${row.Provider}</td>
+            <td>${weighted}</td>
+            <td>${original}</td>
+          </tr>
         `;
+      }).join("")}
+    </tbody>
+  </table>
+`;
         document.getElementById("results").innerHTML = resultsHTML;
       });
     });
