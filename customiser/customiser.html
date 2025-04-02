@@ -84,16 +84,35 @@ title: Customiser
   }
 
   .slider {
-    width: 100%;
-  }
-  
-.slider::-webkit-slider-thumb {
-  background: #3b0a66;
+  width: 100%;
+  appearance: none; /* Remove default styling */
+  height: 6px;
+  background: #ddd;
+  border-radius: 4px;
+  outline: none;
 }
 
-.slider::-moz-range-thumb {
+/* Chrome, Safari, Edge */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
   background: #3b0a66;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
 }
+
+/* Firefox */
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #3b0a66;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+  
   .submit-btn {
     background-color: #3b0a66;
     color: white;
