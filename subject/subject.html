@@ -88,6 +88,65 @@ title: Subject
   .tabulator-row:nth-child(even) {
     background-color: #f5effa;
   }
+/* Modal styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: auto;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 90%;
+  width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.modal-close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.score-green {
+  color: #2e7d32; /* green */
+  font-weight: bold;
+}
+.score-orange {
+  color: #ef6c00; /* orange */
+  font-weight: bold;
+}
+.score-red {
+  color: #c62828; /* red */
+  font-weight: bold;
+}
+
+.modal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.4rem;
+}
+
+.modal-table th, .modal-table td {
+  padding: 0.6rem;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
 </style>
 
 <section class="hero">
@@ -102,35 +161,81 @@ title: Subject
   </div>
 </section>
 
+<!-- Popup Modal -->
+<div id="university-modal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="document.getElementById('university-modal').style.display='none'">&times;</span>
+    <h2 id="modal-university-name">University Comparison</h2>
+    <table class="modal-table" id="modal-comparison-table">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Top Score</th>
+          <th>Selected Uni</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const selectedSubject = urlParams.get('subject');
+document.addEventListener('DOMContentLoaded', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedSubject = urlParams.get('subject');
+  if (!selectedSubject) return;
 
-    const titleElement = document.getElementById("subject-title");
-    if (selectedSubject && titleElement) {
-      titleElement.textContent = `${selectedSubject} Rankings`;
-    }
+  document.getElementById("subject-title").textContent = `${selectedSubject} Rankings`;
 
-    fetch("{{ '/assets/tables/All-Subjects-Formatted.json' | relative_url }}")
-      .then(response => response.json())
-      .then(data => {
-        const filtered = data.filter(row => row.Subject === selectedSubject);
-        const sorted = filtered.sort((a, b) => a.Rank - b.Rank);
+  fetch("../assets/tables/All-Subjects-Formatted.json")
+    .then(response => response.json())
+    .then(data => {
+      const filtered = data.filter(row => row.Subject === selectedSubject);
+      const sorted = filtered.sort((a, b) => a.Rank - b.Rank);
+      const topUni = sorted[0]; // top-ranked university for this subject
 
-        new Tabulator("#subject-table", {
-          data: sorted,
-          layout: "fitColumns",
-          responsiveLayout: "collapse",
-          columns: [
-            { title: "Rank", field: "Rank", width: 80, hozAlign: "center" },
-            { title: "University", field: "Provider", widthGrow: 3 },
-            { title: "Score", field: "AVERAGE", width: 100, hozAlign: "center" }
-          ]
-        });
-      })
-      .catch(error => {
-        console.error("Failed to fetch or parse JSON:", error);
+      const questions = Object.keys(topUni).filter(key => key.startsWith("Q")); // Q01, Q02, etc.
+
+      const table = new Tabulator("#subject-table", {
+        data: sorted,
+        layout: "fitColumns",
+        responsiveLayout: "collapse",
+        columns: [
+          { title: "Rank", field: "Rank", width: 80, hozAlign: "center" },
+          { title: "University", field: "Provider", widthGrow: 3 },
+          { title: "Score", field: "AVERAGE", width: 100, hozAlign: "center" }
+        ],
+        rowClick: function(e, row) {
+          const uniData = row.getData();
+          const tbody = document.querySelector("#modal-comparison-table tbody");
+          tbody.innerHTML = "";
+
+          questions.forEach(q => {
+            const questionLabel = q; // Or map to a prettier name if needed
+            const topScore = Math.round(topUni[q]) + "%";
+            const uniScore = Math.round(uniData[q]) + "%";
+
+            const getColorClass = val => {
+              if (val >= 85) return "score-green";
+              if (val >= 70) return "score-orange";
+              return "score-red";
+            };
+
+            const rowHTML = `
+              <tr>
+                <td>${questionLabel}</td>
+                <td class="${getColorClass(topUni[q])}">${topScore}</td>
+                <td class="${getColorClass(uniData[q])}">${uniScore}</td>
+              </tr>
+            `;
+            tbody.insertAdjacentHTML("beforeend", rowHTML);
+          });
+
+          document.getElementById("modal-university-name").textContent = `Comparison: ${uniData.Provider}`;
+          document.getElementById("university-modal").style.display = "block";
+        }
       });
-  });
+    });
+});
 </script>
+
