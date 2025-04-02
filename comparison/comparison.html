@@ -157,9 +157,12 @@ title: Compare
       });
 
       const sample = data.find(r => r.Subject);
-      questions = Object.keys(sample).filter(k => /^Q\d+/.test(k)).map(k => ({
-        key: k,
-        label: sample[k] // directly use the sample[k] text as label
+questions = Object.keys(sample)
+  .filter(k => /^Q\d+/.test(k))
+  .map(k => ({
+    key: k,
+    label: k // Just display "Q01", "Q02", etc. — or use a manual map if needed
+  }));
       }));
 
       renderEmptyTable();
