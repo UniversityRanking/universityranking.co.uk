@@ -196,34 +196,41 @@ title: Customiser
       const sample = data.find(r => r.Subject);
       questions = Object.keys(sample).filter(k => /^Q\d+/.test(k));
 
-      subjectSelect.addEventListener("change", () => {
-        const selected = subjectSelect.value;
-        const btn = document.getElementById("submit-btn");
-        btn.style.display = selected ? "inline-block" : "none";
+const tbody = document.getElementById("question-body");
+tbody.innerHTML = "";
 
-        if (!selected) return;
+questions.forEach(q => {
+  const tr = document.createElement("tr");
+  const tdLabel = document.createElement("td");
+  tdLabel.textContent = questionTextMap[q] || q;
 
-        const tbody = document.getElementById("question-body");
-        tbody.innerHTML = "";
+  const tdInput = document.createElement("td");
+  const slider = document.createElement("input");
+  slider.type = "range";
+  slider.min = -2;
+  slider.max = 2;
+  slider.value = 0;
+  slider.step = 1;
+  slider.className = "slider";
+  slider.name = q;
+  slider.disabled = true; // initially disabled
 
-        questions.forEach(q => {
-          const tr = document.createElement("tr");
-          const tdLabel = document.createElement("td");
-          tdLabel.textContent = questionTextMap[q] || q;
-          const tdInput = document.createElement("td");
-          const slider = document.createElement("input");
-          slider.type = "range";
-          slider.min = -2;
-          slider.max = 2;
-          slider.value = 0;
-          slider.step = 1;
-          slider.className = "slider";
-          slider.name = q;
-          tdInput.appendChild(slider);
-          tr.appendChild(tdLabel);
-          tr.appendChild(tdInput);
-          tbody.appendChild(tr);
-        });
+  tdInput.appendChild(slider);
+  tr.appendChild(tdLabel);
+  tr.appendChild(tdInput);
+  tbody.appendChild(tr);
+});
+
+// Subject dropdown changes: enable sliders and show submit button
+subjectSelect.addEventListener("change", () => {
+  const selected = subjectSelect.value;
+  const btn = document.getElementById("submit-btn");
+  btn.style.display = selected ? "inline-block" : "none";
+
+  document.querySelectorAll("input.slider").forEach(slider => {
+    slider.disabled = !selected;
+  });
+});
       });
 
       document.getElementById("weights-form").addEventListener("submit", function(e) {
