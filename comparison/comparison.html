@@ -172,10 +172,11 @@ title: Compare
           uniSelect.disabled = !subject;
 
           if (subject && subjectDataMap[subject]) {
-            subjectDataMap[subject].forEach(row => {
+            const providers = new Set(subjectDataMap[subject].map(row => row.Provider));
+            providers.forEach(provider => {
               const opt = document.createElement("option");
-              opt.value = row.Provider;
-              opt.textContent = row.Provider;
+              opt.value = provider;
+              opt.textContent = provider;
               uniSelect.appendChild(opt);
             });
           }
