@@ -21,6 +21,9 @@ title: Customiser
     margin: 0 auto;
     background-color: #f5f5ff;
     border-radius: 12px;
+    margin-top: -5rem;
+border-radius: 20px;
+box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   }
 
   h2 {
@@ -49,6 +52,7 @@ title: Customiser
     border-collapse: collapse;
     font-size: 1.4rem;
     margin-top: 2rem;
+      text-align: left;
   }
 
   .question-table th, .question-table td {
@@ -97,10 +101,33 @@ title: Customiser
   .results-table th {
     background-color: #eee;
   }
+  .hero {
+  background-color: #3b0a66;
+  padding: 4rem 1rem 6rem 1rem;
+  text-align: center;
+  color: white;
+}
+
+.customiser-title {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-top: -1rem;
+}
+
+#subject-select {
+  font-size: 1.4rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+}
 </style>
 
-<div class="customiser-container">
-  <h2>Customise Your Subject Rankings</h2>
+<div class="hero">
+  <h2 class="customiser-title">Customise Your Subject Rankings</h2>
   <div class="form-group">
     <label for="subject-select">Choose Subject Area:</label>
     <select id="subject-select">
