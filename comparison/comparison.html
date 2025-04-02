@@ -18,30 +18,26 @@ title: Compare
 
   .hero {
     background-color: #3b0a66;
-    padding: 6rem 1rem 10rem 1rem;
+    padding: 5rem 1rem 12rem 1rem;
     text-align: center;
     color: white;
-    position: relative;
-    z-index: 1;
   }
 
   .compare-section {
     background-color: #f5f5ff;
-    margin-top: -7rem;
-    padding: 0 1rem 4rem 1rem;
+    margin-top: -8rem;
+    padding: 4rem 1rem 4rem 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
-    z-index: 2;
   }
 
   .compare-title {
     color: white;
     font-size: 2rem;
     font-weight: bold;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-top: 0rem;
+    margin-bottom: 2rem;
     z-index: 2;
     position: relative;
   }
@@ -161,7 +157,7 @@ title: Compare
       const sample = data.find(r => r.Subject);
       questions = Object.keys(sample).filter(k => /^Q\d+/.test(k)).map(k => ({
         key: k,
-        label: sample[k.replace(/^Q/, "Q")]
+        label: sample[k] // directly use the sample[k] text as label
       }));
 
       renderEmptyTable();
@@ -222,7 +218,7 @@ title: Compare
 
         if (subject && uni && subjectDataMap[subject]) {
           const entry = subjectDataMap[subject].find(row => row.Provider === uni);
-          if (entry && entry[q.key]) {
+          if (entry && entry[q.key] !== undefined && typeof entry[q.key] === 'number') {
             const val = Math.round(entry[q.key]);
             cell.textContent = `${val}%`;
             cell.className = val >= 85 ? "score-green" : val >= 70 ? "score-orange" : "score-red";
