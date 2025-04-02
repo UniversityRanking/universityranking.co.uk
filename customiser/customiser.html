@@ -116,6 +116,14 @@ title: Customiser
   .results-table th {
     background-color: #eee;
   }
+
+  .rank-up {
+    background-color: #e0f7e9;
+  }
+
+  .rank-down {
+    background-color: #fde0e0;
+  }
 </style>
 
 <div class="hero">
@@ -196,41 +204,33 @@ title: Customiser
       const sample = data.find(r => r.Subject);
       questions = Object.keys(sample).filter(k => /^Q\d+/.test(k));
 
-const tbody = document.getElementById("question-body");
-tbody.innerHTML = "";
+      const tbody = document.getElementById("question-body");
+      questions.forEach(q => {
+        const tr = document.createElement("tr");
+        const tdLabel = document.createElement("td");
+        tdLabel.textContent = questionTextMap[q] || q;
+        const tdInput = document.createElement("td");
+        const slider = document.createElement("input");
+        slider.type = "range";
+        slider.min = -2;
+        slider.max = 2;
+        slider.value = 0;
+        slider.step = 1;
+        slider.className = "slider";
+        slider.name = q;
+        slider.disabled = true;
+        tdInput.appendChild(slider);
+        tr.appendChild(tdLabel);
+        tr.appendChild(tdInput);
+        tbody.appendChild(tr);
+      });
 
-questions.forEach(q => {
-  const tr = document.createElement("tr");
-  const tdLabel = document.createElement("td");
-  tdLabel.textContent = questionTextMap[q] || q;
-
-  const tdInput = document.createElement("td");
-  const slider = document.createElement("input");
-  slider.type = "range";
-  slider.min = -2;
-  slider.max = 2;
-  slider.value = 0;
-  slider.step = 1;
-  slider.className = "slider";
-  slider.name = q;
-  slider.disabled = true; // initially disabled
-
-  tdInput.appendChild(slider);
-  tr.appendChild(tdLabel);
-  tr.appendChild(tdInput);
-  tbody.appendChild(tr);
-});
-
-// Subject dropdown changes: enable sliders and show submit button
-subjectSelect.addEventListener("change", () => {
-  const selected = subjectSelect.value;
-  const btn = document.getElementById("submit-btn");
-  btn.style.display = selected ? "inline-block" : "none";
-
-  document.querySelectorAll("input.slider").forEach(slider => {
-    slider.disabled = !selected;
-  });
-});
+      subjectSelect.addEventListener("change", () => {
+        const selected = subjectSelect.value;
+        document.getElementById("submit-btn").style.display = selected ? "inline-block" : "none";
+        document.querySelectorAll("input.slider").forEach(slider => {
+          slider.disabled = !selected;
+        });
       });
 
       document.getElementById("weights-form").addEventListener("submit", function(e) {
@@ -280,8 +280,6 @@ subjectSelect.addEventListener("change", () => {
                 <th>Rank</th>
                 <th>Change</th>
                 <th>University</th>
-                <th>Weighted Score</th>
-                <th>Original Score</th>
               </tr>
             </thead>
             <tbody>
@@ -290,16 +288,12 @@ subjectSelect.addEventListener("change", () => {
                 const originalRank = defaultRanks[row.Provider];
                 const diff = originalRank - newRank;
                 const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
-                const weighted = typeof row.weightedScore === 'number' ? row.weightedScore.toFixed(2) + "%" : "–";
-                const original = typeof row.originalScore === 'number' ? row.originalScore.toFixed(2) + "%" : "–";
-
+                const rowClass = diff > 0 ? "rank-up" : diff < 0 ? "rank-down" : "";
                 return `
-                  <tr>
+                  <tr class="${rowClass}">
                     <td>${newRank}</td>
                     <td>${changeText}</td>
                     <td>${row.Provider}</td>
-                    <td>${weighted}</td>
-                    <td>${original}</td>
                   </tr>
                 `;
               }).join("")}
