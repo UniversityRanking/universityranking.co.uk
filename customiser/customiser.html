@@ -3,7 +3,6 @@ layout: default
 title: Customiser
 ---
 
-<!-- Load Tabulator for future proofing -->
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
 <script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
 
@@ -32,73 +31,66 @@ title: Customiser
   }
 
   .customiser-container {
-    max-width: 1000px;
-    width: 100%;
+    width: 1000px;
+    max-width: 95%;
     background: white;
     border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 2rem;
   }
 
-  .question-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-
-  .question-label {
-    width: 75%;
-    font-size: 1rem;
-  }
-
-  .slider {
-    width: 20%;
-  }
-
-  .submit-button {
-    background-color: #3b0a66;
-    color: white;
-    font-size: 1rem;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 2rem;
-  }
-
-  .ranking-table {
-    margin-top: 2rem;
+  .customiser-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 1rem;
+    margin-top: 2rem;
   }
 
-  .ranking-table th, .ranking-table td {
-    border: 1px solid #ddd;
+  .customiser-table th,
+  .customiser-table td {
     padding: 0.75rem;
-    text-align: center;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
   }
 
-  .ranking-table th {
-    background-color: #f0f0f0;
+  .customiser-table input[type=range] {
+    width: 100%;
   }
+
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 3rem;
+    font-size: 1.1rem;
+  }
+
+  .results-table th,
+  .results-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+
+  .score-green { color: #2e7d32; font-weight: bold; }
+  .score-orange { color: #ef6c00; font-weight: bold; }
+  .score-red { color: #c62828; font-weight: bold; }
 </style>
 
 <section class="hero">
-  <h2 class="compare-title">Customise University Rankings</h2>
+  <h2 class="compare-title">Customise Your Ranking</h2>
 </section>
 
 <section class="customiser-section">
   <div class="customiser-container">
-    <label for="subject-select">Select Subject:</label>
-    <select id="subject-select"></select>
+    <label for="subject-select"><strong>Select Subject:</strong></label>
+    <select id="subject-select">
+      <option value="">Select subject</option>
+    </select>
 
-    <div id="sliders"></div>
+    <table class="customiser-table" id="weight-table"></table>
 
-    <button class="submit-button" onclick="calculateCustomRanking()">Submit</button>
+    <button onclick="applyWeightings()">Submit</button>
 
-    <table class="ranking-table" id="results-table" style="display: none;">
+    <table class="results-table" id="results-table" style="display:none">
       <thead>
         <tr>
           <th>Rank</th>
@@ -115,97 +107,136 @@ title: Customiser
 
 <script>
 let allData = [];
-let weights = {};
-let questions = [];
-let originalRanks = {};
+let subjectDataMap = {};
+let questionKeys = [];
+let originalRanks = [];
+const weights = {};
+const scaleMap = {
+  '-2': -0.5,
+  '-1': -0.25,
+   '0': 0,
+   '1': 0.25,
+   '2': 0.5
+};
 
 fetch("../assets/tables/All-Subjects-Formatted.json")
   .then(res => res.json())
   .then(data => {
     allData = data;
-    const subjects = [...new Set(data.map(row => row.Subject))].sort();
-    const subjectSelect = document.getElementById("subject-select");
-    subjects.forEach(subject => {
-      const opt = document.createElement("option");
-      opt.value = subject;
-      opt.textContent = subject;
-      subjectSelect.appendChild(opt);
+
+    data.forEach(row => {
+      if (!subjectDataMap[row.Subject]) {
+        subjectDataMap[row.Subject] = [];
+      }
+      subjectDataMap[row.Subject].push(row);
     });
 
-    const sample = data.find(row => row.Subject === subjects[0]);
-    questions = Object.keys(sample).filter(k => /^Q\d+$/.test(k));
-    createSliders();
+    const subjects = Object.keys(subjectDataMap).sort();
+    const select = document.getElementById("subject-select");
+    subjects.forEach(sub => {
+      const opt = document.createElement("option");
+      opt.value = sub;
+      opt.textContent = sub;
+      select.appendChild(opt);
+    });
+
+    select.addEventListener("change", renderWeightTable);
   });
 
-function createSliders() {
-  const slidersDiv = document.getElementById("sliders");
-  slidersDiv.innerHTML = "";
-  questions.forEach(q => {
-    weights[q] = 0;
-    const row = document.createElement("div");
-    row.className = "question-row";
-    row.innerHTML = `
-      <label class="question-label">${q}: ${q}</label>
-      <input type="range" min="-50" max="50" step="25" value="0" class="slider" id="slider-${q}" oninput="weights['${q}'] = parseInt(this.value)">
-    `;
-    slidersDiv.appendChild(row);
-  });
-}
-
-function averageScore(row) {
-  const total = questions.reduce((sum, q) => sum + (parseFloat(row[q]) || 0), 0);
-  return Math.round(total / questions.length);
-}
-
-function calculateCustomRanking() {
+function renderWeightTable() {
   const subject = document.getElementById("subject-select").value;
   if (!subject) return;
+  const table = document.getElementById("weight-table");
+  table.innerHTML = "<tr><th>Question</th><th>Importance</th></tr>";
 
-  const filtered = allData.filter(r => r.Subject === subject);
+  const sample = subjectDataMap[subject][0];
+  questionKeys = Object.keys(sample).filter(k => /^Q\d+/.test(k));
 
-  const originalSorted = [...filtered].sort((a, b) => averageScore(b) - averageScore(a));
-  originalRanks = {};
-  originalSorted.forEach((r, i) => originalRanks[r.Provider] = i + 1);
+  questionKeys.forEach(k => {
+    weights[k] = 0; // default neutral
+    const tr = document.createElement("tr");
 
-  const updated = filtered.map(row => {
-    let weightedTotal = 0;
-    let totalWeight = 0;
-    questions.forEach(q => {
-      const score = parseFloat(row[q]) || 0;
-      const weight = (100 + weights[q]) / 100;
-      weightedTotal += score * weight;
-      totalWeight += weight;
+    const label = document.createElement("td");
+    label.textContent = k;
+
+    const sliderCell = document.createElement("td");
+    const slider = document.createElement("input");
+    slider.type = "range";
+    slider.min = -2;
+    slider.max = 2;
+    slider.step = 1;
+    slider.value = 0;
+    slider.oninput = () => weights[k] = parseInt(slider.value);
+    sliderCell.appendChild(slider);
+
+    tr.appendChild(label);
+    tr.appendChild(sliderCell);
+    table.appendChild(tr);
+  });
+}
+
+function applyWeightings() {
+  const subject = document.getElementById("subject-select").value;
+  if (!subject) return;
+  const universities = subjectDataMap[subject];
+
+  const results = universities.map(u => {
+    let total = 0;
+    let validCount = 0;
+
+    questionKeys.forEach(k => {
+      if (u[k] !== undefined && typeof u[k] === 'number') {
+        total += u[k] * (1 + scaleMap[weights[k]]);
+        validCount++;
+      }
     });
-    const weightedScore = Math.round(weightedTotal / totalWeight);
+
+    const weightedScore = validCount ? total / validCount : 0;
+    const originalScore = validCount ? questionKeys.reduce((sum, k) => sum + (u[k] || 0), 0) / validCount : 0;
+
     return {
-      Provider: row.Provider,
-      weightedScore,
-      originalScore: averageScore(row),
-      change: 0
+      Provider: u.Provider,
+      Weighted: Math.round(weightedScore),
+      Original: Math.round(originalScore)
     };
   });
 
-  const finalSorted = [...updated].sort((a, b) => b.weightedScore - a.weightedScore);
-  finalSorted.forEach((r, i) => {
-    const newRank = i + 1;
-    const oldRank = originalRanks[r.Provider];
-    r.change = oldRank - newRank;
-  });
+  const sortedOriginal = [...results].sort((a, b) => b.Original - a.Original);
+  originalRanks = sortedOriginal.map(u => u.Provider);
 
-  const tbody = document.querySelector("#results-table tbody");
-  tbody.innerHTML = "";
-  finalSorted.forEach((r, i) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${i + 1}</td>
-      <td>${r.change > 0 ? "+" + r.change : r.change}</td>
-      <td>${r.Provider}</td>
-      <td>${r.weightedScore}%</td>
-      <td>${r.originalScore}%</td>
-    `;
-    tbody.appendChild(row);
-  });
+  const sorted = results.sort((a, b) => b.Weighted - a.Weighted);
 
+  const table = document.querySelector("#results-table tbody");
+  table.innerHTML = "";
   document.getElementById("results-table").style.display = "table";
+
+  sorted.forEach((u, i) => {
+    const tr = document.createElement("tr");
+
+    const rankCell = document.createElement("td");
+    rankCell.textContent = i + 1;
+
+    const changeCell = document.createElement("td");
+    const originalRank = originalRanks.indexOf(u.Provider) + 1;
+    const diff = originalRank - (i + 1);
+    changeCell.textContent = diff === 0 ? "–" : (diff > 0 ? `+${diff}` : diff);
+
+    const nameCell = document.createElement("td");
+    nameCell.textContent = u.Provider;
+
+    const weightedCell = document.createElement("td");
+    weightedCell.textContent = `${u.Weighted}%`;
+    weightedCell.className = u.Weighted >= 85 ? "score-green" : u.Weighted >= 70 ? "score-orange" : "score-red";
+
+    const originalCell = document.createElement("td");
+    originalCell.textContent = `${u.Original}%`;
+
+    tr.appendChild(rankCell);
+    tr.appendChild(changeCell);
+    tr.appendChild(nameCell);
+    tr.appendChild(weightedCell);
+    tr.appendChild(originalCell);
+    table.appendChild(tr);
+  });
 }
 </script>
