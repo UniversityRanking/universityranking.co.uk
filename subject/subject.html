@@ -196,16 +196,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const questions = Object.keys(topUni).filter(key => key.startsWith("Q")); // Q01, Q02, etc.
 
-      const table = new Tabulator("#subject-table", {
-        data: sorted,
-        layout: "fitColumns",
-        responsiveLayout: "collapse",
-        columns: [
-          { title: "Rank", field: "Rank", width: 80, hozAlign: "center" },
-          { title: "University", field: "Provider", widthGrow: 3 },
-          { title: "Score", field: "AVERAGE", width: 100, hozAlign: "center" }
-        ],
-        rowClick: function(e, row) {
+     const table = new Tabulator("#subject-table", {
+  data: sorted,
+  layout: "fitColumns",
+  responsiveLayout: "collapse",
+  columns: [
+    { title: "Rank", field: "Rank", width: 80, hozAlign: "center" },
+    { title: "University", field: "Provider", widthGrow: 3 },
+    { title: "Score", field: "AVERAGE", width: 100, hozAlign: "center" }
+  ]
+});
+
+// 🔁 Handle row click separately
+table.on("rowClick", function (e, row) {
   const uniData = row.getData();
   const tbody = document.querySelector("#modal-comparison-table tbody");
   tbody.innerHTML = "";
@@ -223,6 +226,20 @@ document.addEventListener('DOMContentLoaded', function () {
       if (val >= 70) return "score-orange";
       return "score-red";
     };
+
+    const rowHTML = `
+      <tr>
+        <td>${questionLabel}</td>
+        <td class="${getColorClass(topVal)}">${topScore}</td>
+        <td class="${getColorClass(uniVal)}">${uniScore}</td>
+      </tr>
+    `;
+    tbody.insertAdjacentHTML("beforeend", rowHTML);
+  });
+
+  document.getElementById("modal-university-name").textContent = `Comparison: ${uniData.Provider}`;
+  document.getElementById("university-modal").style.display = "block";
+});
 
     const rowHTML = `
       <tr>
