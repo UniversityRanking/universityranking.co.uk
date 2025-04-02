@@ -16,30 +16,21 @@ title: Compare
     color: #333;
   }
 
-.hero {
-  background-color: #3b0a66;
-  padding: 5rem 1rem 3rem 1rem;
-  text-align: center;
-  color: white;
-}
+  .hero {
+    background-color: #3b0a66;
+    padding: 5rem 1rem 3rem 1rem;
+    text-align: center;
+    color: white;
+  }
 
-.compare-section {
-  background-color: #f5f5ff;
-  margin-top: -4rem;
-  padding: 4rem 1rem 4rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.compare-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-top: 0;
-  margin-bottom: 2rem;
-  z-index: 2;
-  position: relative;
-}
+  .compare-section {
+    background-color: #f5f5ff;
+    margin-top: -4rem;
+    padding: 4rem 1rem 4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   .compare-title {
     color: white;
@@ -94,12 +85,11 @@ title: Compare
   }
 </style>
 
-<section class="compare-section">
-  <section class="hero">
+<section class="hero">
   <h2 class="compare-title">Compare University Scores</h2>
 </section>
-<div class="compare-section">
 
+<section class="compare-section">
   <table class="compare-table">
     <thead>
       <tr>
@@ -144,7 +134,6 @@ title: Compare
   fetch("../assets/tables/All-Subjects-Formatted.json")
     .then(res => res.json())
     .then(data => {
-      // Extract unique subjects and map by subject
       data.forEach(row => {
         subjects.add(row.Subject);
         if (!subjectDataMap[row.Subject]) {
@@ -153,10 +142,8 @@ title: Compare
         subjectDataMap[row.Subject].push(row);
       });
 
-      // Sort subjects alphabetically
       const sortedSubjects = Array.from(subjects).sort();
 
-      // Populate subject dropdowns
       [1, 2, 3].forEach(i => {
         const subjectSelect = document.getElementById(`subject-${i}`);
         sortedSubjects.forEach(sub => {
@@ -167,16 +154,14 @@ title: Compare
         });
       });
 
-      // Extract questions from one of the entries
       const sample = data.find(r => r.Subject);
       questions = Object.keys(sample).filter(k => /^Q\d+/.test(k)).map(k => ({
         key: k,
-        label: sample[k.replace(/\D/g, "")] || sample[k]
+        label: sample[k]
       }));
 
       renderEmptyTable();
 
-      // Set up subject change handlers
       [1, 2, 3].forEach(i => {
         document.getElementById(`subject-${i}`).addEventListener("change", e => {
           const subject = e.target.value;
