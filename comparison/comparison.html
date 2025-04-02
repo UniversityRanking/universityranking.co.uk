@@ -16,14 +16,30 @@ title: Compare
     color: #333;
   }
 
-  .compare-section {
-    background-color: #f5f5ff;
-    margin-top: -5rem;
-    padding: 12rem 1rem 4rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.hero {
+  background-color: #3b0a66;
+  padding: 5rem 1rem 3rem 1rem;
+  text-align: center;
+  color: white;
+}
+
+.compare-section {
+  background-color: #f5f5ff;
+  margin-top: -4rem;
+  padding: 4rem 1rem 4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.compare-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  z-index: 2;
+  position: relative;
+}
 
   .compare-title {
     color: white;
@@ -79,7 +95,10 @@ title: Compare
 </style>
 
 <section class="compare-section">
-  <div class="compare-title">Compare University Scores</div>
+  <section class="hero">
+  <h2 class="compare-title">Compare University Scores</h2>
+</section>
+<div class="compare-section">
 
   <table class="compare-table">
     <thead>
