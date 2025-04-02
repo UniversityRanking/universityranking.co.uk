@@ -18,207 +18,162 @@ title: Compare
 
   .compare-section {
     padding: 2rem 1rem 4rem;
-    background-color: #f5effa;
+    background-color: #f5f5ff;
   }
 
-  .compare-section .container {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .compare-controls {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .compare-controls .dropdown-group {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  .compare-controls label {
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-
-  .compare-controls select {
-    font-size: 1.4rem;
-    padding: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-  }
-
-  table.compare-table {
+  .compare-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 1.4rem;
     background: white;
-    border-radius: 12px;
+    border-radius: 1rem;
     overflow: hidden;
   }
 
-  table.compare-table th,
-  table.compare-table td {
-    padding: 0.75rem;
+  .compare-table th,
+  .compare-table td {
+    padding: 1rem;
+    text-align: left;
     border-bottom: 1px solid #ddd;
-    text-align: center;
   }
 
-  table.compare-table th:first-child,
-  table.compare-table td:first-child {
-    text-align: left;
+  .compare-table th select {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
   }
 
   .score-green {
     color: #2e7d32;
     font-weight: bold;
+    text-align: center;
   }
-
   .score-orange {
     color: #ef6c00;
     font-weight: bold;
+    text-align: center;
   }
-
   .score-red {
     color: #c62828;
     font-weight: bold;
+    text-align: center;
+  }
+
+  .compare-table td:nth-child(2),
+  .compare-table td:nth-child(3),
+  .compare-table td:nth-child(4) {
+    text-align: center;
   }
 </style>
 
 <section class="compare-section">
   <div class="container">
     <h1>Compare University Scores</h1>
-
-    <div class="compare-controls">
-      <div class="dropdown-group">
-        <label for="subject1">Subject 1</label>
-        <select id="subject1"></select>
-        <label for="uni1">University 1</label>
-        <select id="uni1" disabled></select>
-      </div>
-
-      <div class="dropdown-group">
-        <label for="subject2">Subject 2</label>
-        <select id="subject2"></select>
-        <label for="uni2">University 2</label>
-        <select id="uni2" disabled></select>
-      </div>
-
-      <div class="dropdown-group">
-        <label for="subject3">Subject 3</label>
-        <select id="subject3"></select>
-        <label for="uni3">University 3</label>
-        <select id="uni3" disabled></select>
-      </div>
-    </div>
-
-    <table class="compare-table" id="compare-table">
+    <table id="compare-table" class="compare-table">
       <thead>
         <tr>
           <th>Question</th>
-          <th id="col1-header">-</th>
-          <th id="col2-header">-</th>
-          <th id="col3-header">-</th>
+          <th>
+            <select class="subject-select" data-index="0">
+              <option value="">Select subject</option>
+            </select><br>
+            <select class="university-select" data-index="0" disabled>
+              <option value="">University 1</option>
+            </select>
+          </th>
+          <th>
+            <select class="subject-select" data-index="1">
+              <option value="">Select subject</option>
+            </select><br>
+            <select class="university-select" data-index="1" disabled>
+              <option value="">University 2</option>
+            </select>
+          </th>
+          <th>
+            <select class="subject-select" data-index="2">
+              <option value="">Select subject</option>
+            </select><br>
+            <select class="university-select" data-index="2" disabled>
+              <option value="">University 3</option>
+            </select>
+          </th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="compare-table-body"></tbody>
     </table>
   </div>
 </section>
 
 <script>
-let allData = [];
-let questions = [];
+  let jsonData = [];
 
-function populateSubjects() {
-  const subjects = [...new Set(allData.map(row => row.Subject))].sort();
-  const dropdowns = ["subject1", "subject2", "subject3"];
-  dropdowns.forEach(id => {
-    const select = document.getElementById(id);
-    select.innerHTML = `<option value="">Select subject</option>` +
-      subjects.map(s => `<option value="${s}">${s}</option>`).join('');
-  });
-}
-
-function updateUniversities(subjectId, uniId) {
-  const subject = document.getElementById(subjectId).value;
-  const uniSelect = document.getElementById(uniId);
-
-  if (!subject) {
-    uniSelect.innerHTML = "<option value=''>Select subject first</option>";
-    uniSelect.disabled = true;
-    return;
-  }
-
-  const unis = allData.filter(row => row.Subject === subject).map(row => row.Provider);
-  uniSelect.innerHTML = "<option value=''>Select university</option>" +
-    [...new Set(unis)].sort().map(u => `<option value="${u}">${u}</option>`).join('');
-  uniSelect.disabled = false;
-}
-
-function getColorClass(val) {
-  if (val >= 85) return "score-green";
-  if (val >= 70) return "score-orange";
-  return "score-red";
-}
-
-function renderTable() {
-  const tbody = document.querySelector("#compare-table tbody");
-  tbody.innerHTML = "";
-
-  const selections = [
-    { subject: subject1.value, uni: uni1.value, col: 1 },
-    { subject: subject2.value, uni: uni2.value, col: 2 },
-    { subject: subject3.value, uni: uni3.value, col: 3 },
-  ];
-
-  const selectedData = selections.map(sel =>
-    allData.find(row => row.Subject === sel.subject && row.Provider === sel.uni)
-  );
-
-  questions.forEach(q => {
-    const row = document.createElement("tr");
-    const label = q + ": " + allData.find(r => r[q] !== undefined)?.[q + "_label"] || q;
-    row.innerHTML = `<td>${label}</td>`;
-
-    selectedData.forEach(data => {
-      if (!data) {
-        row.innerHTML += `<td>-</td>`;
-        return;
-      }
-      const val = Math.round(data[q]);
-      row.innerHTML += `<td class="${getColorClass(val)}">${val}%</td>`;
+  fetch("../assets/tables/All-Subjects-Formatted.json")
+    .then(res => res.json())
+    .then(data => {
+      jsonData = data;
+      const allSubjects = [...new Set(data.map(item => item.Subject))].sort();
+      document.querySelectorAll('.subject-select').forEach(select => {
+        allSubjects.forEach(subject => {
+          const option = document.createElement("option");
+          option.value = subject;
+          option.textContent = subject;
+          select.appendChild(option);
+        });
+      });
     });
 
-    tbody.appendChild(row);
+  document.querySelectorAll('.subject-select').forEach(select => {
+    select.addEventListener('change', function () {
+      const index = this.dataset.index;
+      const uniSelect = document.querySelector(`.university-select[data-index='${index}']`);
+      uniSelect.innerHTML = '<option value="">Select university</option>';
+      if (this.value === "") {
+        uniSelect.disabled = true;
+        updateTable();
+        return;
+      }
+      const filtered = jsonData.filter(row => row.Subject === this.value);
+      const universities = [...new Set(filtered.map(r => r.Provider))].sort();
+      universities.forEach(uni => {
+        const option = document.createElement("option");
+        option.value = uni;
+        option.textContent = uni;
+        uniSelect.appendChild(option);
+      });
+      uniSelect.disabled = false;
+    });
   });
 
-  document.getElementById("col1-header").textContent = uni1.value || "-";
-  document.getElementById("col2-header").textContent = uni2.value || "-";
-  document.getElementById("col3-header").textContent = uni3.value || "-";
-}
-
-fetch("../assets/tables/All-Subjects-Formatted.json")
-  .then(res => res.json())
-  .then(data => {
-    allData = data;
-    questions = Object.keys(data[0]).filter(k => /^Q\d+/.test(k));
-    populateSubjects();
+  document.querySelectorAll('.university-select').forEach(select => {
+    select.addEventListener('change', updateTable);
   });
 
-["subject1", "subject2", "subject3"].forEach((sid, i) => {
-  const uid = `uni${i + 1}`;
-  document.getElementById(sid).addEventListener("change", () => {
-    updateUniversities(sid, uid);
-    renderTable();
-  });
-});
-
-["uni1", "uni2", "uni3"].forEach(id => {
-  document.getElementById(id).addEventListener("change", renderTable);
-});
+  function updateTable() {
+    const tbody = document.getElementById("compare-table-body");
+    tbody.innerHTML = "";
+    const universities = [0, 1, 2].map(i => {
+      const subject = document.querySelector(`.subject-select[data-index='${i}']`).value;
+      const provider = document.querySelector(`.university-select[data-index='${i}']`).value;
+      return subject && provider ? jsonData.find(d => d.Subject === subject && d.Provider === provider) : null;
+    });
+    const questions = jsonData.length ? Object.keys(jsonData[0]).filter(k => /^Q\d+/.test(k)) : [];
+    questions.forEach(q => {
+      const tr = document.createElement("tr");
+      const labelCell = document.createElement("td");
+      labelCell.textContent = `${q} - ${jsonData[0][q + " Label"] || ""}`;
+      tr.appendChild(labelCell);
+      universities.forEach(entry => {
+        const td = document.createElement("td");
+        if (entry) {
+          const val = Math.round(entry[q]);
+          td.textContent = val + "%";
+          td.className = val >= 85 ? 'score-green' : val >= 70 ? 'score-orange' : 'score-red';
+        } else {
+          td.textContent = "-";
+        }
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
 </script>
