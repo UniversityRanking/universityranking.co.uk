@@ -2,6 +2,11 @@
 layout: default
 title: Home
 ---
+
+---
+layout: default
+title: Home
+---
 <style>
   body {
     font-family: 'Helvetica Neue', sans-serif;
@@ -137,18 +142,17 @@ title: Home
     width: 100%;
   }
 
-  /* Responsive tweaks */
   @media (max-width: 600px) {
     .hero h1 {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
     }
 
     .hero label {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
     }
 
     .hero select {
-      font-size: 1rem;
+      font-size: 1.2rem;
       padding: 0.6rem 1rem;
       width: 80%;
       max-width: 100%;
@@ -156,25 +160,25 @@ title: Home
     }
 
     .tabulator {
-      font-size: 1rem !important;
+      font-size: 1.2rem !important;
     }
 
     .tabulator-row {
-      font-size: 1rem !important;
+      font-size: 1.2rem !important;
     }
 
     .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
-      font-size: 0.95rem !important;
-      height: 45px !important;
+      font-size: 1.1rem !important;
+      height: 50px !important;
     }
 
     .tabulator-cell {
-      padding: 0.6rem 0.4rem !important;
+      padding: 0.75rem 0.5rem !important;
     }
 
     #provider-search {
-      font-size: 1rem;
-      padding: 0.5rem 0.6rem;
+      font-size: 1.2rem;
+      padding: 0.6rem 0.75rem;
     }
 
     .table-section .container,
@@ -183,6 +187,68 @@ title: Home
     }
   }
 </style>
+
+<!-- Load Tabulator -->
+<link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
+<script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
+
+<section class="hero">
+  <div class="container">
+    <h1>2025 Top 5 Universities by past students</h1>
+    <div style="margin-bottom: 1rem;">
+      <label for="subject-select">Choose a subject:</label>
+      <select id="subject-select">
+        <option value="">All Subjects</option>
+        <!-- [Insert full subject list here as needed] -->
+      </select>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("subject-select").addEventListener("change", function () {
+      const subject = this.value;
+      if (subject) {
+        const encoded = encodeURIComponent(subject);
+        window.location.href = `/universityranking.co.uk/subject/subject.html?subject=${encoded}`;
+      }
+    });
+  </script>
+</section>
+
+<section class="table-section">
+  <div class="container">
+    <div id="ranking-table"></div>
+  </div>
+  <script src="{{ '/assets/js/subject-redirect.js' | relative_url }}" defer></script>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const isMobile = window.innerWidth <= 600;
+    const narrow = isMobile ? 40 : 80;
+
+    const table = new Tabulator("#ranking-table", {
+      ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
+      layout: "fitColumns",
+      responsiveLayout: "collapse",
+      initialSort: [
+        { column: "2024 Score", dir: "desc" }
+      ],
+      columns: [
+        { title: "2024", field: "2024", width: narrow, hozAlign: "center", headerSort: false },
+        { title: "2023", field: "2023", width: narrow, hozAlign: "center", headerSort: false },
+        {
+          title: "Provider",
+          field: "Provider",
+          widthGrow: 3,
+          headerSort: false
+        },
+        { title: "Score", field: "2024 Score", width: narrow, hozAlign: "center", headerSort: false }
+      ]
+    });
+  });
+</script>
+
 <!-- Load Tabulator -->
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
 <script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
