@@ -2,6 +2,182 @@
 layout: default
 title: Home
 ---
+<style>
+  body {
+    font-family: 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #333;
+  }
+
+  /* Hero Section */
+  .hero {
+    background-color: #3b0a66;
+    color: white;
+    padding: 3rem 1rem 6rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero .container {
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero label {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-right: 1rem;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .hero select {
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.4rem;
+    background: white;
+    color: #3b0a66;
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  /* Table Section */
+  .table-section {
+    background: white;
+    margin-top: -5rem;
+    padding-bottom: 3rem;
+  }
+
+  .table-section .container {
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  /* Tabulator Table */
+  .tabulator {
+    border: none !important;
+    font-size: 1.6rem;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .tabulator-header {
+    border-bottom: none !important;
+  }
+
+  .tabulator .tabulator-header .tabulator-col {
+    background-color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
+    color: #3b0a66 !important;
+    background-color: white !important;
+    font-weight: bold !important;
+    font-size: 1.4rem !important;
+    width: 100% !important;
+    height: 60px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 0 0.5rem !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Align "Provider" header and cell */
+  .tabulator .tabulator-header .tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding-left: 0.75rem !important;
+    margin-left: -0.1rem !important;
+  }
+
+  .tabulator-cell[tabulator-field="Provider"] {
+    text-align: left !important;
+    padding-left: 0.75rem !important;
+  }
+
+  /* Table Body */
+  .tabulator-cell {
+    border: none !important;
+    padding: 1rem 0.75rem !important;
+  }
+
+  .tabulator-row {
+    font-size: 1.5rem;
+  }
+
+  .tabulator-row:nth-child(odd) {
+    background-color: #ffffff;
+  }
+
+  .tabulator-row:nth-child(even) {
+    background-color: #f5effa;
+  }
+
+  /* Optional: Style the built-in filter */
+  .tabulator-header-filter input {
+    font-size: 1.4rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  @media (max-width: 600px) {
+  .hero h1 {
+    font-size: 1.4rem;
+  }
+
+  .hero label {
+    font-size: 1.2rem;
+  }
+
+  .hero select {
+    font-size: 1.2rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .tabulator {
+    font-size: 1.2rem !important;
+  }
+
+  .tabulator-row {
+    font-size: 1.2rem !important;
+  }
+
+  .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
+    font-size: 1.1rem !important;
+    height: 50px !important;
+  }
+
+  .tabulator-cell {
+    padding: 0.75rem 0.5rem !important;
+  }
+
+  #provider-search {
+    font-size: 1.2rem;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .table-section .container,
+  .hero .container {
+    padding: 0 1rem;
+  }
+}
+</style>
 
 <!-- Load Tabulator -->
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
