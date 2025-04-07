@@ -52,84 +52,46 @@ body {
   padding: 2rem 0;
 }
 
-.hero-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.hero-left {
-  flex: 1 1 60%;
-}
-
-.hero-right {
-  flex: 1 1 35%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image-placeholder {
-  width: 150px;
-  height: 120px;
-  background-color: white;
-  color: #3b0a66;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 6px;
-}
-
-.hero-left select {
-  display: block;
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  font-size: 1rem;
+/* Table Wrapper - overlaps purple area slightly */
+.table-wrapper {
+  background: white;
+  margin-top: -60px;
+  padding: 2rem;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  z-index: 1;
 }
 
 /* Tables */
-.table-container {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.table-wrapper {
-  background: white;
-  margin-top: -40px;
-  padding: 2rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  z-index: 1;
-  position: relative;
-}
-
 .results-table,
 .question-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 1rem;
-  background-color: white;
-  border-radius: 10px;
+  border-radius: 12px 12px 0 0;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.results-table th,
-.results-table td,
-.question-table th,
-.question-table td {
-  border: 1px solid #ccc;
-  padding: 0.75rem;
-  text-align: center;
-}
-
+/* Table Headers */
 .results-table th,
 .question-table th {
-  background-color: #eee;
+  background-color: white;
+  color: #3b0a66;
+  font-weight: bold;
+  text-align: center;
+  padding: 0.75rem;
 }
 
+/* Table Data */
+.results-table td,
+.question-table td {
+  padding: 0.75rem;
+  text-align: center;
+  border: none;
+}
+
+/* Special Layout for Question Table */
 .question-table td:first-child {
   text-align: left;
   width: 70%;
@@ -139,7 +101,33 @@ body {
   width: 30%;
 }
 
-/* Sliders */
+/* Column Widths for Results Table */
+.results-table th:nth-child(1),
+.results-table td:nth-child(1), /* Rank */
+.results-table th:nth-child(2),
+.results-table td:nth-child(2), /* Change */
+.results-table th:nth-child(3),
+.results-table td:nth-child(3) { /* University */
+  text-align: center;
+}
+
+.results-table th:nth-child(4),
+.results-table td:nth-child(4),
+.results-table th:nth-child(5),
+.results-table td:nth-child(5) {
+  width: 12%;
+}
+
+/* Highlighted Row Movement */
+tr.moved-up {
+  background-color: #e5fbe5;
+}
+
+tr.moved-down {
+  background-color: #fdeaea;
+}
+
+/* Slider Styling */
 .slider {
   width: 100%;
   accent-color: #3b0a66;
@@ -186,7 +174,7 @@ body {
 
 .blog-card {
   background: white;
-  border: 1px solid #ddd;
+  border: none;
   padding: 1rem;
   min-width: 250px;
 }
@@ -195,26 +183,6 @@ body {
 .methodology-preview {
   background: #f4f4f4;
   padding: 3rem 0;
-}
-
-.fade-block {
-  position: relative;
-  max-height: 5.5em;
-  overflow: hidden;
-}
-
-.fade-block.expanded {
-  max-height: none;
-}
-
-.fade-out {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2em;
-  background: linear-gradient(to bottom, rgba(244,244,244,0), #f4f4f4);
 }
 
 /* Responsive Styles */
