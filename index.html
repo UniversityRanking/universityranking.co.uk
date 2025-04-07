@@ -3,10 +3,6 @@ layout: default
 title: Home
 ---
 
----
-layout: default
-title: Home
----
 <style>
   body {
     font-family: 'Helvetica Neue', sans-serif;
@@ -437,4 +433,52 @@ title: Home
       ]
     });
   });
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Set sizes based on screen width
+    const isMobile = window.innerWidth <= 600;
+    const colSmall = 40;
+    const colLarge = 80;
+    const scoreSmall = 40;
+    const scoreLarge = 100;
+
+    const table = new Tabulator("#ranking-table", {
+      ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
+      layout: "fitColumns",
+      responsiveLayout: "collapse",
+      initialSort: [
+        { column: "2024 Score", dir: "desc" } // Default sort: high to low
+      ],
+      columns: [
+        {
+          title: "2024",
+          field: "2024",
+          width: isMobile ? colSmall : colLarge,
+          hozAlign: "center",
+          headerSort: false
+        },
+        {
+          title: "2023",
+          field: "2023",
+          width: isMobile ? colSmall : colLarge,
+          hozAlign: "center",
+          headerSort: false
+        },
+        {
+          title: "Provider",
+          field: "Provider",
+          widthGrow: 3,
+          headerSort: false
+        },
+        {
+          title: "Score",
+          field: "2024 Score",
+          width: isMobile ? scoreSmall : scoreLarge,
+          hozAlign: "center",
+          headerSort: false
+        }
+      ]
+    });
+  });
+</script>
 </script>
