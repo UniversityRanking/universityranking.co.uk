@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 15:52 University Ranking | Real Students. Real Rankings.
+title: 15:55 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -352,72 +352,24 @@ title: 15:52 University Ranking | Real Students. Real Rankings.
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const table = new Tabulator("#ranking-table", {
-      ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
-      layout: "fitColumns",
-      responsiveLayout: "collapse",
-      initialSort: [
-        { column: "2024 Score", dir: "desc" } // Default sort: high to low
-      ],
-      columns: [
-        { title: "2024", field: "2024", width: 50, hozAlign: "center", headerSort: false },
-        { title: "2023", field: "2023", width: 50, hozAlign: "center", headerSort: false },
-        {
-          title: "Provider",
-          field: "Provider",
-          widthGrow: 3,
-          headerSort: false
-        },
-        { title: "Score", field: "2024 Score", width: 100, hozAlign: "center", headerSort: false }
-      ]
-    });
-  });
-  <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Set sizes based on screen width
     const isMobile = window.innerWidth <= 600;
-    const colSmall = 40;
-    const colLarge = 80;
-    const scoreSmall = 40;
-    const scoreLarge = 100;
+    const colWidth = isMobile ? 40 : 80;
+    const scoreWidth = isMobile ? 40 : 80;
 
     const table = new Tabulator("#ranking-table", {
       ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
       layout: "fitColumns",
       responsiveLayout: "collapse",
       initialSort: [
-        { column: "2024 Score", dir: "desc" } // Default sort: high to low
+        { column: "2024 Score", dir: "desc" }
       ],
       columns: [
-        {
-          title: "2024",
-          field: "2024",
-          width: isMobile ? colSmall : colLarge,
-          hozAlign: "center",
-          headerSort: false
-        },
-        {
-          title: "2023",
-          field: "2023",
-          width: isMobile ? colSmall : colLarge,
-          hozAlign: "center",
-          headerSort: false
-        },
-        {
-          title: "Provider",
-          field: "Provider",
-          widthGrow: 3,
-          headerSort: false
-        },
-        {
-          title: "Score",
-          field: "2024 Score",
-          width: isMobile ? scoreSmall : scoreLarge,
-          hozAlign: "center",
-          headerSort: false
-        }
+        { title: "2024", field: "2024", width: colWidth, hozAlign: "center", headerSort: false },
+        { title: "2023", field: "2023", width: colWidth, hozAlign: "center", headerSort: false },
+        { title: "Provider", field: "Provider", widthGrow: 3, headerSort: false },
+        { title: "Score", field: "2024 Score", width: scoreWidth, hozAlign: "center", headerSort: false }
       ]
     });
   });
 </script>
-</script>
+
