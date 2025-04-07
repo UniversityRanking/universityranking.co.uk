@@ -1,16 +1,51 @@
-
+/* Base Reset */
 body {
-  font-family: sans-serif;
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
+  color: #333;
+  background-color: #fff;
 }
 
+/* Container */
 .container {
   max-width: 750px;
   margin: 0 auto;
   padding: 1rem;
 }
 
+/* Header */
+.site-header {
+  background-color: #3b0a66;
+  color: white;
+  padding: 1rem 0;
+}
+
+.site-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-logo img {
+  height: 50px;
+}
+
+.site-nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Hero Section */
 .hero {
   background-color: #3b0a66;
   color: white;
@@ -55,6 +90,12 @@ body {
   font-size: 1rem;
 }
 
+/* Tables */
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .table-wrapper {
   background: white;
   margin-top: -40px;
@@ -64,6 +105,73 @@ body {
   position: relative;
 }
 
+.results-table,
+.question-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.results-table th,
+.results-table td,
+.question-table th,
+.question-table td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.results-table th,
+.question-table th {
+  background-color: #eee;
+}
+
+.question-table td:first-child {
+  text-align: left;
+  width: 70%;
+}
+
+.question-table td:last-child {
+  width: 30%;
+}
+
+/* Sliders */
+.slider {
+  width: 100%;
+  accent-color: #3b0a66;
+}
+
+/* Footer */
+.site-footer {
+  background: #3b0a66;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 2rem;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 200px;
+  padding: 0 1rem;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Blog Section */
 .blog-preview {
   background: #f9f9f9;
   padding: 3rem 0 2rem;
@@ -83,6 +191,7 @@ body {
   min-width: 250px;
 }
 
+/* Methodology Section */
 .methodology-preview {
   background: #f4f4f4;
   padding: 3rem 0;
@@ -108,89 +217,7 @@ body {
   background: linear-gradient(to bottom, rgba(244,244,244,0), #f4f4f4);
 }
 
-.site-header {
-  background: #3b0a66;
-  color: white;
-  padding: 1rem 0;
-}
-
-.site-header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.site-header nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-}
-
-.site-header nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.site-footer {
-  background: #3b0a66;
-  color: white;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 2rem;
-}
-
-.footer-column {
-  flex: 1;
-  min-width: 200px;
-  padding: 0 1rem;
-}
-
-.footer-column ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-column a {
-  color: white;
-  text-decoration: none;
-}
-/* Base styles for all devices */
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  color: #333;
-}
-
-.site-header {
-  background-color: #3b0a66;
-  color: white;
-  padding: 1rem 0;
-}
-
-.site-logo img {
-  height: 50px;
-}
-
-.site-nav ul {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.site-nav a {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-/* Responsive adjustments for screens 768px and below */
+/* Responsive Styles */
 @media (max-width: 768px) {
   .site-header {
     padding: 0.5rem 0;
@@ -210,14 +237,20 @@ body {
     font-size: 1rem;
   }
 
-  .container {
-    padding: 0 1rem;
+  .hero-flex {
+    flex-direction: column;
+  }
+
+  .hero-left,
+  .hero-right {
+    flex: 1 1 100%;
+    text-align: center;
   }
 
   .results-table,
   .question-table {
     font-size: 0.9rem;
-    overflow-x: auto;
     display: block;
+    overflow-x: auto;
   }
 }
