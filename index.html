@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 12:34 University Ranking | Real Students. Real Rankings.
+title: 13:50 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -18,6 +18,9 @@ title: 12:34 University Ranking | Real Students. Real Rankings.
     color: white;
     padding: 1.5rem 1rem 7rem;
     position: relative;
+    display: flex;
+    flex-direction: column; /* Stack the text and image */
+    justify-content: center;
   }
 
   .hero .container {
@@ -26,14 +29,16 @@ title: 12:34 University Ranking | Real Students. Real Rankings.
   }
 
   .hero-grid {
-    display: grid;
-    grid-template-columns: 7fr 3fr;
-    gap: 1rem;
-    align-items: start;
+    display: flex;
+    flex-direction: column; /* Stack text and image */
+    gap: 2rem;
+    align-items: center; /* Center the content */
+    width: 80%; /* Make the text and image take 80% of the width */
+    margin: 0 auto;
   }
 
   .hero-text {
-    text-align: left;
+    text-align: center;
   }
 
   .hero-text h1 {
@@ -62,10 +67,12 @@ title: 12:34 University Ranking | Real Students. Real Rankings.
     text-align: center;
     position: relative;
     z-index: 3;
+    width: 100%;
   }
 
   .subject-select-inner {
-    display: inline-block;
+    display: block;
+    width: 100%; /* Take up full width */
   }
 
   .subject-select label {
@@ -84,6 +91,9 @@ title: 12:34 University Ranking | Real Students. Real Rankings.
     color: #3b0a66;
     font-weight: bold;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    width: 80%; /* Set dropdown width to 80% */
+    margin: 0 auto;
+    display: block;
   }
 
   /* Table Section */
@@ -108,7 +118,7 @@ title: 12:34 University Ranking | Real Students. Real Rankings.
   /* Tabulator Table */
   .tabulator {
     border: none !important;
-    font-size: 1.3rem;
+    font-size: 1rem; /* Smaller font size for the table */
     overflow: hidden;
     border-radius: 12px 12px 0 0;
   }
@@ -118,11 +128,11 @@ title: 12:34 University Ranking | Real Students. Real Rankings.
   }
 
   .tabulator .tabulator-header {
-  padding: 0 !important;
-  margin: 0 !important;
-  height: auto !important;
-}
-  
+    padding: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+  }
+
   .tabulator .tabulator-header .tabulator-col {
     background-color: white !important;
     border: none !important;
@@ -135,7 +145,7 @@ title: 12:34 University Ranking | Real Students. Real Rankings.
   .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
     color: #3b0a66 !important;
     font-weight: bold !important;
-    font-size: 1.4rem !important;
+    font-size: 1.1rem !important; /* Smaller font size */
     width: 100% !important;
     height: 36px !important;
     display: flex !important;
@@ -159,11 +169,12 @@ title: 12:34 University Ranking | Real Students. Real Rankings.
 
   .tabulator-cell {
     border: none !important;
-    padding: 1rem 0.75rem !important;
+    padding: 0.5rem 0.75rem !important; /* Reduced padding */
+    font-size: 1rem; /* Smaller text size */
   }
 
   .tabulator-row {
-    font-size: 1.3rem;
+    font-size: 1rem; /* Smaller text size */
   }
 
   .tabulator-row:nth-child(odd) {
@@ -175,7 +186,7 @@ title: 12:34 University Ranking | Real Students. Real Rankings.
   }
 
   .tabulator-header-filter input {
-    font-size: 1.4rem;
+    font-size: 1rem; /* Smaller font size for search inputs */
     padding: 0.5rem;
     border-radius: 6px;
     border: 1px solid #ccc;
@@ -188,6 +199,39 @@ title: 12:34 University Ranking | Real Students. Real Rankings.
 
   header + .hero {
     margin-top: -2rem;
+  }
+
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .hero-text h1 {
+      font-size: 2rem;
+    }
+
+    .hero-text p {
+      font-size: 1rem;
+    }
+
+    .subject-select select {
+      width: 100%;
+      padding: 1rem;
+    }
+
+    .tabulator-header .tabulator-col-title {
+      font-size: 1rem;
+    }
+
+    .tabulator-cell {
+      font-size: 1.1rem;
+    }
+
+    .tabulator-cell, .tabulator-header .tabulator-col {
+      padding: 0.5rem 1rem;
+    }
   }
 </style>
 
