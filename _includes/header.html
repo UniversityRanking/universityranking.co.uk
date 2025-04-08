@@ -6,20 +6,20 @@
       <img src="{{ '/assets/images/university-ranking-logo.png' | relative_url }}" alt="University Rankings - Real Students. Real Rankings." style="height: 100px;" />
     </a>
 
-    <!-- ✅ Show Home + Hamburger on same row on subject pages -->
+    <!-- Mobile-only Home + Hamburger row for Subject pages -->
     {% if page.url contains 'subject' %}
-      <div class="mobile-subject-nav" style="display: none;">
+      <div class="mobile-subject-nav">
         <a href="{{ '/index.html' | relative_url }}" class="mobile-home-link">Home</a>
         <button id="menu-toggle" class="mobile-hamburger">&#9776;</button>
       </div>
     {% else %}
-      <!-- Default hamburger for all other pages -->
+      <!-- Hamburger on all other pages -->
       <button id="menu-toggle" style="background: none; border: none; color: white; font-size: 2rem; display: none;">
         &#9776;
       </button>
     {% endif %}
 
-    <!-- Nav -->
+    <!-- Full nav menu -->
     <nav class="site-nav" id="site-nav" style="flex: 1; display: flex; justify-content: flex-end;">
       <ul style="display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0;">
         <li><a href="{{ '/index.html' | relative_url }}" style="color: white; font-weight: bold; text-decoration: none;">Home</a></li>
@@ -28,11 +28,17 @@
         <li><a href="{{ '/methodology.html' | relative_url }}" style="color: white; font-weight: bold; text-decoration: none;">Methodology</a></li>
       </ul>
     </nav>
+
   </div>
 </header>
 
 <style>
-/* Mobile styles */
+/* ✅ Desktop remains unchanged */
+.site-nav ul li a:hover {
+  background-color: #3b0a66;
+}
+
+/* ✅ Mobile styles */
 @media (max-width: 768px) {
   .site-header .container {
     flex-direction: column;
@@ -46,7 +52,7 @@
 
   #menu-toggle {
     display: block !important;
-    margin: 0 auto 0.75rem auto;
+    margin-bottom: 0.5rem;
   }
 
   .mobile-subject-nav {
@@ -75,7 +81,7 @@
     display: none !important;
     width: 100%;
     justify-content: center !important;
-    background-color: #2b084d;
+    background-color: #2b084d; /* darker purple */
     border-radius: 0 0 1rem 1rem;
     padding: 1rem 0;
   }
