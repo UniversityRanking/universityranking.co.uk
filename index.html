@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 10:11 University Ranking | Real Students. Real Rankings.
+title: 10:15 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -13,69 +13,49 @@ title: 10:11 University Ranking | Real Students. Real Rankings.
   }
 
   /* Hero Section */
-  .hero-flex {
+  .hero {
     background-color: #3b0a66;
     color: white;
-    padding: 4rem 1rem;
+    padding: 3rem 1rem 6rem;
+    text-align: center;
+    position: relative;
   }
 
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: center;
+  .hero .container {
+    max-width: 850px;
+    margin: 0 auto;
   }
 
-  .hero-text h1 {
-    font-size: 2.5rem;
+  .hero h1 {
+    font-size: 1.5rem;
     margin-bottom: 1rem;
   }
 
-  .hero-text p {
+  .hero label {
     font-size: 1.3rem;
-    line-height: 1.6;
-  }
-
-  .fade-text .more-text {
-    display: none;
-  }
-
-  #toggle-more {
-    background: none;
-    border: none;
-    color: #fff;
     font-weight: bold;
-    margin-top: 1rem;
-    cursor: pointer;
+    margin-right: 1rem;
+    display: inline-block;
+    vertical-align: middle;
   }
 
-  .hero-image img {
-    width: 100%;
-    border-radius: 1rem;
-    max-height: 400px;
-    object-fit: contain;
-  }
-
-  @media (max-width: 768px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-      text-align: center;
-    }
-
-    .hero-text h1 {
-      font-size: 2rem;
-    }
-
-    .hero-image img {
-      margin-top: 2rem;
-    }
+  .hero select {
+    font-size: 1.3rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.4rem;
+    background: white;
+    color: #3b0a66;
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: middle;
   }
 
   /* Table Section */
   .table-section {
     background: white;
-    padding-bottom: 3rem;
     margin-top: -5rem;
+    padding-bottom: 3rem;
   }
 
   .table-section .container {
@@ -202,65 +182,86 @@ title: 10:11 University Ranking | Real Students. Real Rankings.
       padding: 0 1rem;
     }
   }
-
   .tagline {
-    font-size: 2.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.5rem;
-    color: white;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-  }
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  color: white;
+}
 
-  .subtagline {
-    font-size: 1.4rem;
-    font-weight: normal;
-    color: #e2d9ee;
-    margin-bottom: 2rem;
-  }
+.subtagline {
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: #e2d9ee;
+  margin-bottom: 2rem;
+}
+  .tagline {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+.hero-flex {
+  background-color: #3b0a66;
+  color: white;
+  padding: 4rem 1rem;
+}
 
-  .container {
-    max-width: 850px;
-    margin: 0 auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
 
-  .hero-flex {
-    background-color: #3b0a66;
-    color: white;
-    padding: 4rem 0; /* Adjusted padding to be more consistent */
-    margin: 0 auto;
-    max-width: 850px; /* Added max-width */
-  }
+.hero-text h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
 
-  .table-section {
-    background: white;
-    padding-bottom: 3rem;
-    margin-top: -5rem;
-    margin: 0 auto;
-    max-width: 850px; /* Added max-width */
-  }
+.hero-text p {
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
 
+.fade-text .more-text {
+  display: none;
+}
+
+#toggle-more {
+  background: none;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.hero-image img {
+  width: 100%;
+  border-radius: 1rem;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
   .hero-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: center;
+    grid-template-columns: 1fr;
+    text-align: center;
   }
 
-  @media (max-width: 768px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-      text-align: center;
-    }
+  .hero-text h1 {
+    font-size: 2rem;
   }
+
+  .hero-image img {
+    margin-top: 2rem;
+  }
+}
 </style>
 
+<!-- Load Tabulator -->
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
 <script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
-
 <section class="hero-flex">
   <div class="container">
     <div class="hero-grid">
@@ -276,145 +277,161 @@ title: 10:11 University Ranking | Real Students. Real Rankings.
         <img src="/assets/images/hero-image.png" alt="Hero image" />
       </div>
     </div>
-    <div style="margin-top: 2rem;">
+  </div>
+</section>
+<section class="hero">
+  <div class="container">
+    <h1 class="tagline">Real Students. Real Rankings.</h1>
+    <h2 class="subtagline">Explore the 2024 University League Table</h2>
+    <div style="margin-bottom: 1rem;">
       <label for="subject-select">Choose a subject:</label>
       <select id="subject-select">
         <option>Select Subject</option>
-        <option value="Accounting">Accounting</option>
-        <option value="Adult nursing">Adult nursing</option>
-        <option value="Aeronautical and aerospace engineering">Aeronautical and aerospace engineering</option>
-        <option value="African and modern Middle Eastern studies">African and modern Middle Eastern studies</option>
-        <option value="Agricultural sciences">Agricultural sciences</option>
-        <option value="Agriculture">Agriculture</option>
-        <option value="American and Australasian studies">American and Australasian studies</option>
-        <option value="Anatomy, physiology and pathology">Anatomy, physiology and pathology</option>
-        <option value="Animal science">Animal science</option>
-        <option value="Anthropology">Anthropology</option>
-        <option value="Applied psychology">Applied psychology</option>
-        <option value="Archaeology">Archaeology</option>
-        <option value="Architecture">Architecture</option>
-        <option value="Art">Art</option>
-        <option value="Artificial intelligence">Artificial intelligence</option>
-        <option value="Asian studies">Asian studies</option>
-        <option value="Astronomy">Astronomy</option>
-        <option value="Bioengineering, medical and biomedical engineering">Bioengineering, medical and biomedical engineering</option>
-        <option value="Biotechnology">Biotechnology</option>
-        <option value="Building">Building</option>
-        <option value="Business computing">Business computing</option>
-        <option value="Business studies">Business studies</option>
-        <option value="Chemical, process and energy engineering">Chemical, process and energy engineering</option>
-        <option value="Chemistry">Chemistry</option>
-        <option value="Childhood and youth studies">Childhood and youth studies</option>
-        <option value="Children's nursing">Children's nursing</option>
-        <option value="Cinematics and photography">Cinematics and photography</option>
-        <option value="Civil engineering">Civil engineering</option>
-        <option value="Classics">Classics</option>
-        <option value="Combined, general or negotiated studies">Combined, general or negotiated studies</option>
-        <option value="Community nursing">Community nursing</option>
-        <option value="Complementary and alternative medicine">Complementary and alternative medicine</option>
-        <option value="Computer games and animation">Computer games and animation</option>
-        <option value="Computer science">Computer science</option>
-        <option value="Counselling, psychotherapy and occupational therapy">Counselling, psychotherapy and occupational therapy</option>
-        <option value="Creative writing">Creative writing</option>
-        <option value="Cultural studies">Cultural studies</option>
-        <option value="Dance">Dance</option>
-        <option value="Dental nursing">Dental nursing</option>
-        <option value="Dentistry">Dentistry</option>
-        <option value="Design studies">Design studies</option>
-        <option value="Development studies">Development studies</option>
-        <option value="Developmental psychology">Developmental psychology</option>
-        <option value="Drama">Drama</option>
-        <option value="Earth sciences">Earth sciences</option>
-        <option value="Ecology and environmental biology">Ecology and environmental biology</option>
-        <option value="Economics">Economics</option>
-        <option value="Education">Education</option>
-        <option value="Electrical and electronic engineering">Electrical and electronic engineering</option>
-        <option value="English language">English language</option>
-        <option value="Environmental and public health">Environmental and public health</option>
-        <option value="Environmental sciences">Environmental sciences</option>
-        <option value="Finance">Finance</option>
-        <option value="Food and beverage production">Food and beverage production</option>
-        <option value="Food sciences">Food sciences</option>
-        <option value="Forensic and archaeological sciences">Forensic and archaeological sciences</option>
-        <option value="Forestry and arboriculture">Forestry and arboriculture</option>
-        <option value="French studies">French studies</option>
-        <option value="Gaelic studies">Gaelic studies</option>
-        <option value="Genetics">Genetics</option>
-        <option value="German and Scandinavian studies">German and Scandinavian studies</option>
-        <option value="Hair and beauty sciences">Hair and beauty sciences</option>
-        <option value="Health studies">Health studies</option>
-        <option value="Heritage studies">Heritage studies</option>
-        <option value="History">History</option>
-        <option value="History of art, architecture and design">History of art, architecture and design</option>
-        <option value="Human geography">Human geography</option>
-        <option value="Human resource management">Human resource management</option>
-        <option value="Iberian studies">Iberian studies</option>
-        <option value="Information services">Information services</option>
-        <option value="Information systems">Information systems</option>
-        <option value="Information technology">Information technology</option>
-        <option value="Italian studies">Italian studies</option>
-        <option value="Journalism">Journalism</option>
-        <option value="Landscape design">Landscape design</option>
-        <option value="Law">Law</option>
-        <option value="Learning disabilities nursing">Learning disabilities nursing</option>
-        <option value="Linguistics">Linguistics</option>
-        <option value="Literature in English">Literature in English</option>
-        <option value="Management studies">Management studies</option>
-        <option value="Maritime technology">Maritime technology</option>
-        <option value="Marketing">Marketing</option>
-        <option value="Materials science">Materials science</option>
-        <option value="Materials technology">Materials technology</option>
-        <option value="Mathematics">Mathematics</option>
-        <option value="Mechanical engineering">Mechanical engineering</option>
-        <option value="Media studies">Media studies</option>
-        <option value="Medical sciences">Medical sciences</option>
-        <option value="Medical technology">Medical technology</option>
-        <option value="Medicine by specialism">Medicine by specialism</option>
-        <option value="Mental health nursing">Mental health nursing</option>
-        <option value="Microbiology and cell science">Microbiology and cell science</option>
-        <option value="Midwifery">Midwifery</option>
-        <option value="Minerals technology">Minerals technology</option>
-        <option value="Molecular biology, biophysics and biochemistry">Molecular biology, biophysics and biochemistry</option>
-        <option value="Music">Music</option>
-        <option value="Naval architecture">Naval architecture</option>
-        <option value="Nursing">Nursing</option>
-        <option value="Nutrition and dietetics">Nutrition and dietetics</option>
-        <option value="Operational research">Operational research</option>
-        <option value="Ophthalmics">Ophthalmics</option>
-        <option value="Personal development">Personal development</option>
-        <option value="Pharmacology">Pharmacology</option>
-        <option value="Pharmacy">Pharmacy</option>
-        <option value="Philosophy">Philosophy</option>
-        <option value="Physical geographical sciences">Physical geographical sciences</option>
-        <option value="Physics">Physics</option>
-        <option value="Physiotherapy">Physiotherapy</option>
-        <option value="Planning (urban, rural and regional)">Planning (urban, rural and regional)</option>
-        <option value="Plant sciences">Plant sciences</option>
-        <option value="Politics">Politics</option>
-        <option value="Polymers and textiles">Polymers and textiles</option>
-        <option value="Production and manufacturing engineering">Production and manufacturing engineering</option>
-        <option value="Psychology and health">Psychology and health</option>
-        <option value="Publicity studies">Publicity studies</option>
-        <option value="Publishing">Publishing</option>
-        <option value="Rural estate management">Rural estate management</option>
-        <option value="Slavic studies">Slavic studies</option>
-        <option value="Social policy">Social policy</option>
-        <option value="Social work">Social work</option>
-        <option value="Sociology">Sociology</option>
-        <option value="Software engineering">Software engineering</option>
-        <option value="Sport and exercise sciences">Sport and exercise sciences</option>
-        <option value="Statistics">Statistics</option>
-        <option value="Teacher training">Teacher training</option>
-        <option value="Theology and religious studies">Theology and religious studies</option>
-        <option value="Tourism, transport and travel">Tourism, transport and travel</option>
-        <option value="Toxicology">Toxicology</option>
-        <option value="Veterinary medicine and dentistry">Veterinary medicine and dentistry</option>
-        <option value="Welsh studies">Welsh studies</option>
-        <option value="Zoology">Zoology</option>
+<option value="Accounting">Accounting</option>
+<option value="Adult nursing">Adult nursing</option>
+<option value="Aeronautical and aerospace engineering">Aeronautical and aerospace engineering</option>
+<option value="African and modern Middle Eastern studies">African and modern Middle Eastern studies</option>
+<option value="Agricultural sciences">Agricultural sciences</option>
+<option value="Agriculture">Agriculture</option>
+<option value="American and Australasian studies">American and Australasian studies</option>
+<option value="Anatomy, physiology and pathology">Anatomy, physiology and pathology</option>
+<option value="Animal science">Animal science</option>
+<option value="Anthropology">Anthropology</option>
+<option value="Applied psychology">Applied psychology</option>
+<option value="Archaeology">Archaeology</option>
+<option value="Architecture">Architecture</option>
+<option value="Art">Art</option>
+<option value="Artificial intelligence">Artificial intelligence</option>
+<option value="Asian studies">Asian studies</option>
+<option value="Astronomy">Astronomy</option>
+<option value="Bioengineering, medical and biomedical engineering">Bioengineering, medical and biomedical engineering</option>
+<option value="Biotechnology">Biotechnology</option>
+<option value="Building">Building</option>
+<option value="Business computing">Business computing</option>
+<option value="Business studies">Business studies</option>
+<option value="Chemical, process and energy engineering">Chemical, process and energy engineering</option>
+<option value="Chemistry">Chemistry</option>
+<option value="Childhood and youth studies">Childhood and youth studies</option>
+<option value="Children's nursing">Children's nursing</option>
+<option value="Cinematics and photography">Cinematics and photography</option>
+<option value="Civil engineering">Civil engineering</option>
+<option value="Classics">Classics</option>
+<option value="Combined, general or negotiated studies">Combined, general or negotiated studies</option>
+<option value="Community nursing">Community nursing</option>
+<option value="Complementary and alternative medicine">Complementary and alternative medicine</option>
+<option value="Computer games and animation">Computer games and animation</option>
+<option value="Computer science">Computer science</option>
+<option value="Counselling, psychotherapy and occupational therapy">Counselling, psychotherapy and occupational therapy</option>
+<option value="Creative writing">Creative writing</option>
+<option value="Cultural studies">Cultural studies</option>
+<option value="Dance">Dance</option>
+<option value="Dental nursing">Dental nursing</option>
+<option value="Dentistry">Dentistry</option>
+<option value="Design studies">Design studies</option>
+<option value="Development studies">Development studies</option>
+<option value="Developmental psychology">Developmental psychology</option>
+<option value="Drama">Drama</option>
+<option value="Earth sciences">Earth sciences</option>
+<option value="Ecology and environmental biology">Ecology and environmental biology</option>
+<option value="Economics">Economics</option>
+<option value="Education">Education</option>
+<option value="Electrical and electronic engineering">Electrical and electronic engineering</option>
+<option value="English language">English language</option>
+<option value="Environmental and public health">Environmental and public health</option>
+<option value="Environmental sciences">Environmental sciences</option>
+<option value="Finance">Finance</option>
+<option value="Food and beverage production">Food and beverage production</option>
+<option value="Food sciences">Food sciences</option>
+<option value="Forensic and archaeological sciences">Forensic and archaeological sciences</option>
+<option value="Forestry and arboriculture">Forestry and arboriculture</option>
+<option value="French studies">French studies</option>
+<option value="Gaelic studies">Gaelic studies</option>
+<option value="Genetics">Genetics</option>
+<option value="German and Scandinavian studies">German and Scandinavian studies</option>
+<option value="Hair and beauty sciences">Hair and beauty sciences</option>
+<option value="Health studies">Health studies</option>
+<option value="Heritage studies">Heritage studies</option>
+<option value="History">History</option>
+<option value="History of art, architecture and design">History of art, architecture and design</option>
+<option value="Human geography">Human geography</option>
+<option value="Human resource management">Human resource management</option>
+<option value="Iberian studies">Iberian studies</option>
+<option value="Information services">Information services</option>
+<option value="Information systems">Information systems</option>
+<option value="Information technology">Information technology</option>
+<option value="Italian studies">Italian studies</option>
+<option value="Journalism">Journalism</option>
+<option value="Landscape design">Landscape design</option>
+<option value="Law">Law</option>
+<option value="Learning disabilities nursing">Learning disabilities nursing</option>
+<option value="Linguistics">Linguistics</option>
+<option value="Literature in English">Literature in English</option>
+<option value="Management studies">Management studies</option>
+<option value="Maritime technology">Maritime technology</option>
+<option value="Marketing">Marketing</option>
+<option value="Materials science">Materials science</option>
+<option value="Materials technology">Materials technology</option>
+<option value="Mathematics">Mathematics</option>
+<option value="Mechanical engineering">Mechanical engineering</option>
+<option value="Media studies">Media studies</option>
+<option value="Medical sciences">Medical sciences</option>
+<option value="Medical technology">Medical technology</option>
+<option value="Medicine by specialism">Medicine by specialism</option>
+<option value="Mental health nursing">Mental health nursing</option>
+<option value="Microbiology and cell science">Microbiology and cell science</option>
+<option value="Midwifery">Midwifery</option>
+<option value="Minerals technology">Minerals technology</option>
+<option value="Molecular biology, biophysics and biochemistry">Molecular biology, biophysics and biochemistry</option>
+<option value="Music">Music</option>
+<option value="Naval architecture">Naval architecture</option>
+<option value="Nursing">Nursing</option>
+<option value="Nutrition and dietetics">Nutrition and dietetics</option>
+<option value="Operational research">Operational research</option>
+<option value="Ophthalmics">Ophthalmics</option>
+<option value="Personal development">Personal development</option>
+<option value="Pharmacology">Pharmacology</option>
+<option value="Pharmacy">Pharmacy</option>
+<option value="Philosophy">Philosophy</option>
+<option value="Physical geographical sciences">Physical geographical sciences</option>
+<option value="Physics">Physics</option>
+<option value="Physiotherapy">Physiotherapy</option>
+<option value="Planning (urban, rural and regional)">Planning (urban, rural and regional)</option>
+<option value="Plant sciences">Plant sciences</option>
+<option value="Politics">Politics</option>
+<option value="Polymers and textiles">Polymers and textiles</option>
+<option value="Production and manufacturing engineering">Production and manufacturing engineering</option>
+<option value="Psychology and health">Psychology and health</option>
+<option value="Publicity studies">Publicity studies</option>
+<option value="Publishing">Publishing</option>
+<option value="Rural estate management">Rural estate management</option>
+<option value="Slavic studies">Slavic studies</option>
+<option value="Social policy">Social policy</option>
+<option value="Social work">Social work</option>
+<option value="Sociology">Sociology</option>
+<option value="Software engineering">Software engineering</option>
+<option value="Sport and exercise sciences">Sport and exercise sciences</option>
+<option value="Statistics">Statistics</option>
+<option value="Teacher training">Teacher training</option>
+<option value="Theology and religious studies">Theology and religious studies</option>
+<option value="Tourism, transport and travel">Tourism, transport and travel</option>
+<option value="Toxicology">Toxicology</option>
+<option value="Veterinary medicine and dentistry">Veterinary medicine and dentistry</option>
+<option value="Welsh studies">Welsh studies</option>
+<option value="Zoology">Zoology</option>
         <option value="Zoology">Zoology</option>
       </select>
     </div>
   </div>
+
+  <script>
+  document.getElementById("subject-select").addEventListener("change", function () {
+    const subject = this.value;
+    if (subject) {
+      const encoded = encodeURIComponent(subject);
+      window.location.href = `{{ '/subject/subject.html' | relative_url }}?subject=${encoded}`;
+    }
+  });
+</script>
 </section>
 
 <section class="table-section">
@@ -438,36 +455,38 @@ title: 10:11 University Ranking | Real Students. Real Rankings.
         { column: "2024 Score", dir: "desc" }
       ],
       columns: [
-        {
-          title: isMobile ? "24" : "2024",
-          field: "2024",
-          width: isMobile ? 30 : 80,
-          hozAlign: "center",
-          headerSort: false
-        },
-        {
-          title: isMobile ? "23" : "2023",
-          field: "2023",
-          width: isMobile ? 30 : 80,
-          hozAlign: "center",
-          headerSort: false
-        },
-        {
-          title: "Provider",
-          field: "Provider",
-          widthGrow: 3,
-          headerSort: false
-        },
-        {
-          title: "Score",
-          field: "2024 Score",
-          width: isMobile ? 50 : 100,
-          hozAlign: "center",
-          headerSort: false
-        }
-      ]
+    {
+      title: isMobile ? "24" : "2024",  // 👈 here!
+      field: "2024",
+      width: isMobile ? 30 : 80,
+      hozAlign: "center",
+      headerSort: false
+    },
+    {
+      title: isMobile ? "23" : "2023",  // 👈 and here!
+      field: "2023",
+      width: isMobile ? 30 : 80,
+      hozAlign: "center",
+      headerSort: false
+    },
+    {
+      title: "Provider",
+      field: "Provider",
+      widthGrow: 3,
+      headerSort: false
+    },
+    {
+      title: "Score",
+      field: "2024 Score",
+      width: isMobile ? 50 : 100, // 👈 give Score more room
+      hozAlign: "center",
+      headerSort: false
+    }
+  ]
     });
   });
+</script>
+<script>
   document.getElementById('toggle-more').addEventListener('click', function () {
     const moreText = document.getElementById('more-text');
     const btn = this;
