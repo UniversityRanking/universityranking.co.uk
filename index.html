@@ -54,13 +54,20 @@ title: 14:06 University Ranking | Real Students. Real Rankings.
     color: white;
   }
 
-  .hero-image img {
-    width: 100%;
-    border-radius: 1rem;
-    max-height: 280px;
-    object-fit: contain;
-    width: 30%; /* Take 30% of the width */
-  }
+  .hero-image {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+}
+  
+.hero-image img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: none; /* Remove max-height constraint */
+  border-radius: 1rem;
+  object-fit: contain;
+}
 
   /* Subject Select */
   .subject-select {
