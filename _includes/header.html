@@ -6,17 +6,18 @@
       <img src="{{ '/assets/images/university-ranking-logo.png' | relative_url }}" alt="University Rankings - Real Students. Real Rankings." style="height: 100px;" />
     </a>
 
-    <!-- ✅ Home link outside toggle on subject pages -->
+    <!-- ✅ Show Home + Hamburger on same row on subject pages -->
     {% if page.url contains 'subject' %}
-      <div class="mobile-home-link" style="margin-bottom: 0.5rem;">
-        <a href="{{ '/index.html' | relative_url }}" style="color: white; font-weight: bold; text-decoration: none;">Home</a>
+      <div class="mobile-subject-nav" style="display: none;">
+        <a href="{{ '/index.html' | relative_url }}" class="mobile-home-link">Home</a>
+        <button id="menu-toggle" class="mobile-hamburger">&#9776;</button>
       </div>
+    {% else %}
+      <!-- Default hamburger for all other pages -->
+      <button id="menu-toggle" style="background: none; border: none; color: white; font-size: 2rem; display: none;">
+        &#9776;
+      </button>
     {% endif %}
-
-    <!-- Hamburger (shown only on mobile) -->
-    <button id="menu-toggle" style="background: none; border: none; color: white; font-size: 2rem; display: none;">
-      &#9776;
-    </button>
 
     <!-- Nav -->
     <nav class="site-nav" id="site-nav" style="flex: 1; display: flex; justify-content: flex-end;">
@@ -31,7 +32,7 @@
 </header>
 
 <style>
-
+/* Mobile styles */
 @media (max-width: 768px) {
   .site-header .container {
     flex-direction: column;
@@ -48,17 +49,34 @@
     margin: 0 auto 0.75rem auto;
   }
 
+  .mobile-subject-nav {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem 1rem;
+  }
+
   .mobile-home-link {
-    margin-bottom: 0.5rem;
-    text-align: center;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+
+  .mobile-hamburger {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
   }
 
   .site-nav {
     display: none !important;
     width: 100%;
     justify-content: center !important;
-    background-color: #2b084d; /* slightly darker purple */
-    border-radius: 0 0 1rem 1rem; /* rounded bottom if you like */
+    background-color: #2b084d;
+    border-radius: 0 0 1rem 1rem;
     padding: 1rem 0;
   }
 
@@ -88,21 +106,20 @@
   }
 
   .site-nav a:hover {
-    background-color: #3b0a66; /* original purple for hover effect */
+    background-color: #3b0a66;
   }
 }
-  
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  const toggle = document.getElementById('menu-toggle');
+  const toggles = document.querySelectorAll('#menu-toggle, .mobile-hamburger');
   const nav = document.getElementById('site-nav');
 
-  if (toggle && nav) {
+  toggles.forEach(toggle => {
     toggle.addEventListener('click', function () {
       nav.classList.toggle('open');
     });
-  }
+  });
 });
 </script>
