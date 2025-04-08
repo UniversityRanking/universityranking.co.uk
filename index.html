@@ -1,6 +1,6 @@
 ---
 layout: default
-title: University Ranking | Real Students. Real Rankings.
+title: 15:58 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -297,14 +297,15 @@ title: University Ranking | Real Students. Real Rankings.
     text-align: center !important;
   }
 }
-
-/* Fix stray right border and bottom border in Tabulator table */
-.tabulator .tabulator-tableHolder {
-  overflow: hidden !important;
+/* Fix ghost right-side and bottom border issue */
+.tabulator .tabulator-table {
+  box-shadow: none !important;
   border: none !important;
+  margin-right: -1px; /* ✅ hides phantom right border */
+  margin-bottom: -1px; /* ✅ hides phantom bottom border */
 }
 
-.tabulator .tabulator-table {
+.tabulator .tabulator-row {
   border-right: none !important;
   border-bottom: none !important;
 }
