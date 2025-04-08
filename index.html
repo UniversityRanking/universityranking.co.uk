@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 10:47 University Ranking | Real Students. Real Rankings.
+title: 10:55 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -68,44 +68,54 @@ title: 10:47 University Ranking | Real Students. Real Rankings.
     object-fit: contain;
   }
 
-  .subject-select {
-  margin-top: -3.5rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
+  /* Table Section: outer section holds position and spacing */
+  .table-section {
+    background: transparent;
+    margin-top: -6rem;
+    padding-top: 0;
+    padding-bottom: 3rem;
+    overflow: visible;
+    position: relative;
+    z-index: 2;
+  }
 
-.subject-select label {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-right: 1rem;
-  color: #3b0a66;
-}
-
-.subject-select select {
-  font-size: 1.3rem;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 0.4rem;
-  background: white;
-  color: #3b0a66;
-  font-weight: bold;
-}
-
-  /* Table Section */
-.table-section {
-  background: white;
-  margin-top: -6rem;        /* Pulls up more to blend into purple */
-  padding-top: 0;           /* Remove space above table */
-  padding-bottom: 3rem;
-  border-radius: 2rem 2rem 0 0;
-  overflow: hidden;
-  position: relative;
-  z-index: 2;
-}
-  
+  /* Inner container gets the white background and rounded corners */
   .table-section .container {
     max-width: 850px;
     margin: 0 auto;
+    background: white;
+    border-radius: 2rem 2rem 0 0;
+    overflow: hidden;
+    padding: 1rem;
+  }
+
+  /* Subject Select */
+  .subject-select {
+    margin-top: -3.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .subject-select-inner {
+    display: inline-block;
+  }
+
+  .subject-select label {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-right: 1rem;
+    color: #3b0a66;
+  }
+
+  .subject-select select {
+    font-size: 1.3rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.4rem;
+    background: white;
+    color: #3b0a66;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   }
 
   /* Tabulator Table */
@@ -129,7 +139,6 @@ title: 10:47 University Ranking | Real Students. Real Rankings.
 
   .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
     color: #3b0a66 !important;
-    background-color: white !important;
     font-weight: bold !important;
     font-size: 1.4rem !important;
     width: 100% !important;
@@ -139,8 +148,6 @@ title: 10:47 University Ranking | Real Students. Real Rankings.
     justify-content: center !important;
     text-align: center !important;
     padding: 0 0.5rem !important;
-    border: none !important;
-    box-shadow: none !important;
   }
 
   .tabulator .tabulator-header .tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
@@ -211,25 +218,16 @@ title: 10:47 University Ranking | Real Students. Real Rankings.
       padding: 0.5rem 0.3rem !important;
     }
 
-    #provider-search {
-      font-size: 1.2rem;
-      padding: 0.6rem 0.75rem;
-    }
-
-    .table-section .container,
-    .hero .container {
-      padding: 0 1rem;
+    .subject-select select {
+      font-size: 1rem;
     }
   }
-
-  .subject-select select {
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
 </style>
 
 <!-- Load Tabulator -->
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
 <script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
+
 <section class="hero">
   <div class="container">
     <div class="hero-grid">
@@ -240,17 +238,18 @@ title: 10:47 University Ranking | Real Students. Real Rankings.
       <div class="hero-image">
         <img src="/assets/images/hero-image.png" alt="Hero Image" />
       </div>
-       </div>
+    </div>
   </div>
-</section> <!-- closes .hero -->
+</section>
 
 <section class="table-section">
   <div class="container">
 
-    <div class="subject-select" style="margin-top: -3.5rem; margin-bottom: 1.5rem;">
-      <label for="subject-select">Choose a subject:</label>
-      <select id="subject-select">
-        <option>Select Subject</option>
+    <div class="subject-select">
+      <div class="subject-select-inner">
+        <label for="subject-select">Choose a subject:</label>
+        <select id="subject-select">
+          <option>Select Subject</option>
 <option value="Accounting">Accounting</option>
 <option value="Adult nursing">Adult nursing</option>
 <option value="Aeronautical and aerospace engineering">Aeronautical and aerospace engineering</option>
@@ -381,8 +380,9 @@ title: 10:47 University Ranking | Real Students. Real Rankings.
 <option value="Toxicology">Toxicology</option>
 <option value="Veterinary medicine and dentistry">Veterinary medicine and dentistry</option>
 <option value="Welsh studies">Welsh studies</option>
-<option value="Zoology">Zoology</option>
-      </select>
+ <option value="Zoology">Zoology</option>
+        </select>
+      </div>
     </div>
 
     <div id="ranking-table"></div>
@@ -390,10 +390,10 @@ title: 10:47 University Ranking | Real Students. Real Rankings.
   </div>
 </section>
 
-  <script>
+<script>
   document.getElementById("subject-select").addEventListener("change", function () {
     const subject = this.value;
-    if (subject) {
+    if (subject && subject !== "Select Subject") {
       const encoded = encodeURIComponent(subject);
       window.location.href = `{{ '/subject/subject.html' | relative_url }}?subject=${encoded}`;
     }
@@ -403,8 +403,6 @@ title: 10:47 University Ranking | Real Students. Real Rankings.
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const isMobile = window.innerWidth <= 600;
-    const colWidth = isMobile ? 30 : 80;
-    const scoreWidth = isMobile ? 40 : 80;
 
     const table = new Tabulator("#ranking-table", {
       ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
@@ -414,34 +412,34 @@ title: 10:47 University Ranking | Real Students. Real Rankings.
         { column: "2024 Score", dir: "desc" }
       ],
       columns: [
-    {
-      title: isMobile ? "24" : "2024",  // 👈 here!
-      field: "2024",
-      width: isMobile ? 30 : 80,
-      hozAlign: "center",
-      headerSort: false
-    },
-    {
-      title: isMobile ? "23" : "2023",  // 👈 and here!
-      field: "2023",
-      width: isMobile ? 30 : 80,
-      hozAlign: "center",
-      headerSort: false
-    },
-    {
-      title: "Provider",
-      field: "Provider",
-      widthGrow: 3,
-      headerSort: false
-    },
-    {
-      title: "Score",
-      field: "2024 Score",
-      width: isMobile ? 50 : 100, // 👈 give Score more room
-      hozAlign: "center",
-      headerSort: false
-    }
-  ]
+        {
+          title: isMobile ? "24" : "2024",
+          field: "2024",
+          width: isMobile ? 30 : 80,
+          hozAlign: "center",
+          headerSort: false
+        },
+        {
+          title: isMobile ? "23" : "2023",
+          field: "2023",
+          width: isMobile ? 30 : 80,
+          hozAlign: "center",
+          headerSort: false
+        },
+        {
+          title: "Provider",
+          field: "Provider",
+          widthGrow: 3,
+          headerSort: false
+        },
+        {
+          title: "Score",
+          field: "2024 Score",
+          width: isMobile ? 50 : 100,
+          hozAlign: "center",
+          headerSort: false
+        }
+      ]
     });
   });
 </script>
