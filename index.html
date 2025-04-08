@@ -12,211 +12,104 @@ title: 09:11 University Ranking | Real Students. Real Rankings.
     color: #333;
   }
 
-  /* Hero Section */
-  .hero {
+  .hero-section {
     background-color: #3b0a66;
     color: white;
-    padding: 3rem 1rem 6rem;
-    text-align: center;
-    position: relative;
+    padding: 4rem 1rem 6rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
   }
 
-  .hero .container {
-    max-width: 850px;
-    margin: 0 auto;
+  .hero-text, .hero-image {
+    flex: 1 1 400px;
+    max-width: 600px;
+    padding: 1rem;
   }
 
-  .hero h1 {
-    font-size: 1.5rem;
+  .hero-text h1 {
+    font-size: 2.5rem;
     margin-bottom: 1rem;
   }
 
-  .hero label {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-right: 1rem;
-    display: inline-block;
-    vertical-align: middle;
+  .hero-text p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #e2d9ee;
   }
 
-  .hero select {
-    font-size: 1.3rem;
-    padding: 1rem 2rem;
+  .learn-more-toggle {
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 1rem;
+    display: inline-block;
+  }
+
+  .learn-more-content {
+    display: none;
+    font-size: 1rem;
+    margin-top: 1rem;
+    color: #d6cbe7;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .subject-select-section {
+    background-color: #3b0a66;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .subject-select-section label,
+  .subject-select-section select {
+    font-size: 1.2rem;
+    margin: 0.5rem;
+  }
+
+  .subject-select-section select {
+    padding: 0.6rem 1.2rem;
     border: none;
     border-radius: 0.4rem;
-    background: white;
-    color: #3b0a66;
     font-weight: bold;
-    display: inline-block;
-    vertical-align: middle;
   }
 
-  /* Table Section */
-  .table-section {
-    background: white;
-    margin-top: -5rem;
-    padding-bottom: 3rem;
-  }
-
-  .table-section .container {
-    max-width: 850px;
-    margin: 0 auto;
-  }
-
-  /* Tabulator Table */
-  .tabulator {
-    border: none !important;
-    font-size: 1.3rem;
-    overflow: hidden;
-    border-radius: 12px 12px 0 0;
-  }
-
-  .tabulator-header {
-    border-bottom: none !important;
-  }
-
-  .tabulator .tabulator-header .tabulator-col {
-    background-color: white !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-  }
-
-  .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
-    color: #3b0a66 !important;
-    background-color: white !important;
-    font-weight: bold !important;
-    font-size: 1.4rem !important;
-    width: 100% !important;
-    height: 60px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    padding: 0 0.5rem !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-
-  /* Align "Provider" header and cell */
-  .tabulator .tabulator-header .tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
-    justify-content: flex-start !important;
-    text-align: left !important;
-    padding-left: 0.75rem !important;
-    margin-left: -0.1rem !important;
-  }
-
-  .tabulator-cell[tabulator-field="Provider"] {
-    text-align: left !important;
-    padding-left: 0.75rem !important;
-  }
-
-  /* Table Body */
-  .tabulator-cell {
-    border: none !important;
-    padding: 1rem 0.75rem !important;
-  }
-
-  .tabulator-row {
-    font-size: 1.3rem;
-  }
-
-  .tabulator-row:nth-child(odd) {
-    background-color: #ffffff;
-  }
-
-  .tabulator-row:nth-child(even) {
-    background-color: #f5effa;
-  }
-
-  /* Optional: Style the built-in filter */
-  .tabulator-header-filter input {
-    font-size: 1.4rem;
-    padding: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    width: 100%;
-  }
-
-  @media (max-width: 600px) {
-    .hero h1 {
-      font-size: 1.4rem;
-    }
-
-    .hero label {
-      font-size: 1.2rem;
-    }
-
-    .hero select {
-      font-size: 1.2rem;
-      padding: 0.6rem 1rem;
-      width: 80%;
-      max-width: 100%;
-      box-sizing: border-box;
-    }
-
-    .tabulator {
-      font-size: 0.75rem !important;
-    }
-
-    .tabulator-row {
-      font-size: 0.75rem !important;
-    }
-
-    .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
-      font-size: 0.75rem !important;
-      height: 45px !important;
-    }
-
-    .tabulator-cell {
-      padding: 0.5rem 0.3rem !important;
-    }
-
-    #provider-search {
-      font-size: 1.2rem;
-      padding: 0.6rem 0.75rem;
-    }
-
-    .table-section .container,
-    .hero .container {
-      padding: 0 1rem;
+  @media (max-width: 768px) {
+    .hero-text {
+      text-align: center;
     }
   }
-  .tagline {
-  font-size: 2.2rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 0.5rem;
-  color: white;
-}
-
-.subtagline {
-  font-size: 1.4rem;
-  font-weight: normal;
-  color: #e2d9ee;
-  margin-bottom: 2rem;
-}
-  .tagline {
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-}
 </style>
 
-<!-- Load Tabulator -->
-<link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
-<script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
+<section class="hero-section">
+  <div class="hero-text">
+    <h1>University Ranking 2025</h1>
+    <p>The only league table that sets its ranking on the voice of the 340,000 students who complete the National Student Survey. An annual survey completed by final year students on their experience over their degrees.</p>
+    <p>There is no more real university ranking than the 340,000 students who have had their voice heard!</p>
+    <span class="learn-more-toggle" onclick="toggleLearnMore()">+ Learn More</span>
+    <div class="learn-more-content" id="learnMoreContent">
+      <p>The NSS is one of the largest surveys of student opinion in the world and plays a key role in university quality assurance. Our league table only uses this data – real voices, real insight.</p>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="/assets/images/hero-image.png" alt="University League Table">
+  </div>
+</section>
 
-<section class="hero">
-  <div class="container">
-    <h1 class="tagline">Real Students. Real Rankings.</h1>
-    <h2 class="subtagline">Explore the 2024 University League Table</h2>
-    <div style="margin-bottom: 1rem;">
-      <label for="subject-select">Choose a subject:</label>
-      <select id="subject-select">
-        <option>Select Subject</option>
-<option value="Accounting">Accounting</option>
-<option value="Adult nursing">Adult nursing</option>
-<option value="Aeronautical and aerospace engineering">Aeronautical and aerospace engineering</option>
+<section class="subject-select-section">
+  <label for="subject-select">Choose a subject:</label>
+  <select id="subject-select">
+    <option>Select Subject</option>
+    <option value="Accounting">Accounting</option>
+    <option value="Adult nursing">Adult nursing</option>
+    <option value="Aeronautical and aerospace engineering">Aeronautical and aerospace engineering</option>
 <option value="African and modern Middle Eastern studies">African and modern Middle Eastern studies</option>
 <option value="Agricultural sciences">Agricultural sciences</option>
 <option value="Agriculture">Agriculture</option>
@@ -347,10 +240,14 @@ title: 09:11 University Ranking | Real Students. Real Rankings.
 <option value="Zoology">Zoology</option>
         <option value="Zoology">Zoology</option>
       </select>
-    </div>
-  </div>
+</section>
 
-  <script>
+<script>
+  function toggleLearnMore() {
+    const content = document.getElementById("learnMoreContent");
+    content.style.display = content.style.display === "block" ? "none" : "block";
+  }
+
   document.getElementById("subject-select").addEventListener("change", function () {
     const subject = this.value;
     if (subject) {
@@ -359,58 +256,3 @@ title: 09:11 University Ranking | Real Students. Real Rankings.
     }
   });
 </script>
-</section>
-
-<section class="table-section">
-  <div class="container">
-    <div id="ranking-table"></div>
-  </div>
-  <script src="{{ '/assets/js/subject-redirect.js' | relative_url }}" defer></script>
-</section>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const isMobile = window.innerWidth <= 600;
-    const colWidth = isMobile ? 30 : 80;
-    const scoreWidth = isMobile ? 40 : 80;
-
-    const table = new Tabulator("#ranking-table", {
-      ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
-      layout: "fitColumns",
-      responsiveLayout: "collapse",
-      initialSort: [
-        { column: "2024 Score", dir: "desc" }
-      ],
-      columns: [
-    {
-      title: isMobile ? "24" : "2024",  // 👈 here!
-      field: "2024",
-      width: isMobile ? 30 : 80,
-      hozAlign: "center",
-      headerSort: false
-    },
-    {
-      title: isMobile ? "23" : "2023",  // 👈 and here!
-      field: "2023",
-      width: isMobile ? 30 : 80,
-      hozAlign: "center",
-      headerSort: false
-    },
-    {
-      title: "Provider",
-      field: "Provider",
-      widthGrow: 3,
-      headerSort: false
-    },
-    {
-      title: "Score",
-      field: "2024 Score",
-      width: isMobile ? 50 : 100, // 👈 give Score more room
-      hozAlign: "center",
-      headerSort: false
-    }
-  ]
-    });
-  });
-</script>
-
