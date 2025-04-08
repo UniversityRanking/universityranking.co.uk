@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 14:12 University Ranking | Real Students. Real Rankings.
+title: 14:16 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -109,7 +109,8 @@ title: 14:12 University Ranking | Real Students. Real Rankings.
   /* Table Section */
   .table-section {
     background: transparent;
-    margin-top: -10.5rem;
+    margin-top: -7rem;
+    padding-top: 3rem; /* Add breathing space */
     padding-bottom: 3rem;
     overflow: visible;
     position: relative;
@@ -212,23 +213,26 @@ title: 14:12 University Ranking | Real Students. Real Rankings.
   }
 /* Desktop - Right Align */
 @media (min-width: 768px) {
-  .hero-text {
-    text-align: left; /* Right align on desktop */
-    width: 70%; /* 70% of the width for the text */
-  }
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center content inside this column */
+  width: 70%;
+  text-align: right;
+}
 
   .hero-image {
     width: 30%; /* 30% of the width for the image */
   }
 
-  .hero-grid {
-    display: flex;
-    flex-direction: row; /* Side-by-side layout */
-    gap: 2rem;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto;
-  }
+.hero-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: center; /* Vertically align children */
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
 }
 
 /* Mobile - Center Align */
