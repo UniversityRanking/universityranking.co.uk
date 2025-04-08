@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 10:43 University Ranking | Real Students. Real Rankings.
+title: 10:47 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -221,6 +221,10 @@ title: 10:43 University Ranking | Real Students. Real Rankings.
       padding: 0 1rem;
     }
   }
+
+  .subject-select select {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
 </style>
 
 <!-- Load Tabulator -->
@@ -378,7 +382,6 @@ title: 10:43 University Ranking | Real Students. Real Rankings.
 <option value="Veterinary medicine and dentistry">Veterinary medicine and dentistry</option>
 <option value="Welsh studies">Welsh studies</option>
 <option value="Zoology">Zoology</option>
-<option value="Zoology">Zoology</option>
       </select>
     </div>
 
@@ -396,14 +399,6 @@ title: 10:43 University Ranking | Real Students. Real Rankings.
     }
   });
 </script>
-</section>
-
-<section class="table-section">
-  <div class="container">
-    <div id="ranking-table"></div>
-  </div>
-  <script src="{{ '/assets/js/subject-redirect.js' | relative_url }}" defer></script>
-</section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
