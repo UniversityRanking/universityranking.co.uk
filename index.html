@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 1602 University Ranking | Real Students. Real Rankings.
+title: 16:04 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -334,6 +334,39 @@ title: 1602 University Ranking | Real Students. Real Rankings.
     padding-right: 0 !important;
     margin-right: 0 !important;
   }
+
+  /* Fix borders caused by virtual DOM rendering in Tabulator */
+.tabulator .tabulator-tableHolder {
+  overflow: hidden !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.tabulator .tabulator-table,
+.tabulator .tabulator-table * {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.tabulator .tabulator-row {
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.tabulator .tabulator-cell {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.tabulator .tabulator-cell:last-child {
+  padding-right: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Make sure bottom border isn't coming from padding/margin overflow */
+.tabulator .tabulator-tableHolder::after {
+  display: none !important;
+}
 </style>
 
 
