@@ -14,7 +14,7 @@
     {% endif %}
 
     <!-- Hamburger (shown only on mobile) -->
-    <button id="menu-toggle" style="background: none; border: none; color: white; font-size: 2rem; display: none; margin-left: auto;">
+    <button id="menu-toggle" style="background: none; border: none; color: white; font-size: 2rem; display: none;">
       &#9776;
     </button>
 
@@ -31,6 +31,7 @@
 </header>
 
 <style>
+
 @media (max-width: 768px) {
   .site-header .container {
     flex-direction: column;
@@ -44,13 +45,21 @@
 
   #menu-toggle {
     display: block !important;
+    margin: 0 auto 0.75rem auto;
+  }
+
+  .mobile-home-link {
     margin-bottom: 0.5rem;
+    text-align: center;
   }
 
   .site-nav {
     display: none !important;
     width: 100%;
     justify-content: center !important;
+    background-color: #2b084d; /* slightly darker purple */
+    border-radius: 0 0 1rem 1rem; /* rounded bottom if you like */
+    padding: 1rem 0;
   }
 
   .site-nav.open {
@@ -62,13 +71,27 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.5rem 0;
+    margin: 0;
   }
 
   .site-nav ul li {
     width: 100%;
     text-align: center;
   }
+
+  .site-nav a {
+    display: block;
+    padding: 0.5rem 0;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .site-nav a:hover {
+    background-color: #3b0a66; /* original purple for hover effect */
+  }
 }
+  
 </style>
 
 <script>
