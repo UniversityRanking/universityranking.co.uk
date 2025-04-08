@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 16:04 University Ranking | Real Students. Real Rankings.
+title: 16:06 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -551,6 +551,7 @@ title: 16:04 University Ranking | Real Students. Real Rankings.
     const table = new Tabulator("#ranking-table", {
       ajaxURL: "{{ '/assets/tables/MainTable.json' | relative_url }}",
       layout: "fitColumns",
+      virtualDom: false, // 👈 Add this line
       responsiveLayout: "collapse",
       initialSort: [
         { column: "2024 Score", dir: "desc" }
