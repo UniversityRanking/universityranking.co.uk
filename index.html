@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 14:28 University Ranking | Real Students. Real Rankings.
+title: 14:33 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -16,7 +16,7 @@ title: 14:28 University Ranking | Real Students. Real Rankings.
   .hero {
     background-color: #3b0a66;
     color: white;
-    padding: 1.5rem 1rem 6rem;
+    padding: 1.5rem 1rem 8rem; /* Extended to flow behind table header */
     position: relative;
     display: flex;
     flex-direction: column;
@@ -74,8 +74,8 @@ title: 14:28 University Ranking | Real Students. Real Rankings.
 
   /* Subject Select */
   .subject-select {
-    margin-top: -1rem; /* Pull up closer to hero */
-    margin-bottom: 1.5rem;
+    margin-top: -3rem; /* Pull up closer into purple */
+    margin-bottom: 2rem;
     text-align: center;
     position: relative;
     z-index: 3;
@@ -112,7 +112,7 @@ title: 14:28 University Ranking | Real Students. Real Rankings.
   /* Table Section */
   .table-section {
     background: transparent;
-    margin-top: -5rem; /* Lift table higher under selector */
+    margin-top: -6rem; /* Moves up tighter under selector */
     padding-top: 2rem;
     padding-bottom: 3rem;
     overflow: visible;
@@ -239,8 +239,8 @@ title: 14:28 University Ranking | Real Students. Real Rankings.
     }
 
     .subject-select {
-      margin-top: 1rem; /* Tighten gap under hero */
-      margin-bottom: 1.5rem;
+      margin-top: -2rem; /* Brings dropdown up visually */
+      margin-bottom: 1rem;
     }
 
     .subject-select-inner {
@@ -257,6 +257,11 @@ title: 14:28 University Ranking | Real Students. Real Rankings.
       padding: 1rem;
     }
 
+    .table-section {
+      margin-top: -3rem;
+      padding-top: 2rem;
+    }
+
     .tabulator-header .tabulator-col-title {
       font-size: 0.8rem;
     }
@@ -268,13 +273,9 @@ title: 14:28 University Ranking | Real Students. Real Rankings.
     .tabulator-cell, .tabulator-header .tabulator-col {
       padding: 0.5rem 1rem;
     }
-
-    .table-section {
-      margin-top: -2rem; /* Bring table closer to dropdown */
-      padding-top: 2rem;
-    }
   }
 </style>
+
 
 <!-- Load Tabulator -->
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
