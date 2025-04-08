@@ -30,7 +30,7 @@ title: 13:50 University Ranking | Real Students. Real Rankings.
 
   .hero-grid {
     display: flex;
-    flex-direction: column; /* Stack text and image */
+    flex-direction: row; /* Stack text and image */
     gap: 2rem;
     align-items: center; /* Center the content */
     width: 80%; /* Make the text and image take 80% of the width */
@@ -203,10 +203,10 @@ title: 13:50 University Ranking | Real Students. Real Rankings.
 
   /* Mobile Styles */
   @media (max-width: 768px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
+.hero-grid {
+    flex-direction: column; /* Stack the content vertically on mobile */
+    gap: 2rem;
+  }
 
     .hero-text h1 {
       font-size: 2rem;
