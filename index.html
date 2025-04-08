@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 15:58 University Ranking | Real Students. Real Rankings.
+title: 1602 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -297,18 +297,43 @@ title: 15:58 University Ranking | Real Students. Real Rankings.
     text-align: center !important;
   }
 }
-/* Fix ghost right-side and bottom border issue */
-.tabulator .tabulator-table {
-  box-shadow: none !important;
+/* Fix ghost borders in Tabulator table */
+.tabulator,
+.tabulator .tabulator-table,
+.tabulator .tabulator-row {
   border: none !important;
-  margin-right: -1px; /* ✅ hides phantom right border */
-  margin-bottom: -1px; /* ✅ hides phantom bottom border */
+  box-shadow: none !important;
 }
 
-.tabulator .tabulator-row {
-  border-right: none !important;
-  border-bottom: none !important;
+.tabulator .tabulator-tableHolder {
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
 }
+
+/* 👇 Add this AFTER the media query to target all screen sizes (including desktop) */
+  .tabulator,
+  .tabulator .tabulator-table,
+  .tabulator .tabulator-row,
+  .tabulator .tabulator-cell {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .tabulator .tabulator-tableHolder {
+    overflow: hidden !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .tabulator .tabulator-row {
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .tabulator .tabulator-cell:last-child {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
 </style>
 
 
