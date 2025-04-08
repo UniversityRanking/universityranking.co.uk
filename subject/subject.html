@@ -16,6 +16,28 @@ title: ""
     color: #333;
   }
 
+  .hero {
+    background-color: #3b0a66;
+    color: white;
+    padding: 2.5rem 1rem 1rem; /* reduced bottom padding to tighten */
+    text-align: center;
+    position: relative;
+    margin-top: -2rem;
+  }
+
+  .hero .container {
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  .instruction-text {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    color: white;
+    font-weight: 500;
+  }
+
   .table-section {
     background: white;
     padding-bottom: 3rem;
@@ -27,42 +49,42 @@ title: ""
     margin: 0 auto;
   }
 
-.table-wrapper {
-  margin-top: -5.2rem; /* Bring table up to hug hero cleanly */
-}
-  
-.tabulator {
-  border: none !important;
-  overflow: visible !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
+  .table-wrapper {
+    margin-top: -5.4rem; /* pull table into the purple hero */
+  }
+
+  .tabulator {
+    border: none !important;
+    overflow: visible !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+  }
 
   .tabulator-header {
     border-bottom: none !important;
+    background-color: transparent !important;
   }
 
   .tabulator .tabulator-header .tabulator-col {
-    background-color: white !important;
+    background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
   }
 
   .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
-    color: #3b0a66 !important;
-    background-color: white !important;
+    color: white !important;
     font-weight: bold !important;
-    font-size: 1.4rem !important;
-    width: 100% !important;
-    height: 60px !important;
+    font-size: 1.3rem !important;
+    height: 48px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
-    padding: 0 0.5rem !important;
+    padding: 0 0.25rem !important;
     border: none !important;
-    box-shadow: none !important;
+    background-color: transparent !important;
   }
 
   .tabulator .tabulator-header .tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
@@ -80,6 +102,7 @@ title: ""
   .tabulator-cell {
     border: none !important;
     padding: 0.3rem 0.5rem !important;
+    background-color: white !important;
   }
 
   .tabulator-row {
@@ -133,10 +156,12 @@ title: ""
     color: #2e7d32;
     font-weight: bold;
   }
+
   .score-orange {
     color: #ef6c00;
     font-weight: bold;
   }
+
   .score-red {
     color: #c62828;
     font-weight: bold;
@@ -159,27 +184,6 @@ title: ""
   .modal-table th:nth-child(3) {
     text-align: center;
   }
-
-  .hero {
-    background-color: #3b0a66;
-    color: white;
-    padding: 2.5rem 1rem 2.5rem;
-    text-align: center;
-    position: relative;
-    margin-top: -2rem; /* 🔥 Pull it upward */
-  }
-
-  .hero .container {
-    max-width: 850px;
-    margin: 0 auto;
-  }
-.instruction-text {
-  text-align: center;
-  font-size: 1.2rem;
-  margin-top: 0.8rem;
-  color: white;
-  font-weight: 500;
-}
 </style>
 
 <section class="hero">
