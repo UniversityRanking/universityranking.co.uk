@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 13:50 University Ranking | Real Students. Real Rankings.
+title: 14:06 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -33,12 +33,13 @@ title: 13:50 University Ranking | Real Students. Real Rankings.
     flex-direction: row; /* Stack text and image */
     gap: 2rem;
     align-items: center; /* Center the content */
-    width: 80%; /* Make the text and image take 80% of the width */
+    width: 100%; 
     margin: 0 auto;
   }
 
   .hero-text {
     text-align: center;
+    width: 70%; /* Take 70% of the width */
   }
 
   .hero-text h1 {
@@ -58,6 +59,7 @@ title: 13:50 University Ranking | Real Students. Real Rankings.
     border-radius: 1rem;
     max-height: 280px;
     object-fit: contain;
+    width: 30%; /* Take 30% of the width */
   }
 
   /* Subject Select */
@@ -71,29 +73,30 @@ title: 13:50 University Ranking | Real Students. Real Rankings.
   }
 
   .subject-select-inner {
-    display: block;
-    width: 100%; /* Take up full width */
+  display: flex;
+  justify-content: space-between; /* Keep label and dropdown on the same line */
+  align-items: center;
+  max-width: 750px; /* Limit combined width to 750px */
+  margin: 0 auto; /* Center the elements */
   }
 
   .subject-select label {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-right: 1rem;
-    color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-right: 1rem;
+  color: white;
   }
 
   .subject-select select {
-    font-size: 1.3rem;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 0.4rem;
-    background: white;
-    color: #3b0a66;
-    font-weight: bold;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    width: 80%; /* Set dropdown width to 80% */
-    margin: 0 auto;
-    display: block;
+  font-size: 1.3rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: white;
+  color: #3b0a66;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  width: 100%; /* Let the dropdown take up the remaining space */
   }
 
   /* Table Section */
