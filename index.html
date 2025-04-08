@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 08:49 University Ranking | Real Students. Real Rankings.
+title: 08:55 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -332,14 +332,14 @@ title: 08:49 University Ranking | Real Students. Real Rankings.
   </div>
 
   <script>
-    document.getElementById("subject-select").addEventListener("change", function () {
-      const subject = this.value;
-      if (subject) {
-        const encoded = encodeURIComponent(subject);
-        window.location.href = `/subject/subject.html?subject=${encoded}`;
-      }
-    });
-  </script>
+  document.getElementById("subject-select").addEventListener("change", function () {
+    const subject = this.value;
+    if (subject) {
+      const encoded = encodeURIComponent(subject);
+      window.location.href = `{{ '/subject/subject.html' | relative_url }}?subject=${encoded}`;
+    }
+  });
+</script>
 </section>
 
 <section class="table-section">
