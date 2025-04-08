@@ -203,7 +203,47 @@ title: 14:06 University Ranking | Real Students. Real Rankings.
   header + .hero {
     margin-top: -2rem;
   }
+/* Desktop - Right Align */
+@media (min-width: 768px) {
+  .hero-text {
+    text-align: right; /* Right align on desktop */
+    width: 70%; /* 70% of the width for the text */
+  }
 
+  .hero-image {
+    width: 30%; /* 30% of the width for the image */
+  }
+
+  .hero-grid {
+    display: flex;
+    flex-direction: row; /* Side-by-side layout */
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* Mobile - Center Align */
+@media (max-width: 768px) {
+  .hero-text {
+    text-align: center; /* Center text on mobile */
+    width: 100%; /* Full width */
+  }
+
+  .hero-image {
+    width: 100%; /* Full width for the image on mobile */
+  }
+
+  .hero-grid {
+    display: flex;
+    flex-direction: column; /* Stack the text and image */
+    gap: 2rem;
+    align-items: center; /* Center the content */
+    width: 80%;
+    margin: 0 auto;
+  }
+}
   /* Mobile Styles */
   @media (max-width: 768px) {
 .hero-grid {
