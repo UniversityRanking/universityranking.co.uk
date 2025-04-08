@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 15:09 University Ranking | Real Students. Real Rankings.
+title: 15:15 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -172,7 +172,6 @@ title: 15:09 University Ranking | Real Students. Real Rankings.
     justify-content: flex-start !important;
     text-align: left !important;
     padding-left: 0.75rem !important;
-    margin-left: -0.1rem !important;
   }
 
   .tabulator-cell[tabulator-field="Provider"] {
@@ -186,6 +185,30 @@ title: 15:09 University Ranking | Real Students. Real Rankings.
     font-size: 1rem;
   }
 
+  .tabulator-cell {
+  border: none !important;
+  padding: 1rem 0.75rem !important;
+  font-size: 1rem;
+}
+
+/* ✅ Allow header titles to wrap and shrink */
+.tabulator .tabulator-header .tabulator-col[tabulator-field="2024"] .tabulator-col-title,
+.tabulator .tabulator-header .tabulator-col[tabulator-field="2023"] .tabulator-col-title {
+  white-space: normal !important;
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+  text-align: center !important;
+  padding: 0 !important;
+}
+
+/* ✅ Same for the cells if needed */
+.tabulator-cell[tabulator-field="2024"],
+.tabulator-cell[tabulator-field="2023"] {
+  white-space: nowrap !important;
+  font-size: 0.75rem !important;
+  text-align: center !important;
+}
+  
   .tabulator-row:nth-child(odd) {
     background-color: #ffffff !important;
   }
