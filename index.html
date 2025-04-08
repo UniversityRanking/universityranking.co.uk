@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 15:24 University Ranking | Real Students. Real Rankings.
+title: 15:29 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -265,34 +265,35 @@ title: 15:24 University Ranking | Real Students. Real Rankings.
     padding-top: 2rem;
   }
 
+  .tabulator .tabulator-header .tabulator-col {
+    padding: 0 !important;
+  }
+
   .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
-    font-size: 0.8rem !important;
+    font-size: 0.75rem !important;
+    white-space: normal !important;
+    text-align: center !important;
+    line-height: 1rem !important;
+    padding: 0.2rem 0.25rem !important;
+  }
+
+  .tabulator .tabulator-header .tabulator-col[tabulator-field="2024"] .tabulator-col-title,
+  .tabulator .tabulator-header .tabulator-col[tabulator-field="2023"] .tabulator-col-title {
+    font-size: 0.75rem !important;
+    white-space: normal !important;
+    line-height: 1rem !important;
+    padding: 0.1rem !important;
   }
 
   .tabulator-cell {
     font-size: 0.8rem !important;
-    padding: 0.5rem 0.75rem !important;
+    padding: 0.5rem 0.5rem !important;
   }
 
-  .tabulator-header .tabulator-col {
-    padding: 0.5rem 0.75rem !important;
-  }
-
-  /* ✅ Fix wrapping for small header cells */
-  .tabulator .tabulator-header .tabulator-col[tabulator-field="2024"] .tabulator-col-title,
-  .tabulator .tabulator-header .tabulator-col[tabulator-field="2023"] .tabulator-col-title {
-    white-space: normal !important;
-    font-size: 0.75rem !important;
-    line-height: 1rem !important;
-    text-align: center !important;
-    padding: 0 !important;
-  }
-
-  /* ✅ Maintain tight, readable layout in matching cells */
   .tabulator-cell[tabulator-field="2024"],
   .tabulator-cell[tabulator-field="2023"] {
-    white-space: nowrap !important;
     font-size: 0.75rem !important;
+    white-space: nowrap !important;
     text-align: center !important;
   }
 }
