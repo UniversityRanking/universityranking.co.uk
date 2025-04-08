@@ -1,8 +1,10 @@
 <footer class="site-footer" style="background-color: #3b0a66; color: white;">
-  <div class="container" style="max-width: 750px; margin: 0 auto; display: flex; justify-content: space-between; gap: 2rem; padding: 2rem 1rem;">
+  <div class="container" style="max-width: 750px; margin: 0 auto; display: flex; justify-content: space-between; gap: 2rem; padding: 2rem 1rem; flex-wrap: wrap;">
+    
     <div class="footer-column" style="flex: 1;">
-      <img src="{{ '/assets/images/logo-t.png' | relative_url }}" alt="University Ranking Logo" style="width: 200px; height: auto;" />
+      <img src="{{ '/assets/images/university-ranking-logo.png' | relative_url }}" alt="University Ranking Logo" style="width: 200px; height: auto;" />
     </div>
+
     <div class="footer-column" style="flex: 1;">
       <h4>Recent Posts</h4>
       <ul style="list-style: none; padding: 0;">
@@ -11,6 +13,7 @@
         {% endfor %}
       </ul>
     </div>
+
     <div class="footer-column" style="flex: 1;">
       <h4>Explore</h4>
       <ul style="list-style: none; padding: 0;">
@@ -22,3 +25,34 @@
     </div>
   </div>
 </footer>
+
+<style>
+  @media (max-width: 768px) {
+    .site-footer .container {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+    }
+
+    .site-footer .footer-column {
+      width: 100% !important;
+      margin-bottom: 2rem;
+    }
+
+    .site-footer .footer-column img {
+      margin: 0 auto;
+    }
+
+    .site-footer .footer-column ul {
+      padding-left: 0;
+    }
+
+    .site-footer .footer-column h4 {
+      margin-bottom: 0.5rem;
+    }
+
+    .site-footer .footer-column li {
+      margin: 0.3rem 0;
+    }
+  }
+</style>
