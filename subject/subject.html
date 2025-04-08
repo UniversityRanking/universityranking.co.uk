@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Subject
+title: ""
 ---
 
 <!-- Load Tabulator -->
@@ -158,22 +158,22 @@ title: Subject
   }
 
   .hero {
-  background-color: #3b0a66;
-  color: white;
-  padding: 6rem 1rem 8rem;
-  text-align: center;
-  position: relative;
-}
-.hero .container {
-  max-width: 850px;
-  margin: 0 auto;
-}
+    background-color: #3b0a66;
+    color: white;
+    padding: 6rem 1rem 8rem;
+    text-align: center;
+    position: relative;
+  }
 
+  .hero .container {
+    max-width: 850px;
+    margin: 0 auto;
+  }
 </style>
 
 <section class="hero">
   <div class="container">
-    <h1 id="subject-title">Subject Rankings</h1>
+    <h1 id="subject-title">Subject League Table</h1>
   </div>
 </section>
 
@@ -207,7 +207,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const selectedSubject = urlParams.get('subject');
   if (!selectedSubject) return;
 
-  document.getElementById("subject-title").textContent = `${selectedSubject} Rankings`;
+  // ✅ Set page <title>
+  document.title = `${selectedSubject} Subject League Table`;
+
+  // ✅ Update <h1> heading
+  document.getElementById("subject-title").textContent = `${selectedSubject} Subject League Table`;
 
   fetch("../assets/tables/All-Subjects-Formatted.json")
     .then(response => response.json())
@@ -222,9 +226,9 @@ document.addEventListener('DOMContentLoaded', function () {
         layout: "fitColumns",
         responsiveLayout: "collapse",
         columns: [
-          { title: "Rank", field: "Rank", width: 80, hozAlign: "center" },
-          { title: "University", field: "Provider", widthGrow: 3 },
-          { title: "Score", field: "AVERAGE", width: 100, hozAlign: "center" }
+          { title: "Rank", field: "Rank", width: 80, hozAlign: "center", headerSort: false },
+          { title: "University", field: "Provider", widthGrow: 3, headerSort: false },
+          { title: "Score", field: "AVERAGE", width: 100, hozAlign: "center", headerSort: false }
         ]
       });
 
@@ -234,12 +238,8 @@ document.addEventListener('DOMContentLoaded', function () {
         tbody.innerHTML = "";
 
         questions.forEach(q => {
-          const questionLabel = q;
           const topVal = Math.round(topUni[q]);
           const uniVal = Math.round(uniData[q]);
-
-          const topScore = topVal + "%";
-          const uniScore = uniVal + "%";
 
           const getColorClass = val => {
             if (val >= 85) return "score-green";
@@ -249,9 +249,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
           const rowHTML = `
             <tr>
-              <td>${questionLabel}</td>
-              <td class="${getColorClass(topVal)}">${topScore}</td>
-              <td class="${getColorClass(uniVal)}">${uniScore}</td>
+              <td>${q}</td>
+              <td class="${getColorClass(topVal)}">${topVal}%</td>
+              <td class="${getColorClass(uniVal)}">${uniVal}%</td>
             </tr>
           `;
           tbody.insertAdjacentHTML("beforeend", rowHTML);
