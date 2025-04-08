@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 10:39 University Ranking | Real Students. Real Rankings.
+title: 10:43 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -69,25 +69,27 @@ title: 10:39 University Ranking | Real Students. Real Rankings.
   }
 
   .subject-select {
-    margin-top: 2rem;
-  }
+  margin-top: -3.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
 
-  .subject-select label {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-right: 1rem;
-    color: white;
-  }
+.subject-select label {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-right: 1rem;
+  color: #3b0a66;
+}
 
-  .subject-select select {
-    font-size: 1.3rem;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 0.4rem;
-    background: white;
-    color: #3b0a66;
-    font-weight: bold;
-  }
+.subject-select select {
+  font-size: 1.3rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: white;
+  color: #3b0a66;
+  font-weight: bold;
+}
 
   /* Table Section */
 .table-section {
@@ -238,9 +240,10 @@ title: 10:39 University Ranking | Real Students. Real Rankings.
   </div>
 </section> <!-- closes .hero -->
 
-<section class="subject-select"> <!-- starts new section -->
+<section class="table-section">
   <div class="container">
-    <div style="margin-bottom: 1rem;">
+
+    <div class="subject-select" style="margin-top: -3.5rem; margin-bottom: 1.5rem;">
       <label for="subject-select">Choose a subject:</label>
       <select id="subject-select">
         <option>Select Subject</option>
@@ -375,10 +378,14 @@ title: 10:39 University Ranking | Real Students. Real Rankings.
 <option value="Veterinary medicine and dentistry">Veterinary medicine and dentistry</option>
 <option value="Welsh studies">Welsh studies</option>
 <option value="Zoology">Zoology</option>
-        <option value="Zoology">Zoology</option>
+<option value="Zoology">Zoology</option>
       </select>
     </div>
+
+    <div id="ranking-table"></div>
+
   </div>
+</section>
 
   <script>
   document.getElementById("subject-select").addEventListener("change", function () {
