@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 15:39 Compare Universities | University Ranking | Real Students. Real Rankings.
+title: 15:43 Compare Universities | University Ranking | Real Students. Real Rankings.
 ---
 
 <!-- Load Tabulator (not needed now but kept for consistency) -->
@@ -26,8 +26,8 @@ title: 15:39 Compare Universities | University Ranking | Real Students. Real Ran
 
   .compare-section {
     background-color: #ffffff;
-    margin-top: -8rem;
-    padding: 4rem 1rem;
+    margin-top: -9rem;
+    padding: 0 1rem 4rem 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,17 +43,19 @@ title: 15:39 Compare Universities | University Ranking | Real Students. Real Ran
   .table-wrapper {
     width: 100%;
     max-width: 850px;
+    background: white;
+    border-radius: 20px 20px 0 0;
     overflow-x: auto;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: relative;
+    top: -3.5rem; /* pulls into purple */
   }
 
   .compare-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 1rem;
-    background: white;
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    min-width: 100%;
+    min-width: 800px;
   }
 
   .compare-table th,
@@ -94,7 +96,7 @@ title: 15:39 Compare Universities | University Ranking | Real Students. Real Ran
     font-weight: bold;
   }
 
-  /* 🔧 Desktop column widths */
+  /* Desktop column control */
   @media (min-width: 769px) {
     .compare-table th:first-child,
     .compare-table td:first-child {
@@ -111,24 +113,24 @@ title: 15:39 Compare Universities | University Ranking | Real Students. Real Ran
     }
   }
 
-  /* 📱 Mobile behavior: sticky first col + scrollable others */
+  /* Mobile sticky + scroll */
   @media (max-width: 768px) {
-    .compare-table {
-      min-width: 800px; /* makes scrolling possible */
-    }
-
     .compare-table th:first-child,
     .compare-table td:first-child {
       position: sticky;
       left: 0;
-      background-color: #fff;
+      background-color: white;
       z-index: 1;
       width: 70%;
       min-width: 70%;
     }
 
     .compare-table th:nth-child(2),
-    .compare-table td:nth-child(2) {
+    .compare-table td:nth-child(2),
+    .compare-table th:nth-child(3),
+    .compare-table td:nth-child(3),
+    .compare-table th:nth-child(4),
+    .compare-table td:nth-child(4) {
       width: 30%;
       min-width: 30%;
     }
