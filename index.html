@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 09:28 University Ranking | Real Students. Real Rankings.
+title: 09:31 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -513,11 +513,9 @@ title: 09:28 University Ranking | Real Students. Real Rankings.
           width: isMobile ? 70 : 100,
           hozAlign: "center",
           headerSort: false,
-          formatter: "number",
-          formatterParams: {
-            decimal: ".",
-            thousand: "",
-            precision: 2
+          formatter: function(cell) {
+            const value = cell.getValue();
+            return value.toFixed(2); //
           }
         }
       ]
