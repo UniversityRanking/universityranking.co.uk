@@ -142,6 +142,11 @@ title: Compare 2
   fetch("/assets/tables/All-Subjects-Formatted.json")
     .then(res => res.json())
     .then(data => {
+      if (!data || data.length === 0) {
+        console.error("JSON loaded but no data found.");
+        return;
+      }
+
       data.forEach(row => {
         subjects.add(row.Subject);
         if (!subjectDataMap[row.Subject]) subjectDataMap[row.Subject] = [];
@@ -158,6 +163,7 @@ title: Compare 2
           option.textContent = sub;
           subjectSelect.appendChild(option);
         });
+        console.log(`Populated subject-${i} with ${sortedSubjects.length} subjects.`);
       });
 
       const questionTextMap = {
@@ -190,7 +196,15 @@ title: Compare 2
       };
 
       const sample = data.find(r => r.Subject);
-      questions = Object.keys(sample).filter(k => /^Q\d+/.test(k)).map(k => ({ key: k, label: questionTextMap[k] || k }));
+      if (!sample) {
+        console.error("No sample data found to extract questions.");
+        return;
+      }
+
+      questions = Object.keys(sample)
+        .filter(k => /^Q\d+/.test(k))
+        .map(k => ({ key: k, label: questionTextMap[k] || k }));
+
       renderEmptyTable();
 
       [1, 2, 3].forEach(i => {
@@ -213,7 +227,8 @@ title: Compare 2
 
         document.getElementById(`university-${i}`).addEventListener("change", updateTable);
       });
-    });
+    })
+    .catch(err => console.error("Failed to load JSON:", err));
 
   function renderEmptyTable() {
     const tbody = document.getElementById("compare-body");
