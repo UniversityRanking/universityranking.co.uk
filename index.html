@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 09:22 University Ranking | Real Students. Real Rankings.
+title: 09:25 University Ranking | Real Students. Real Rankings.
 ---
 
 <style>
@@ -512,7 +512,12 @@ title: 09:22 University Ranking | Real Students. Real Rankings.
           field: "2024 Score",
           width: isMobile ? 70 : 100,
           hozAlign: "center",
-          headerSort: false
+          headerSort: false,
+          formatter: "number",
+          formatterParams: {
+            decimal: ".",
+            thousand: "",
+            precision: 2
         }
       ]
     });
