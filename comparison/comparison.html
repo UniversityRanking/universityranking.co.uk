@@ -3,7 +3,6 @@ layout: default
 title: Compare
 ---
 
-<!-- Load Tabulator (not needed now but kept for consistency) -->
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
 <script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
 
@@ -18,59 +17,61 @@ title: Compare
 
   .hero {
     background-color: #3b0a66;
-    padding: 5rem 1rem 12rem 1rem;
+    color: white;
+    padding: 3rem 1rem 3rem;
     text-align: center;
-    color: white;
-  }
-
-  .compare-section {
-    background-color: #f5f5ff;
-    margin-top: -4rem;
-    padding: 4rem 1rem 4rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .compare-title {
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    margin-top: 0rem;
-    margin-bottom: 2rem;
-    z-index: 2;
     position: relative;
   }
 
-.compare-table {
-  width: 1000px;
-  border-collapse: collapse;
-  font-size: 1.4rem;
-  background: white;
-  border-radius: 20px 20px 0 0;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  position: relative;
-  top: -2.5cm; /* pulls the table upward by approx 2cm */
-}
+  .hero h2 {
+    margin-top: -1rem;
+    font-size: 2.5rem;
+  }
+
+  .compare-section {
+    background-color: white;
+    margin-top: -5rem;
+    padding-top: 0;
+    padding-bottom: 3rem;
+  }
+
+  .compare-table {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 1.3rem;
+    background: white;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
 
   .compare-table th,
   .compare-table td {
     padding: 1rem;
     border-bottom: 1px solid #ddd;
-    text-align: center;
   }
 
   .compare-table th {
-    background-color: #fff;
+    background-color: white;
+    color: #3b0a66;
     font-weight: bold;
+    text-align: center;
+  }
+
+  .compare-table td:first-child {
+    text-align: left;
+  }
+
+  .compare-table td:not(:first-child) {
     text-align: center;
   }
 
   .compare-table select {
     width: 160px;
     max-width: 100%;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .score-green {
@@ -85,11 +86,30 @@ title: Compare
     color: #c62828;
     font-weight: bold;
   }
+
+  @media (max-width: 768px) {
+    .hero h2 {
+      font-size: 2rem;
+    }
+
+    .compare-table {
+      font-size: 1rem;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 0.75rem;
+    }
+
+    .compare-table select {
+      width: 120px;
+      font-size: 0.9rem;
+    }
+  }
 </style>
 
-
 <section class="hero">
-  <h2 class="compare-title">Compare University Scores</h2>
+  <h2>Compare University Scores</h2>
 </section>
 
 <section class="compare-section">
@@ -98,34 +118,20 @@ title: Compare
       <tr>
         <th>Question</th>
         <th>
-          <select id="subject-1">
-            <option value="">Select subject</option>
-          </select><br>
-          <select id="university-1" disabled>
-            <option value="">Select university</option>
-          </select>
+          <select id="subject-1"><option value="">Select subject</option></select><br>
+          <select id="university-1" disabled><option value="">Select university</option></select>
         </th>
         <th>
-          <select id="subject-2">
-            <option value="">Select subject</option>
-          </select><br>
-          <select id="university-2" disabled>
-            <option value="">Select university</option>
-          </select>
+          <select id="subject-2"><option value="">Select subject</option></select><br>
+          <select id="university-2" disabled><option value="">Select university</option></select>
         </th>
         <th>
-          <select id="subject-3">
-            <option value="">Select subject</option>
-          </select><br>
-          <select id="university-3" disabled>
-            <option value="">Select university</option>
-          </select>
+          <select id="subject-3"><option value="">Select subject</option></select><br>
+          <select id="university-3" disabled><option value="">Select university</option></select>
         </th>
       </tr>
     </thead>
-    <tbody id="compare-body">
-      <!-- Questions and scores will be inserted here -->
-    </tbody>
+    <tbody id="compare-body"></tbody>
   </table>
 </section>
 
@@ -139,9 +145,7 @@ title: Compare
     .then(data => {
       data.forEach(row => {
         subjects.add(row.Subject);
-        if (!subjectDataMap[row.Subject]) {
-          subjectDataMap[row.Subject] = [];
-        }
+        if (!subjectDataMap[row.Subject]) subjectDataMap[row.Subject] = [];
         subjectDataMap[row.Subject].push(row);
       });
 
@@ -187,13 +191,7 @@ title: Compare
       };
 
       const sample = data.find(r => r.Subject);
-      questions = Object.keys(sample)
-        .filter(k => /^Q\d+/.test(k))
-        .map(k => ({
-          key: k,
-          label: questionTextMap[k] || k
-        }));
-
+      questions = Object.keys(sample).filter(k => /^Q\d+/.test(k)).map(k => ({ key: k, label: questionTextMap[k] || k }));
       renderEmptyTable();
 
       [1, 2, 3].forEach(i => {
@@ -204,15 +202,13 @@ title: Compare
           uniSelect.disabled = !subject;
 
           if (subject && subjectDataMap[subject]) {
-const providers = [...new Set(subjectDataMap[subject].map(row => row.Provider))].sort();
-providers.forEach(provider => {
-  const opt = document.createElement("option");
-  opt.value = provider;
-  opt.textContent = provider;
-  uniSelect.appendChild(opt);
-});
+            [...new Set(subjectDataMap[subject].map(row => row.Provider))].sort().forEach(provider => {
+              const opt = document.createElement("option");
+              opt.value = provider;
+              opt.textContent = provider;
+              uniSelect.appendChild(opt);
+            });
           }
-
           uniSelect.dispatchEvent(new Event("change"));
         });
 
@@ -253,7 +249,7 @@ providers.forEach(provider => {
 
         if (subject && uni && subjectDataMap[subject]) {
           const entry = subjectDataMap[subject].find(row => row.Provider === uni);
-          if (entry && entry[q.key] !== undefined && typeof entry[q.key] === 'number') {
+          if (entry && typeof entry[q.key] === 'number') {
             const val = Math.round(entry[q.key]);
             cell.textContent = `${val}%`;
             cell.className = val >= 85 ? "score-green" : val >= 70 ? "score-orange" : "score-red";
