@@ -14,7 +14,13 @@ title: Compare
     background-color: #ffffff;
     color: #333;
   }
-
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem 0;
+}
   .hero {
     background-color: #3b0a66;
     color: white;
@@ -118,8 +124,10 @@ title: Compare
       <tr>
         <th>Question</th>
         <th>
-          <select id="subject-1"><option value="">Select subject</option></select><br>
-          <select id="university-1" disabled><option value="">Select university</option></select>
+         <div class="dropdown-container">
+    <select id="subject-1"><option value="">Select subject</option></select>
+    <select id="university-1" disabled><option value="">Select university</option></select>
+  </div>
         </th>
         <th>
           <select id="subject-2"><option value="">Select subject</option></select><br>
