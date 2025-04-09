@@ -16,16 +16,38 @@ title: ""
     color: #333;
   }
 
-  .table-section {
-    background: white;
-    margin-top: -5rem;
-    padding-bottom: 3rem;
-    padding-top: 0;
+  .hero {
+    background-color: #3b0a66;
+    color: white;
+    padding: 3rem 1rem 3rem;
+    text-align: center;
+    position: relative;
   }
 
+  .hero h1 {
+    margin-top: -1rem;
+    font-size: 2.5rem;
+  }
+
+  .instruction-text {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    color: white;
+    font-weight: 300;
+  }
+
+  .hero .container,
   .table-section .container {
     max-width: 850px;
     margin: 0 auto;
+  }
+
+  .table-section {
+    background: white;
+    margin-top: -5rem;
+    padding-top: 0;
+    padding-bottom: 3rem;
   }
 
   .tabulator {
@@ -35,31 +57,25 @@ title: ""
     border-radius: 12px 12px 0 0;
   }
 
-  .tabulator-header {
-    border-bottom: none !important;
-  }
-
+  .tabulator-header,
   .tabulator .tabulator-header .tabulator-col {
-    background-color: white !important;
     border: none !important;
+    background-color: white !important;
     box-shadow: none !important;
     padding: 0 !important;
   }
 
   .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
     color: #3b0a66 !important;
-    background-color: white !important;
     font-weight: bold !important;
     font-size: 1.4rem !important;
-    width: 100% !important;
     height: 60px !important;
+    width: 100% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
     padding: 0 0.5rem !important;
-    border: none !important;
-    box-shadow: none !important;
   }
 
   .tabulator .tabulator-header .tabulator-col[tabulator-field="Provider"] .tabulator-col-title {
@@ -77,6 +93,7 @@ title: ""
   .tabulator-cell {
     border: none !important;
     padding: 1rem 0.75rem !important;
+    font-size: 1rem;
   }
 
   .tabulator-row {
@@ -130,10 +147,12 @@ title: ""
     color: #2e7d32;
     font-weight: bold;
   }
+
   .score-orange {
     color: #ef6c00;
     font-weight: bold;
   }
+
   .score-red {
     color: #c62828;
     font-weight: bold;
@@ -157,28 +176,32 @@ title: ""
     text-align: center;
   }
 
-  .hero {
-    background-color: #3b0a66;
-    color: white;
-    padding: 3rem 1rem 3rem;
-    text-align: center;
-    position: relative;
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2rem;
+    }
+
+    .instruction-text {
+      font-size: 1rem;
+    }
+
+    .tabulator-cell {
+      font-size: 0.8rem !important;
+      padding: 0.5rem !important;
+    }
+
+    .tabulator-row {
+      font-size: 1rem !important;
+    }
+
+    .tabulator .tabulator-header .tabulator-col .tabulator-col-title {
+      font-size: 0.75rem !important;
+      padding: 0.2rem 0.25rem !important;
+      white-space: normal !important;
+      line-height: 1rem !important;
+      text-align: center !important;
+    }
   }
-  
-.hero h1 {
-  margin-top: -1rem; /* Move heading up */
-}
-  .hero .container {
-    max-width: 850px;
-    margin: 0 auto;
-  }
-.instruction-text {
-  text-align: center;
-  font-size: 1.0rem;
-  margin-top: 0.5rem; /* Adjusts the space between the title and the new text */
-  color: white;
-  font-weight: 300;
-}
 </style>
 
 <section class="hero">
