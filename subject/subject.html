@@ -241,10 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const selectedSubject = urlParams.get('subject');
   if (!selectedSubject) return;
 
-  // ✅ Set page <title>
   document.title = `${selectedSubject} Subject League Table`;
-
-  // ✅ Update <h1> heading
   document.getElementById("subject-title").textContent = `${selectedSubject} Subject League Table`;
 
   fetch("../assets/tables/All-Subjects-Formatted.json")
@@ -255,14 +252,38 @@ document.addEventListener('DOMContentLoaded', function () {
       const topUni = sorted[0];
       const questions = Object.keys(topUni).filter(key => key.startsWith("Q"));
 
+      // Detect if mobile
+      const isMobile = window.innerWidth <= 768;
+
       const table = new Tabulator("#subject-table", {
         data: sorted,
         layout: "fitColumns",
         responsiveLayout: "collapse",
         columns: [
-          { title: "Rank", field: "Rank", width: 60, hozAlign: "center", headerSort: false },
-          { title: "University", field: "Provider", widthGrow: 3, headerSort: false },
-          { title: "Score", field: "AVERAGE", width: 100, hozAlign: "center", headerSort: false }
+          {
+            title: "Rank",
+            field: "Rank",
+            width: isMobile ? 60 : 80,
+            hozAlign: "center",
+            headerSort: false
+          },
+          {
+            title: "University",
+            field: "Provider",
+            widthGrow: 3,
+            headerSort: false
+          },
+          {
+            title: "Score",
+            field: "AVERAGE",
+            width: isMobile ? 80 : 100,
+            hozAlign: "center",
+            headerSort: false,
+            formatter: function(cell) {
+              const value = cell.getValue();
+              return typeof value === 'number' ? value.toFixed(2) : value;
+            }
+          }
         ]
       });
 
