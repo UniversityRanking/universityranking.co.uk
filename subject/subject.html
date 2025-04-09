@@ -176,6 +176,7 @@ title: ""
     text-align: center;
   }
 
+  /* ✅ Mobile-only tweaks */
   @media (max-width: 768px) {
     .hero h1 {
       font-size: 2rem;
@@ -200,6 +201,32 @@ title: ""
       white-space: normal !important;
       line-height: 1rem !important;
       text-align: center !important;
+    }
+
+    .modal-content {
+      width: 95% !important;
+      max-width: none !important;
+      max-height: 90vh !important;
+      font-size: 0.8rem !important;
+      padding: 1rem !important;
+    }
+
+    .modal-table {
+      font-size: 0.8rem !important;
+    }
+
+    .modal-table th, .modal-table td {
+      padding: 0.4rem !important;
+    }
+
+    .modal h2 {
+      font-size: 1rem !important;
+    }
+
+    .modal-close {
+      font-size: 1.2rem !important;
+      top: 0.5rem !important;
+      right: 0.5rem !important;
     }
   }
 </style>
