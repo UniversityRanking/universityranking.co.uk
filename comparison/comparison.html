@@ -1,9 +1,8 @@
 ---
 layout: default
-title: 15:30 Compare Universities | University Ranking | Real Students. Real Rankings.
+title: Compare Universities | University Ranking | Real Students. Real Rankings.
 ---
 
-<!-- Load Tabulator (not needed now but kept for consistency) -->
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
 <script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
 
@@ -14,7 +13,7 @@ title: 15:30 Compare Universities | University Ranking | Real Students. Real Ran
     padding: 0;
     background-color: #ffffff;
     color: #333;
-    font-size: 1rem; /* default is ~16px, change this as needed */
+    font-size: 1rem;
   }
 
   .hero {
@@ -22,15 +21,6 @@ title: 15:30 Compare Universities | University Ranking | Real Students. Real Ran
     padding: 2rem 1rem 12rem 1rem;
     text-align: center;
     color: white;
-  }
-
-  .compare-section {
-    background-color: #ffffff;
-    margin-top: -8rem;
-    padding: 4rem 1rem 4rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 
   .compare-title {
@@ -43,17 +33,43 @@ title: 15:30 Compare Universities | University Ranking | Real Students. Real Ran
     position: relative;
   }
 
-.compare-table {
-  width: 1000px;
-  border-collapse: collapse;
-  font-size: 1.0rem;
-  background: white;
-  border-radius: 20px 20px 0 0;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  position: relative;
-  top: -3.0cm; /* pulls the table upward by approx 2cm */
-}
+  .compare-section {
+    background-color: #ffffff;
+    margin-top: -8rem;
+    padding: 4rem 1rem 4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .compare-table-container {
+    display: block;
+  }
+
+  .mobile-notice {
+    display: none;
+    font-size: 1.1rem;
+    color: #3b0a66;
+    background-color: #fff3cd;
+    border: 1px solid #ffecb5;
+    padding: 1rem;
+    border-radius: 10px;
+    max-width: 700px;
+    margin: 2rem auto;
+    text-align: center;
+  }
+
+  .compare-table {
+    width: 850px;
+    border-collapse: collapse;
+    font-size: 1rem;
+    background: white;
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: relative;
+    top: -3.0cm;
+  }
 
   .compare-table th,
   .compare-table td {
@@ -86,48 +102,62 @@ title: 15:30 Compare Universities | University Ranking | Real Students. Real Ran
     color: #c62828;
     font-weight: bold;
   }
-</style>
 
+  @media (max-width: 768px) {
+    .compare-table-container {
+      display: none;
+    }
+    .mobile-notice {
+      display: block;
+    }
+  }
+</style>
 
 <section class="hero">
   <h2 class="compare-title">Compare Universities</h2>
 </section>
 
 <section class="compare-section">
-  <table class="compare-table">
-    <thead>
-      <tr>
-        <th>Question</th>
-        <th>
-          <select id="subject-1">
-            <option value="">Select subject</option>
-          </select><br>
-          <select id="university-1" disabled>
-            <option value="">Select university</option>
-          </select>
-        </th>
-        <th>
-          <select id="subject-2">
-            <option value="">Select subject</option>
-          </select><br>
-          <select id="university-2" disabled>
-            <option value="">Select university</option>
-          </select>
-        </th>
-        <th>
-          <select id="subject-3">
-            <option value="">Select subject</option>
-          </select><br>
-          <select id="university-3" disabled>
-            <option value="">Select university</option>
-          </select>
-        </th>
-      </tr>
-    </thead>
-    <tbody id="compare-body">
-      <!-- Questions and scores will be inserted here -->
-    </tbody>
-  </table>
+  <div class="mobile-notice">
+    This feature is best viewed on a desktop or larger screen. Please visit this page on a desktop to compare universities.
+  </div>
+
+  <div class="compare-table-container">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>
+            <select id="subject-1">
+              <option value="">Select subject</option>
+            </select><br>
+            <select id="university-1" disabled>
+              <option value="">Select university</option>
+            </select>
+          </th>
+          <th>
+            <select id="subject-2">
+              <option value="">Select subject</option>
+            </select><br>
+            <select id="university-2" disabled>
+              <option value="">Select university</option>
+            </select>
+          </th>
+          <th>
+            <select id="subject-3">
+              <option value="">Select subject</option>
+            </select><br>
+            <select id="university-3" disabled>
+              <option value="">Select university</option>
+            </select>
+          </th>
+        </tr>
+      </thead>
+      <tbody id="compare-body">
+        <!-- Questions and scores will be inserted here -->
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <script>
@@ -205,13 +235,13 @@ title: 15:30 Compare Universities | University Ranking | Real Students. Real Ran
           uniSelect.disabled = !subject;
 
           if (subject && subjectDataMap[subject]) {
-const providers = [...new Set(subjectDataMap[subject].map(row => row.Provider))].sort();
-providers.forEach(provider => {
-  const opt = document.createElement("option");
-  opt.value = provider;
-  opt.textContent = provider;
-  uniSelect.appendChild(opt);
-});
+            const providers = [...new Set(subjectDataMap[subject].map(row => row.Provider))].sort();
+            providers.forEach(provider => {
+              const opt = document.createElement("option");
+              opt.value = provider;
+              opt.textContent = provider;
+              uniSelect.appendChild(opt);
+            });
           }
 
           uniSelect.dispatchEvent(new Event("change"));
@@ -254,7 +284,7 @@ providers.forEach(provider => {
 
         if (subject && uni && subjectDataMap[subject]) {
           const entry = subjectDataMap[subject].find(row => row.Provider === uni);
-          if (entry && entry[q.key] !== undefined && typeof entry[q.key] === 'number') {
+          if (entry && typeof entry[q.key] === 'number') {
             const val = Math.round(entry[q.key]);
             cell.textContent = `${val}%`;
             cell.className = val >= 85 ? "score-green" : val >= 70 ? "score-orange" : "score-red";
