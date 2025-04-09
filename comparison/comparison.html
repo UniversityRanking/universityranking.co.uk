@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 15:43 Compare Universities | University Ranking | Real Students. Real Rankings.
+title: 15:45 Compare Universities | University Ranking | Real Students. Real Rankings.
 ---
 
 <!-- Load Tabulator (not needed now but kept for consistency) -->
@@ -19,43 +19,40 @@ title: 15:43 Compare Universities | University Ranking | Real Students. Real Ran
 
   .hero {
     background-color: #3b0a66;
-    padding: 2rem 1rem 12rem 1rem;
-    text-align: center;
     color: white;
+    padding: 2rem 1rem 10rem 1rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .compare-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
   }
 
   .compare-section {
     background-color: #ffffff;
-    margin-top: -9rem;
+    margin-top: -8rem;
     padding: 0 1rem 4rem 1rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .compare-title {
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
+    justify-content: center;
   }
 
   .table-wrapper {
     width: 100%;
     max-width: 850px;
+    overflow-x: auto;
     background: white;
     border-radius: 20px 20px 0 0;
-    overflow-x: auto;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    position: relative;
-    top: -3.5rem; /* pulls into purple */
   }
 
   .compare-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 1rem;
-    min-width: 800px;
+    min-width: 700px;
   }
 
   .compare-table th,
@@ -68,76 +65,61 @@ title: 15:43 Compare Universities | University Ranking | Real Students. Real Ran
 
   .compare-table th {
     background-color: #fff;
+    color: #3b0a66;
     font-weight: bold;
     text-align: center;
   }
 
-  .compare-table td:first-child,
+  .compare-table td:first-child {
+    font-weight: normal;
+    background: white;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+  }
+
   .compare-table th:first-child {
-    text-align: left;
+    background: white;
+    position: sticky;
+    left: 0;
+    z-index: 2;
   }
 
   .compare-table select {
     width: 160px;
     max-width: 100%;
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .score-green {
     color: #2e7d32;
     font-weight: bold;
   }
+
   .score-orange {
     color: #ef6c00;
     font-weight: bold;
   }
+
   .score-red {
     color: #c62828;
     font-weight: bold;
   }
 
-  /* Desktop column control */
-  @media (min-width: 769px) {
-    .compare-table th:first-child,
-    .compare-table td:first-child {
-      width: 40%;
-    }
-
-    .compare-table th:nth-child(2),
-    .compare-table td:nth-child(2),
-    .compare-table th:nth-child(3),
-    .compare-table td:nth-child(3),
-    .compare-table th:nth-child(4),
-    .compare-table td:nth-child(4) {
-      width: 20%;
-    }
-  }
-
-  /* Mobile sticky + scroll */
   @media (max-width: 768px) {
-    .compare-table th:first-child,
-    .compare-table td:first-child {
-      position: sticky;
-      left: 0;
-      background-color: white;
-      z-index: 1;
-      width: 70%;
-      min-width: 70%;
-    }
-
-    .compare-table th:nth-child(2),
-    .compare-table td:nth-child(2),
-    .compare-table th:nth-child(3),
-    .compare-table td:nth-child(3),
-    .compare-table th:nth-child(4),
-    .compare-table td:nth-child(4) {
-      width: 30%;
-      min-width: 30%;
-    }
-
     .compare-table th,
     .compare-table td {
+      font-size: 0.9rem;
       padding: 0.75rem;
+    }
+
+    .compare-table select {
+      width: 120px;
+      font-size: 0.9rem;
+    }
+
+    .table-wrapper {
+      border-radius: 12px;
     }
   }
 </style>
