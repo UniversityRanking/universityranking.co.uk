@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Compare
+title: Compare 2
 ---
 
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
@@ -14,13 +14,13 @@ title: Compare
     background-color: #ffffff;
     color: #333;
   }
-.dropdown-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  align-items: center;
-  padding: 0.5rem 0;
-}
+  .dropdown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
   .hero {
     background-color: #3b0a66;
     color: white;
@@ -28,19 +28,16 @@ title: Compare
     text-align: center;
     position: relative;
   }
-
   .hero h2 {
     margin-top: -1rem;
     font-size: 2.5rem;
   }
-
   .compare-section {
     background-color: white;
     margin-top: -5rem;
     padding-top: 0;
     padding-bottom: 3rem;
   }
-
   .compare-table {
     width: 100%;
     max-width: 1000px;
@@ -52,34 +49,28 @@ title: Compare
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   }
-
   .compare-table th,
   .compare-table td {
     padding: 1rem;
     border-bottom: 1px solid #ddd;
   }
-
   .compare-table th {
     background-color: white;
     color: #3b0a66;
     font-weight: bold;
     text-align: center;
   }
-
   .compare-table td:first-child {
     text-align: left;
   }
-
   .compare-table td:not(:first-child) {
     text-align: center;
   }
-
   .compare-table select {
     width: 160px;
     max-width: 100%;
     font-size: 1rem;
   }
-
   .score-green {
     color: #2e7d32;
     font-weight: bold;
@@ -92,21 +83,17 @@ title: Compare
     color: #c62828;
     font-weight: bold;
   }
-
   @media (max-width: 768px) {
     .hero h2 {
       font-size: 2rem;
     }
-
     .compare-table {
       font-size: 1rem;
     }
-
     .compare-table th,
     .compare-table td {
       padding: 0.75rem;
     }
-
     .compare-table select {
       width: 120px;
       font-size: 0.9rem;
@@ -124,18 +111,22 @@ title: Compare
       <tr>
         <th>Question</th>
         <th>
-         <div class="dropdown-container">
-    <select id="subject-1"><option value="">Select subject</option></select>
-    <select id="university-1" disabled><option value="">Select university</option></select>
-  </div>
+          <div class="dropdown-container">
+            <select id="subject-1"><option value="">Select subject</option></select>
+            <select id="university-1" disabled><option value="">Select university</option></select>
+          </div>
         </th>
         <th>
-          <select id="subject-2"><option value="">Select subject</option></select><br>
-          <select id="university-2" disabled><option value="">Select university</option></select>
+          <div class="dropdown-container">
+            <select id="subject-2"><option value="">Select subject</option></select>
+            <select id="university-2" disabled><option value="">Select university</option></select>
+          </div>
         </th>
         <th>
-          <select id="subject-3"><option value="">Select subject</option></select><br>
-          <select id="university-3" disabled><option value="">Select university</option></select>
+          <div class="dropdown-container">
+            <select id="subject-3"><option value="">Select subject</option></select>
+            <select id="university-3" disabled><option value="">Select university</option></select>
+          </div>
         </th>
       </tr>
     </thead>
@@ -148,7 +139,7 @@ title: Compare
   const subjectDataMap = {};
   let questions = [];
 
-  fetch("../assets/tables/All-Subjects-Formatted.json")
+  fetch("/assets/tables/All-Subjects-Formatted.json")
     .then(res => res.json())
     .then(data => {
       data.forEach(row => {
