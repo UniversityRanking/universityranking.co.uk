@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Compare Universities | University Ranking 2025 | Real Students. Real Rankings. 
+title: Compare
 ---
 
 <!-- Load Tabulator (not needed now but kept for consistency) -->
@@ -18,78 +18,53 @@ title: Compare Universities | University Ranking 2025 | Real Students. Real Rank
 
   .hero {
     background-color: #3b0a66;
-    color: white;
-    padding: 3rem 1rem 3rem;
+    padding: 5rem 1rem 12rem 1rem;
     text-align: center;
-    position: relative;
-  }
-
-  .hero h1,
-  .compare-title {
-    margin-top: -1rem;
-    font-size: 2.5rem;
-  }
-
-  .instruction-text {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-top: 0.5rem;
     color: white;
-    font-weight: 300;
   }
 
   .compare-section {
-    background-color: white;
-    margin-top: -5rem;
-    padding-top: 0;
-    padding-bottom: 3rem;
+    background-color: #f5f5ff;
+    margin-top: -4rem;
+    padding: 4rem 1rem 4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .compare-section .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 2rem 2rem 0 0;
-    overflow: hidden;
-    padding: 1rem;
+  .compare-title {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 0rem;
+    margin-bottom: 2rem;
+    z-index: 2;
+    position: relative;
   }
 
-  .compare-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 1.3rem;
-  }
+.compare-table {
+  width: 1000px;
+  border-collapse: collapse;
+  font-size: 1.4rem;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  position: relative;
+  top: -2.5cm; /* pulls the table upward by approx 2cm */
+}
 
   .compare-table th,
   .compare-table td {
-    padding: 1rem 0.75rem;
+    padding: 1rem;
     border-bottom: 1px solid #ddd;
+    text-align: center;
   }
 
   .compare-table th {
     background-color: #fff;
     font-weight: bold;
-    font-size: 1.4rem;
-    color: #3b0a66;
     text-align: center;
-  }
-
-  .compare-table td {
-    text-align: center;
-    font-size: 1rem;
-  }
-
-  .compare-table td:first-child {
-    text-align: left;
-    padding-left: 0.75rem;
-  }
-
-  .compare-table tbody tr:nth-child(odd) {
-    background-color: #ffffff;
-  }
-
-  .compare-table tbody tr:nth-child(even) {
-    background-color: #f5effa;
   }
 
   .compare-table select {
@@ -102,46 +77,16 @@ title: Compare Universities | University Ranking 2025 | Real Students. Real Rank
     color: #2e7d32;
     font-weight: bold;
   }
-
   .score-orange {
     color: #ef6c00;
     font-weight: bold;
   }
-
   .score-red {
     color: #c62828;
     font-weight: bold;
   }
-
-  @media (max-width: 768px) {
-    .hero h1,
-    .compare-title {
-      font-size: 2rem;
-    }
-
-    .instruction-text {
-      font-size: 1rem;
-    }
-
-    .compare-table {
-      font-size: 0.8rem;
-    }
-
-    .compare-table th,
-    .compare-table td {
-      font-size: 0.8rem;
-      padding: 0.5rem;
-    }
-
-    .compare-table select {
-      font-size: 0.9rem;
-    }
-
-    .compare-section .container {
-      padding: 0.5rem;
-    }
-  }
 </style>
+
 
 <section class="hero">
   <h2 class="compare-title">Compare University Scores</h2>
@@ -185,5 +130,143 @@ title: Compare Universities | University Ranking 2025 | Real Students. Real Rank
 </section>
 
 <script>
-// existing JS unchanged
+  const subjects = new Set();
+  const subjectDataMap = {};
+  let questions = [];
+
+  fetch("../assets/tables/All-Subjects-Formatted.json")
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(row => {
+        subjects.add(row.Subject);
+        if (!subjectDataMap[row.Subject]) {
+          subjectDataMap[row.Subject] = [];
+        }
+        subjectDataMap[row.Subject].push(row);
+      });
+
+      const sortedSubjects = Array.from(subjects).sort();
+
+      [1, 2, 3].forEach(i => {
+        const subjectSelect = document.getElementById(`subject-${i}`);
+        sortedSubjects.forEach(sub => {
+          const option = document.createElement("option");
+          option.value = sub;
+          option.textContent = sub;
+          subjectSelect.appendChild(option);
+        });
+      });
+
+      const questionTextMap = {
+        Q01: "How good are teaching staff at explaining things?",
+        Q02: "How often do teaching staff make the subject engaging?",
+        Q03: "How often is the course intellectually stimulating?",
+        Q04: "How often does your course challenge you to achieve your best work?",
+        Q05: "To what extent have you had the chance to explore ideas and concepts in depth?",
+        Q06: "How well does your course introduce subjects and skills in a way that builds on what you have already learned?",
+        Q07: "To what extent have you had the chance to bring together information and ideas from different topics?",
+        Q08: "How well have teaching staff supported your learning?",
+        Q09: "How clearly have teaching staff explained course content?",
+        Q10: "How fair has assessment been?",
+        Q11: "How well have assessments allowed you to demonstrate what you’ve learned?",
+        Q12: "How helpful has feedback been on your work?",
+        Q13: "How clear has guidance been about marking criteria?",
+        Q14: "How well organised is your course?",
+        Q15: "How well have teaching staff communicated with students about changes?",
+        Q16: "How clearly has your timetable been communicated?",
+        Q17: "How easy has it been to access subject-specific resources (e.g. equipment, facilities)?",
+        Q18: "How easy has it been to access IT resources and facilities?",
+        Q19: "How easy has it been to access library resources?",
+        Q20: "How well have students’ views about the course been heard?",
+        Q21: "How clear has it been that student feedback on the course is acted on?",
+        Q22: "How well communicated were changes made in response to student feedback?",
+        Q23: "How well have students' unions represented students’ academic interests?",
+        Q24: "How well is your university supporting your learning?",
+        Q25: "How well are your academic skills being developed?",
+        Q26: "How well does your university support your mental wellbeing?"
+      };
+
+      const sample = data.find(r => r.Subject);
+      questions = Object.keys(sample)
+        .filter(k => /^Q\d+/.test(k))
+        .map(k => ({
+          key: k,
+          label: questionTextMap[k] || k
+        }));
+
+      renderEmptyTable();
+
+      [1, 2, 3].forEach(i => {
+        document.getElementById(`subject-${i}`).addEventListener("change", e => {
+          const subject = e.target.value;
+          const uniSelect = document.getElementById(`university-${i}`);
+          uniSelect.innerHTML = '<option value="">Select university</option>';
+          uniSelect.disabled = !subject;
+
+          if (subject && subjectDataMap[subject]) {
+const providers = [...new Set(subjectDataMap[subject].map(row => row.Provider))].sort();
+providers.forEach(provider => {
+  const opt = document.createElement("option");
+  opt.value = provider;
+  opt.textContent = provider;
+  uniSelect.appendChild(opt);
+});
+          }
+
+          uniSelect.dispatchEvent(new Event("change"));
+        });
+
+        document.getElementById(`university-${i}`).addEventListener("change", updateTable);
+      });
+    });
+
+  function renderEmptyTable() {
+    const tbody = document.getElementById("compare-body");
+    tbody.innerHTML = "";
+    questions.forEach(q => {
+      const tr = document.createElement("tr");
+      const labelCell = document.createElement("td");
+      labelCell.textContent = q.label;
+      tr.appendChild(labelCell);
+      for (let i = 0; i < 3; i++) {
+        const cell = document.createElement("td");
+        cell.textContent = "–";
+        tr.appendChild(cell);
+      }
+      tbody.appendChild(tr);
+    });
+  }
+
+  function updateTable() {
+    const tbody = document.getElementById("compare-body");
+    tbody.innerHTML = "";
+    questions.forEach(q => {
+      const tr = document.createElement("tr");
+      const labelCell = document.createElement("td");
+      labelCell.textContent = q.label;
+      tr.appendChild(labelCell);
+
+      [1, 2, 3].forEach(i => {
+        const subject = document.getElementById(`subject-${i}`).value;
+        const uni = document.getElementById(`university-${i}`).value;
+        const cell = document.createElement("td");
+
+        if (subject && uni && subjectDataMap[subject]) {
+          const entry = subjectDataMap[subject].find(row => row.Provider === uni);
+          if (entry && entry[q.key] !== undefined && typeof entry[q.key] === 'number') {
+            const val = Math.round(entry[q.key]);
+            cell.textContent = `${val}%`;
+            cell.className = val >= 85 ? "score-green" : val >= 70 ? "score-orange" : "score-red";
+          } else {
+            cell.textContent = "–";
+          }
+        } else {
+          cell.textContent = "–";
+        }
+        tr.appendChild(cell);
+      });
+
+      tbody.appendChild(tr);
+    });
+  }
 </script>
