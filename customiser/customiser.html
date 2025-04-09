@@ -1,8 +1,9 @@
 ---
 layout: default
-title: Customiser
+title: Compare Universities | University Ranking 2025 | Real Students. Real Rankings. 
 ---
 
+<!-- Load Tabulator (not needed now but kept for consistency) -->
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
 <script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
 
@@ -17,322 +18,311 @@ title: Customiser
 
   .hero {
     background-color: #3b0a66;
-    padding: 4rem 1rem 2rem 1rem;
-    text-align: center;
     color: white;
+    padding: 3rem 1rem 3rem;
+    text-align: center;
+    position: relative;
   }
 
-  .customiser-title {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
+  .hero h1,
+  .compare-title {
+    margin-top: -1rem;
+    font-size: 2.5rem;
   }
 
-  .form-group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    font-size: 1.6rem;
-    margin-bottom: 2rem;
+  .instruction-text {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    color: white;
+    font-weight: 300;
   }
 
-  #subject-select {
-    font-size: 1.4rem;
-    padding: 0.6rem 1.2rem;
-    border-radius: 6px;
+  .compare-section {
+    background-color: white;
+    margin-top: -5rem;
+    padding-top: 0;
+    padding-bottom: 3rem;
   }
 
-  .customiser-container {
-    padding: 2rem 1rem 4rem 1rem;
+  .compare-section .container {
     max-width: 1000px;
-    margin: -2rem auto 0 auto;
-    background-color: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  }
-
-  .question-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 1.4rem;
-    margin-top: -0.5rem;
-    background-color: #fff;
-    border-radius: 10px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 2rem 2rem 0 0;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
   }
 
-  .question-table th,
-  .question-table td {
-    border: 1px solid #ccc;
-    padding: 0.75rem;
-  }
-
-  .question-table th {
-    background-color: #eee;
-    text-align: center;
-  }
-
-  .question-table td:first-child {
-    text-align: left;
-    color: #333;
-    width: 70%;
-  }
-
-  .question-table td:last-child {
-    width: 30%;
-  }
-
-  .slider {
-  width: 100%;
-  appearance: none; /* Remove default styling */
-  height: 6px;
-  background: #ddd;
-  border-radius: 4px;
-  outline: none;
-}
-
-/* Chrome, Safari, Edge */
-.slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  background: #3b0a66;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-}
-
-/* Firefox */
-.slider::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  background: #3b0a66;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-}
-  
-  .submit-btn {
-    background-color: #3b0a66;
-    color: white;
-    padding: 1rem 2rem;
-    font-size: 1.4rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 2rem;
-    display: none;
-  }
-
-  .results-table {
+  .compare-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 3rem;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
-  .results-table th,
-  .results-table td {
-    border: 1px solid #ccc;
-    padding: 0.75rem;
+  .compare-table th,
+  .compare-table td {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .compare-table th {
+    background-color: #fff;
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: #3b0a66;
     text-align: center;
   }
 
-  .results-table th {
-    background-color: #eee;
+  .compare-table td {
+    text-align: center;
+    font-size: 1rem;
   }
 
-  .row-up {
-    background-color: #d4f7dc;
+  .compare-table td:first-child {
+    text-align: left;
+    padding-left: 0.75rem;
   }
 
-  .row-down {
-    background-color: #fddddd;
+  .compare-table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+  }
+
+  .compare-table tbody tr:nth-child(even) {
+    background-color: #f5effa;
+  }
+
+  .compare-table select {
+    width: 160px;
+    max-width: 100%;
+    font-size: 1.2rem;
+  }
+
+  .score-green {
+    color: #2e7d32;
+    font-weight: bold;
+  }
+
+  .score-orange {
+    color: #ef6c00;
+    font-weight: bold;
+  }
+
+  .score-red {
+    color: #c62828;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1,
+    .compare-title {
+      font-size: 2rem;
+    }
+
+    .instruction-text {
+      font-size: 1rem;
+    }
+
+    .compare-table {
+      font-size: 0.8rem;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      font-size: 0.8rem;
+      padding: 0.5rem;
+    }
+
+    .compare-table select {
+      font-size: 0.9rem;
+    }
+
+    .compare-section .container {
+      padding: 0.5rem;
+    }
   }
 </style>
 
 
-<div class="hero">
-  <h2 class="customiser-title">Customise Your Subject Rankings</h2>
-  <div class="form-group">
-    <label for="subject-select">Choose Subject Area:</label>
-    <select id="subject-select">
-      <option value="">-- Select a Subject --</option>
-    </select>
-  </div>
-</div>
+<section class="hero">
+  <h2 class="compare-title">Compare University Scores</h2>
+</section>
 
-<div class="customiser-container">
-  <form id="weights-form">
-    <table class="question-table">
-      <thead>
-        <tr>
-          <th>Question</th>
-          <th>Importance</th>
-        </tr>
-      </thead>
-      <tbody id="question-body">
-      </tbody>
-    </table>
-    <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
-  </form>
-  <div id="results"></div>
-</div>
+<section class="compare-section">
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>
+          <select id="subject-1">
+            <option value="">Select subject</option>
+          </select><br>
+          <select id="university-1" disabled>
+            <option value="">Select university</option>
+          </select>
+        </th>
+        <th>
+          <select id="subject-2">
+            <option value="">Select subject</option>
+          </select><br>
+          <select id="university-2" disabled>
+            <option value="">Select university</option>
+          </select>
+        </th>
+        <th>
+          <select id="subject-3">
+            <option value="">Select subject</option>
+          </select><br>
+          <select id="university-3" disabled>
+            <option value="">Select university</option>
+          </select>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="compare-body">
+      <!-- Questions and scores will be inserted here -->
+    </tbody>
+  </table>
+</section>
 
 <script>
-  const questionTextMap = {
-    Q01: "How good are teaching staff at explaining things?",
-    Q02: "How often do teaching staff make the subject engaging?",
-    Q03: "How often is the course intellectually stimulating?",
-    Q04: "How often does your course challenge you to achieve your best work?",
-    Q05: "To what extent have you had the chance to explore ideas and concepts in depth?",
-    Q06: "How well does your course introduce subjects and skills in a way that builds on what you have already learned?",
-    Q07: "To what extent have you had the chance to bring together information and ideas from different topics?",
-    Q08: "To what extent does your course have the right balance of directed and independent study?",
-    Q09: "How well has your course developed your knowledge and skills that you think you will need for your future?",
-    Q10: "How clear were the marking criteria used to assess your work?",
-    Q11: "How fair has the marking and assessment been on your course?",
-    Q12: "How well have assessments allowed you to demonstrate what you have learned?",
-    Q13: "How often have you received assessment feedback on time?",
-    Q14: "How often does feedback help you to improve your work?",
-    Q15: "How easy is it to contact teaching staff when you needed to?",
-    Q16: "How well have teaching staff supported your learning?",
-    Q17: "How well organised is your course?",
-    Q18: "How well were any changes to teaching communicated?",
-    Q19: "How well have the library resources supported your learning?",
-    Q20: "How well have the IT resources and facilities supported your learning?",
-    Q21: "How well have the course-specific facilities and resources supported your learning?",
-    Q22: "How clear is it that students’ feedback has been acted on?",
-    Q23: "How well does the students’ union represent students’ academic interests?",
-    Q24: "How well communicated was information about your university’s mental wellbeing services?",
-    Q25: "How well communicated was information about how to access your university’s mental wellbeing services?",
-    Q26: "How well communicated was information about your university’s academic support services?"
-  };
-
-  let allData = [];
-  let defaultRanks = {};
+  const subjects = new Set();
+  const subjectDataMap = {};
   let questions = [];
 
   fetch("../assets/tables/All-Subjects-Formatted.json")
     .then(res => res.json())
     .then(data => {
-      allData = data;
-
-      const subjectSelect = document.getElementById("subject-select");
-      const tbody = document.getElementById("question-body");
-      const btn = document.getElementById("submit-btn");
-
-      const subjects = [...new Set(data.map(row => row.Subject))].sort();
-      subjects.forEach(subject => {
-        const option = document.createElement("option");
-        option.value = subject;
-        option.textContent = subject;
-        subjectSelect.appendChild(option);
+      data.forEach(row => {
+        subjects.add(row.Subject);
+        if (!subjectDataMap[row.Subject]) {
+          subjectDataMap[row.Subject] = [];
+        }
+        subjectDataMap[row.Subject].push(row);
       });
+
+      const sortedSubjects = Array.from(subjects).sort();
+
+      [1, 2, 3].forEach(i => {
+        const subjectSelect = document.getElementById(`subject-${i}`);
+        sortedSubjects.forEach(sub => {
+          const option = document.createElement("option");
+          option.value = sub;
+          option.textContent = sub;
+          subjectSelect.appendChild(option);
+        });
+      });
+
+      const questionTextMap = {
+        Q01: "How good are teaching staff at explaining things?",
+        Q02: "How often do teaching staff make the subject engaging?",
+        Q03: "How often is the course intellectually stimulating?",
+        Q04: "How often does your course challenge you to achieve your best work?",
+        Q05: "To what extent have you had the chance to explore ideas and concepts in depth?",
+        Q06: "How well does your course introduce subjects and skills in a way that builds on what you have already learned?",
+        Q07: "To what extent have you had the chance to bring together information and ideas from different topics?",
+        Q08: "How well have teaching staff supported your learning?",
+        Q09: "How clearly have teaching staff explained course content?",
+        Q10: "How fair has assessment been?",
+        Q11: "How well have assessments allowed you to demonstrate what you’ve learned?",
+        Q12: "How helpful has feedback been on your work?",
+        Q13: "How clear has guidance been about marking criteria?",
+        Q14: "How well organised is your course?",
+        Q15: "How well have teaching staff communicated with students about changes?",
+        Q16: "How clearly has your timetable been communicated?",
+        Q17: "How easy has it been to access subject-specific resources (e.g. equipment, facilities)?",
+        Q18: "How easy has it been to access IT resources and facilities?",
+        Q19: "How easy has it been to access library resources?",
+        Q20: "How well have students’ views about the course been heard?",
+        Q21: "How clear has it been that student feedback on the course is acted on?",
+        Q22: "How well communicated were changes made in response to student feedback?",
+        Q23: "How well have students' unions represented students’ academic interests?",
+        Q24: "How well is your university supporting your learning?",
+        Q25: "How well are your academic skills being developed?",
+        Q26: "How well does your university support your mental wellbeing?"
+      };
 
       const sample = data.find(r => r.Subject);
-      questions = Object.keys(sample).filter(k => /^Q\d+/.test(k));
+      questions = Object.keys(sample)
+        .filter(k => /^Q\d+/.test(k))
+        .map(k => ({
+          key: k,
+          label: questionTextMap[k] || k
+        }));
 
-      // Always visible: populate question table once
-      tbody.innerHTML = "";
-      questions.forEach(q => {
-        const tr = document.createElement("tr");
-        const tdLabel = document.createElement("td");
-        tdLabel.textContent = questionTextMap[q] || q;
+      renderEmptyTable();
 
-        const tdInput = document.createElement("td");
-        const slider = document.createElement("input");
-        slider.type = "range";
-        slider.min = -2;
-        slider.max = 2;
-        slider.value = 0;
-        slider.step = 1;
-        slider.className = "slider";
-        slider.name = q;
-        slider.disabled = true;
+      [1, 2, 3].forEach(i => {
+        document.getElementById(`subject-${i}`).addEventListener("change", e => {
+          const subject = e.target.value;
+          const uniSelect = document.getElementById(`university-${i}`);
+          uniSelect.innerHTML = '<option value="">Select university</option>';
+          uniSelect.disabled = !subject;
 
-        tdInput.appendChild(slider);
-        tr.appendChild(tdLabel);
-        tr.appendChild(tdInput);
-        tbody.appendChild(tr);
-      });
+          if (subject && subjectDataMap[subject]) {
+const providers = [...new Set(subjectDataMap[subject].map(row => row.Provider))].sort();
+providers.forEach(provider => {
+  const opt = document.createElement("option");
+  opt.value = provider;
+  opt.textContent = provider;
+  uniSelect.appendChild(opt);
+});
+          }
 
-      subjectSelect.addEventListener("change", () => {
-        const selected = subjectSelect.value;
-        btn.style.display = selected ? "inline-block" : "none";
-        document.querySelectorAll("input.slider").forEach(slider => {
-          slider.disabled = !selected;
-        });
-      });
-
-      document.getElementById("weights-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const subject = subjectSelect.value;
-        const subjectData = allData.filter(row => row.Subject === subject);
-
-        const weights = {};
-        document.querySelectorAll("input.slider").forEach(input => {
-          weights[input.name] = parseInt(input.value) * 25;
+          uniSelect.dispatchEvent(new Event("change"));
         });
 
-        subjectData.forEach(row => {
-          let total = 0, count = 0;
-          questions.forEach(q => {
-            if (typeof row[q] === 'number') {
-              total += row[q];
-              count++;
-            }
-          });
-          row.originalScore = count ? total / count : 0;
-        });
-
-        const originalSorted = [...subjectData].sort((a, b) => b.originalScore - a.originalScore);
-        originalSorted.forEach((row, idx) => defaultRanks[row.Provider] = idx + 1);
-
-        subjectData.forEach(row => {
-          let total = 0, count = 0;
-          questions.forEach(q => {
-            if (typeof row[q] === 'number') {
-              const weightFactor = 1 + (weights[q] || 0) / 100;
-              total += row[q] * weightFactor;
-              count++;
-            }
-          });
-          row.weightedScore = count ? total / count : 0;
-        });
-
-        const sorted = [...subjectData].sort((a, b) => b.weightedScore - a.weightedScore);
-
-        const resultsHTML = `
-          <table class="results-table">
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Change</th>
-                <th>University</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${sorted.map((row, i) => {
-                const newRank = i + 1;
-                const originalRank = defaultRanks[row.Provider];
-                const diff = originalRank - newRank;
-                const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
-                const rowClass = diff > 0 ? "row-up" : diff < 0 ? "row-down" : "";
-
-                return `
-                  <tr class="${rowClass}">
-                    <td>${newRank}</td>
-                    <td>${changeText}</td>
-                    <td>${row.Provider}</td>
-                  </tr>
-                `;
-              }).join("")}
-            </tbody>
-          </table>
-        `;
-        document.getElementById("results").innerHTML = resultsHTML;
+        document.getElementById(`university-${i}`).addEventListener("change", updateTable);
       });
     });
+
+  function renderEmptyTable() {
+    const tbody = document.getElementById("compare-body");
+    tbody.innerHTML = "";
+    questions.forEach(q => {
+      const tr = document.createElement("tr");
+      const labelCell = document.createElement("td");
+      labelCell.textContent = q.label;
+      tr.appendChild(labelCell);
+      for (let i = 0; i < 3; i++) {
+        const cell = document.createElement("td");
+        cell.textContent = "–";
+        tr.appendChild(cell);
+      }
+      tbody.appendChild(tr);
+    });
+  }
+
+  function updateTable() {
+    const tbody = document.getElementById("compare-body");
+    tbody.innerHTML = "";
+    questions.forEach(q => {
+      const tr = document.createElement("tr");
+      const labelCell = document.createElement("td");
+      labelCell.textContent = q.label;
+      tr.appendChild(labelCell);
+
+      [1, 2, 3].forEach(i => {
+        const subject = document.getElementById(`subject-${i}`).value;
+        const uni = document.getElementById(`university-${i}`).value;
+        const cell = document.createElement("td");
+
+        if (subject && uni && subjectDataMap[subject]) {
+          const entry = subjectDataMap[subject].find(row => row.Provider === uni);
+          if (entry && entry[q.key] !== undefined && typeof entry[q.key] === 'number') {
+            const val = Math.round(entry[q.key]);
+            cell.textContent = `${val}%`;
+            cell.className = val >= 85 ? "score-green" : val >= 70 ? "score-orange" : "score-red";
+          } else {
+            cell.textContent = "–";
+          }
+        } else {
+          cell.textContent = "–";
+        }
+        tr.appendChild(cell);
+      });
+
+      tbody.appendChild(tr);
+    });
+  }
 </script>
