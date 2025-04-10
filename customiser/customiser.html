@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 09:42 Customiser
+title: 09:47 Customiser
 ---
 
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
@@ -154,6 +154,12 @@ title: 09:42 Customiser
     background-color: #fddddd;
   }
 
+#results {
+  max-width: 850px;
+  margin: 2rem auto 4rem auto;
+  padding: 0 1rem;
+}
+  
   @media (max-width: 768px) {
     .customiser-title {
       font-size: 1.6rem;
@@ -208,8 +214,9 @@ title: 09:42 Customiser
     </table>
     <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
   </form>
-  <div id="results"></div>
 </div>
+
+  <div id="results"></div>
 
 <script>
   const questionTextMap = {
