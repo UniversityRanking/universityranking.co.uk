@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 10:46 Customiser
+title: Restored Customiser
 ---
 
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
@@ -16,25 +16,11 @@ title: 10:46 Customiser
     font-size: 1rem;
   }
 
-  /* Hero styling, identical to your other pages for consistency */
   .hero {
     background-color: #3b0a66;
-    color: white;
-    padding: 3rem 1rem 3rem;
+    padding: 0.5rem 1rem 12rem 1rem;
     text-align: center;
-  }
-
-  /* Center content, max 850px wide */
-  .container {
-    max-width: 850px;
-    margin: 0 auto;
-  }
-
-  /* Overlap effect: the white section slides up into the purple */
-  .customiser-section {
-    background: white;
-    margin-top: -5rem; /* adjust for more/less overlap */
-    padding-bottom: 3rem;
+    color: white;
   }
 
   .customiser-title {
@@ -57,11 +43,12 @@ title: 10:46 Customiser
     border-radius: 6px;
   }
 
-  /* White content box inside the overlap */
   .customiser-container {
     padding: 2rem 1rem 4rem 1rem;
+    max-width: 850px;
+    margin: -7rem auto 0 auto;
     background-color: #ffffff;
-    border-radius: 20px 20px 0 0; /* top corners curved */
+    border-radius: 20px 20px 0 0;
   }
 
   .question-table {
@@ -85,7 +72,6 @@ title: 10:46 Customiser
     color: #3b0a66;
     font-weight: bold;
     font-size: 1.3rem;
-    padding-top: 0.3rem;
   }
 
   .question-table td:first-child {
@@ -107,7 +93,6 @@ title: 10:46 Customiser
     outline: none;
   }
 
-  /* Range slider thumbs */
   .slider::-webkit-slider-thumb {
     appearance: none;
     width: 16px;
@@ -117,6 +102,7 @@ title: 10:46 Customiser
     cursor: pointer;
     border: none;
   }
+
   .slider::-moz-range-thumb {
     width: 16px;
     height: 16px;
@@ -126,7 +112,6 @@ title: 10:46 Customiser
     border: none;
   }
 
-  /* Submit button */
   .submit-btn {
     background-color: #3b0a66;
     color: white;
@@ -139,7 +124,6 @@ title: 10:46 Customiser
     display: none;
   }
 
-  /* Results table */
   .results-table {
     width: 100%;
     border-collapse: collapse;
@@ -147,10 +131,10 @@ title: 10:46 Customiser
     font-size: 1.3rem;
   }
 
-  .results-table td:nth-child(3) {
-    text-align: left;
-  }
-
+.results-table td:nth-child(3) {
+  text-align: left;
+}
+  
   .results-table th,
   .results-table td {
     border: none;
@@ -167,73 +151,74 @@ title: 10:46 Customiser
   .row-up {
     background-color: #d4f7dc;
   }
+
   .row-down {
     background-color: #fddddd;
   }
 
-  /* Results container styling */
-  #results {
-    max-width: 850px;
-    margin: 2rem auto 4rem auto;
-    padding: 0 1rem;
-  }
-
-  /* Mobile tweaks */
+#results {
+  max-width: 850px;
+  margin: 2rem auto 4rem auto;
+  padding: 0 1rem;
+}
+  
   @media (max-width: 768px) {
     .customiser-title {
       font-size: 1.6rem;
     }
+
     .form-group {
       flex-direction: column;
       font-size: 1rem;
     }
+
     #subject-select {
       font-size: 1rem;
     }
+
     .question-table {
       font-size: 0.8rem;
     }
+
     .question-table th {
       font-size: 1rem;
     }
+
     .results-table {
       font-size: 0.9rem;
     }
   }
 </style>
 
-<section class="hero">
-  <div class="container">
-    <h2 class="customiser-title">Customise Your Subject Rankings</h2>
-    <div class="form-group">
-      <label for="subject-select">Choose Subject Area:</label>
-      <select id="subject-select">
-        <option value="">-- Select a Subject --</option>
-      </select>
-    </div>
-  </div>
-</section>
 
-<section class="customiser-section">
-  <div class="container">
-    <div class="customiser-container">
-      <form id="weights-form">
-        <table class="question-table">
-          <thead>
-            <tr>
-              <th>Question</th>
-              <th>Importance</th>
-            </tr>
-          </thead>
-          <tbody id="question-body"></tbody>
-        </table>
-        <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
-      </form>
-    </div>
-    <!-- We'll place results outside the customiser-container but still in the container -->
-    <div id="results"></div>
+
+<div class="hero">
+  <h2 class="customiser-title">Customise Your Subject Rankings</h2>
+  <div class="form-group">
+    <label for="subject-select">Choose Subject Area:</label>
+    <select id="subject-select">
+      <option value="">-- Select a Subject --</option>
+    </select>
   </div>
-</section>
+</div>
+
+<div class="customiser-container">
+  <form id="weights-form">
+    <table class="question-table">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Importance</th>
+        </tr>
+      </thead>
+      <tbody id="question-body">
+      </tbody>
+    </table>
+    <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
+  </form>
+</div>
+
+  <div id="results"></div>
 
 <script>
   const questionTextMap = {
@@ -287,9 +272,9 @@ title: 10:46 Customiser
       });
 
       const sample = data.find(r => r.Subject);
-      questions = Object.keys(sample).filter(k => /^Q\\d+/.test(k));
+      questions = Object.keys(sample).filter(k => /^Q\d+/.test(k));
 
-      // Populate question table once
+      // Always visible: populate question table once
       tbody.innerHTML = "";
       questions.forEach(q => {
         const tr = document.createElement("tr");
@@ -326,13 +311,11 @@ title: 10:46 Customiser
         const subject = subjectSelect.value;
         const subjectData = allData.filter(row => row.Subject === subject);
 
-        // Get slider values
         const weights = {};
         document.querySelectorAll("input.slider").forEach(input => {
           weights[input.name] = parseInt(input.value) * 25;
         });
 
-        // Original rank
         subjectData.forEach(row => {
           let total = 0, count = 0;
           questions.forEach(q => {
@@ -343,13 +326,12 @@ title: 10:46 Customiser
           });
           row.originalScore = count ? total / count : 0;
         });
-        const originalSorted = [...subjectData].sort((a, b) => b.originalScore - a.originalScore);
-        originalSorted.forEach((row, idx) => (defaultRanks[row.Provider] = idx + 1));
 
-        // Weighted rank
+        const originalSorted = [...subjectData].sort((a, b) => b.originalScore - a.originalScore);
+        originalSorted.forEach((row, idx) => defaultRanks[row.Provider] = idx + 1);
+
         subjectData.forEach(row => {
-          let total = 0,
-            count = 0;
+          let total = 0, count = 0;
           questions.forEach(q => {
             if (typeof row[q] === 'number') {
               const weightFactor = 1 + (weights[q] || 0) / 100;
@@ -362,7 +344,6 @@ title: 10:46 Customiser
 
         const sorted = [...subjectData].sort((a, b) => b.weightedScore - a.weightedScore);
 
-        // Build results HTML
         const resultsHTML = `
           <table class="results-table">
             <thead>
@@ -373,27 +354,25 @@ title: 10:46 Customiser
               </tr>
             </thead>
             <tbody>
-              ${sorted
-                .map((row, i) => {
-                  const newRank = i + 1;
-                  const originalRank = defaultRanks[row.Provider];
-                  const diff = originalRank - newRank;
-                  const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : '0';
-                  const rowClass = diff > 0 ? 'row-up' : diff < 0 ? 'row-down' : '';
+              ${sorted.map((row, i) => {
+                const newRank = i + 1;
+                const originalRank = defaultRanks[row.Provider];
+                const diff = originalRank - newRank;
+                const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
+                const rowClass = diff > 0 ? "row-up" : diff < 0 ? "row-down" : "";
 
-                  return `
-                    <tr class="${rowClass}">
-                      <td>${newRank}</td>
-                      <td>${changeText}</td>
-                      <td>${row.Provider}</td>
-                    </tr>
-                  `;
-                })
-                .join('')}
+                return `
+                  <tr class="${rowClass}">
+                    <td>${newRank}</td>
+                    <td>${changeText}</td>
+                    <td>${row.Provider}</td>
+                  </tr>
+                `;
+              }).join("")}
             </tbody>
           </table>
         `;
-        document.getElementById('results').innerHTML = resultsHTML;
+        document.getElementById("results").innerHTML = resultsHTML;
       });
     });
 </script>
