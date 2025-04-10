@@ -1,62 +1,31 @@
 ---
 layout: default
-title: 11:04 Customiser
+title: 10:09 Customiser
 ---
+
+<link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
+<script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
 
 <style>
   body {
     font-family: 'Helvetica Neue', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #3b0a66; /* Full width purple background */
+    background-color: #ffffff;
     color: #333;
     font-size: 1rem;
   }
 
-  /* Top Header */
-  .top-header {
-    background-color: #3b0a66;
-    color: white;
-    padding: 1rem 1rem;
-  }
-
-  .top-header-container {
-    max-width: 1200px; /* Adjust as needed */
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .top-header nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 1rem;
-  }
-
-  .top-header nav a:first-child {
-    margin-left: 0;
-  }
-
-  /* Hero section (purple background with text and dropdown) */
   .hero {
-    color: white;
-    padding: 3rem 1rem 5rem; /* Adjust vertical padding as needed */
+    background-color: #3b0a66;
+    padding: 0.5rem 1rem 10rem 1rem;
     text-align: center;
-    position: relative;
-    max-width: 850px; /* Constrain width */
-    margin: 0 auto; /* Center */
-    background-color: #3b0a66; /* Ensure it has the purple background */
-  }
-
-  .container {
-    max-width: 850px;
-    margin: 0 auto;
+    color: white;
   }
 
   .customiser-title {
     font-size: 2.2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   .form-group {
@@ -65,6 +34,7 @@ title: 11:04 Customiser
     align-items: center;
     gap: 1rem;
     font-size: 1.2rem;
+    margin-bottom: 0.5rem;
   }
 
   #subject-select {
@@ -73,16 +43,12 @@ title: 11:04 Customiser
     border-radius: 6px;
   }
 
-  /* Customiser section (white table) */
-  .customiser-section {
-    background: white;
-    margin-top: -4.5rem; /* Adjust to control overlap */
-    padding: 2rem 1rem 4rem;
+  .customiser-container {
+    padding: 2rem 1rem 4rem 1rem;
+    max-width: 850px;
+    margin: -10rem auto 0 auto;
+    background-color: #ffffff;
     border-radius: 20px 20px 0 0;
-    z-index: 1;
-    position: relative;
-    max-width: 850px; /* Constrain width */
-    margin: 0 auto; /* Center */
   }
 
   .question-table {
@@ -101,6 +67,7 @@ title: 11:04 Customiser
   }
 
   .question-table th {
+    background-color: #fff;
     text-align: center;
     color: #3b0a66;
     font-weight: bold;
@@ -164,6 +131,10 @@ title: 11:04 Customiser
     font-size: 1.3rem;
   }
 
+.results-table td:nth-child(3) {
+  text-align: left;
+}
+  
   .results-table th,
   .results-table td {
     border: none;
@@ -177,10 +148,6 @@ title: 11:04 Customiser
     font-weight: bold;
   }
 
-  .results-table td:nth-child(3) {
-    text-align: left;
-  }
-
   .row-up {
     background-color: #d4f7dc;
   }
@@ -189,12 +156,12 @@ title: 11:04 Customiser
     background-color: #fddddd;
   }
 
-  #results {
-    max-width: 850px;
-    margin: 2rem auto 4rem auto;
-    padding: 0 1rem;
-  }
-
+#results {
+  max-width: 850px;
+  margin: 2rem auto 4rem auto;
+  padding: 0 1rem;
+}
+  
   @media (max-width: 768px) {
     .customiser-title {
       font-size: 1.6rem;
@@ -223,49 +190,35 @@ title: 11:04 Customiser
   }
 </style>
 
-<header class="top-header">
-  <div class="top-header-container">
-    <img src="university-ranking-logo.png" alt="University Ranking" style="height: 40px;">
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Compare</a>
-      <a href="#">Customiser</a>
-      <a href="#">Methodology</a>
-    </nav>
-  </div>
-</header>
 
-<section class="hero">
-  <div class="container">
-    <h2 class="customiser-title">Customise Your Subject Rankings</h2>
-    <div class="form-group">
-      <label for="subject-select">Choose Subject Area:</label>
-      <select id="subject-select">
-        <option value="">-- Select a Subject --</option>
-      </select>
-    </div>
-  </div>
-</section>
 
-<section class="customiser-section">
-  <div class="container">
-    <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
-    <form id="weights-form">
-      <table class="question-table">
-        <thead>
-          <tr>
-            <th>Question</th>
-            <th>Importance</th>
-          </tr>
-        </thead>
-        <tbody id="question-body"></tbody>
-      </table>
-      <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
-    </form>
-    <div id="results"></div>
+<div class="hero">
+  <h2 class="customiser-title">Customise Your Subject Rankings</h2>
+  <div class="form-group">
+    <label for="subject-select">Choose Subject Area:</label>
+    <select id="subject-select">
+      <option value="">-- Select a Subject --</option>
+    </select>
   </div>
-</section>
+</div>
+
+<div class="customiser-container">
+  <form id="weights-form">
+    <table class="question-table">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Importance</th>
+        </tr>
+      </thead>
+      <tbody id="question-body">
+      </tbody>
+    </table>
+    <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
+  </form>
+</div>
+
+  <div id="results"></div>
 
 <script>
   const questionTextMap = {
@@ -321,6 +274,7 @@ title: 11:04 Customiser
       const sample = data.find(r => r.Subject);
       questions = Object.keys(sample).filter(k => /^Q\d+/.test(k));
 
+      // Always visible: populate question table once
       tbody.innerHTML = "";
       questions.forEach(q => {
         const tr = document.createElement("tr");
@@ -365,7 +319,7 @@ title: 11:04 Customiser
         subjectData.forEach(row => {
           let total = 0, count = 0;
           questions.forEach(q => {
-            if (typeof row[q] === "number") {
+            if (typeof row[q] === 'number') {
               total += row[q];
               count++;
             }
@@ -374,14 +328,12 @@ title: 11:04 Customiser
         });
 
         const originalSorted = [...subjectData].sort((a, b) => b.originalScore - a.originalScore);
-        originalSorted.forEach((row, idx) => {
-          defaultRanks[row.Provider] = idx + 1;
-        });
+        originalSorted.forEach((row, idx) => defaultRanks[row.Provider] = idx + 1);
 
         subjectData.forEach(row => {
           let total = 0, count = 0;
           questions.forEach(q => {
-            if (typeof row[q] === "number") {
+            if (typeof row[q] === 'number') {
               const weightFactor = 1 + (weights[q] || 0) / 100;
               total += row[q] * weightFactor;
               count++;
@@ -408,6 +360,7 @@ title: 11:04 Customiser
                 const diff = originalRank - newRank;
                 const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
                 const rowClass = diff > 0 ? "row-up" : diff < 0 ? "row-down" : "";
+
                 return `
                   <tr class="${rowClass}">
                     <td>${newRank}</td>
