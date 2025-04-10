@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 10:18 Customiser
+title: 10:22 Customiser
 ---
 
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
@@ -17,12 +17,16 @@ title: 10:18 Customiser
   }
 
   .hero {
-    background-color: #3b0a66;
-    padding: 0.5rem 1rem 7rem 1rem;
+    padding: 0.5rem 1rem 10rem 1rem;
     text-align: center;
     color: white;
   }
 
+  .hero-bg {
+  background-color: #3b0a66;
+  padding-bottom: 3rem; /* reduce this until the purple stops where you want */
+}
+  
   .customiser-title {
     font-size: 2.2rem;
     margin-bottom: 0.5rem;
@@ -193,13 +197,15 @@ title: 10:18 Customiser
 
 
 
-<div class="hero">
-  <h2 class="customiser-title">Customise Your Subject Rankings</h2>
-  <div class="form-group">
-    <label for="subject-select">Choose Subject Area:</label>
-    <select id="subject-select">
-      <option value="">-- Select a Subject --</option>
-    </select>
+<div class="hero-bg">
+  <div class="hero">
+    <h2 class="customiser-title">Customise Your Subject Rankings</h2>
+    <div class="form-group">
+      <label for="subject-select">Choose Subject Area:</label>
+      <select id="subject-select">
+        <option value="">-- Select a Subject --</option>
+      </select>
+    </div>
   </div>
 </div>
 
