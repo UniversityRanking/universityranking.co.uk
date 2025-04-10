@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 10:35 Customiser
+title: 10:40 Customiser
 ---
 
 <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
@@ -17,17 +17,21 @@ title: 10:35 Customiser
   }
 
 .hero {
-  padding: 0rem;
-  text-align: center;
+  background-color: #3b0a66;
   color: white;
+  padding: 3rem 1rem 3rem;
+  text-align: center;
+}
+.container {
+  max-width: 850px;
+  margin: 0 auto;
+}
+  .customiser-section {
+  background: white;
+  margin-top: -5rem;
+  padding-bottom: 3rem;
 }
 
-.hero-bg {
-  background-color: #3b0a66;
-  padding: 5rem 1rem 5rem 1rem;  /* move your padding here */
-  text-align: center;
-  color: white;
-}
   
   .customiser-title {
     font-size: 2.2rem;
@@ -49,13 +53,11 @@ title: 10:35 Customiser
     border-radius: 6px;
   }
 
-  .customiser-container {
-    padding: 2rem 1rem 4rem 1rem;
-    max-width: 850px;
-    margin: -8rem auto 0 auto;
-    background-color: #ffffff;
-    border-radius: 20px 20px 0 0;
-  }
+.customiser-container {
+  padding: 2rem 1rem 4rem 1rem;
+  background-color: #ffffff;
+  border-radius: 20px 20px 0 0;
+}
 
   .question-table {
     width: 100%;
@@ -199,8 +201,8 @@ title: 10:35 Customiser
 
 
 
-<div class="hero-bg">
-  <div class="hero">
+<section class="hero">
+  <div class="container">
     <h2 class="customiser-title">Customise Your Subject Rankings</h2>
     <div class="form-group">
       <label for="subject-select">Choose Subject Area:</label>
@@ -209,23 +211,29 @@ title: 10:35 Customiser
       </select>
     </div>
   </div>
-</div>
+</section>
 
-<div class="customiser-container">
-  <form id="weights-form">
-    <table class="question-table">
-      <thead>
-        <tr>
-          <th>Question</th>
-          <th>Importance</th>
-        </tr>
-      </thead>
-      <tbody id="question-body">
-      </tbody>
-    </table>
-    <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
-  </form>
-</div>
+<section class="customiser-section">
+  <div class="container">
+    <div class="customiser-container">
+      <!-- leave this part unchanged -->
+      <form id="weights-form">
+        <table class="question-table">
+          <thead>
+            <tr>
+              <th>Question</th>
+              <th>Importance</th>
+            </tr>
+          </thead>
+          <tbody id="question-body"></tbody>
+        </table>
+        <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div id="results"></div>
 
   <div id="results"></div>
 
