@@ -1,30 +1,52 @@
 ---
 layout: default
-title: 11:00 Customiser
+title: 11:04 Customiser
 ---
-
-<link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
-<script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
 
 <style>
   body {
     font-family: 'Helvetica Neue', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
+    background-color: #3b0a66; /* Full width purple background */
     color: #333;
     font-size: 1rem;
   }
 
-  /* Hero header */
-  .hero {
+  /* Top Header */
+  .top-header {
     background-color: #3b0a66;
     color: white;
-    padding: 3rem 1rem 5rem;
+    padding: 1rem 1rem;
+  }
+
+  .top-header-container {
+    max-width: 1200px; /* Adjust as needed */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .top-header nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+  }
+
+  .top-header nav a:first-child {
+    margin-left: 0;
+  }
+
+  /* Hero section (purple background with text and dropdown) */
+  .hero {
+    color: white;
+    padding: 3rem 1rem 5rem; /* Adjust vertical padding as needed */
     text-align: center;
     position: relative;
-    max-width: 850px; /* Add this line */
-    margin: 0 auto; /* Add this line */
+    max-width: 850px; /* Constrain width */
+    margin: 0 auto; /* Center */
+    background-color: #3b0a66; /* Ensure it has the purple background */
   }
 
   .container {
@@ -51,14 +73,16 @@ title: 11:00 Customiser
     border-radius: 6px;
   }
 
-  /* Overlapping section starts lower but moves up visually */
+  /* Customiser section (white table) */
   .customiser-section {
     background: white;
-    margin-top: -4.5rem;
+    margin-top: -4.5rem; /* Adjust to control overlap */
     padding: 2rem 1rem 4rem;
     border-radius: 20px 20px 0 0;
     z-index: 1;
     position: relative;
+    max-width: 850px; /* Constrain width */
+    margin: 0 auto; /* Center */
   }
 
   .question-table {
@@ -199,7 +223,18 @@ title: 11:00 Customiser
   }
 </style>
 
-<!-- Purple Hero Area -->
+<header class="top-header">
+  <div class="top-header-container">
+    <img src="university-ranking-logo.png" alt="University Ranking" style="height: 40px;">
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Compare</a>
+      <a href="#">Customiser</a>
+      <a href="#">Methodology</a>
+    </nav>
+  </div>
+</header>
+
 <section class="hero">
   <div class="container">
     <h2 class="customiser-title">Customise Your Subject Rankings</h2>
@@ -212,9 +247,10 @@ title: 11:00 Customiser
   </div>
 </section>
 
-<!-- White Table Overlap Section -->
 <section class="customiser-section">
   <div class="container">
+    <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
     <form id="weights-form">
       <table class="question-table">
         <thead>
@@ -227,165 +263,163 @@ title: 11:00 Customiser
       </table>
       <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
     </form>
-
     <div id="results"></div>
   </div>
 </section>
 
 <script>
-// Same JavaScript from before — no changes needed.
-const questionTextMap = {
-  Q01: "How good are teaching staff at explaining things?",
-  Q02: "How often do teaching staff make the subject engaging?",
-  Q03: "How often is the course intellectually stimulating?",
-  Q04: "How often does your course challenge you to achieve your best work?",
-  Q05: "To what extent have you had the chance to explore ideas and concepts in depth?",
-  Q06: "How well does your course introduce subjects and skills in a way that builds on what you have already learned?",
-  Q07: "To what extent have you had the chance to bring together information and ideas from different topics?",
-  Q08: "To what extent does your course have the right balance of directed and independent study?",
-  Q09: "How well has your course developed your knowledge and skills that you think you will need for your future?",
-  Q10: "How clear were the marking criteria used to assess your work?",
-  Q11: "How fair has the marking and assessment been on your course?",
-  Q12: "How well have assessments allowed you to demonstrate what you have learned?",
-  Q13: "How often have you received assessment feedback on time?",
-  Q14: "How often does feedback help you to improve your work?",
-  Q15: "How easy is it to contact teaching staff when you needed to?",
-  Q16: "How well have teaching staff supported your learning?",
-  Q17: "How well organised is your course?",
-  Q18: "How well were any changes to teaching communicated?",
-  Q19: "How well have the library resources supported your learning?",
-  Q20: "How well have the IT resources and facilities supported your learning?",
-  Q21: "How well have the course-specific facilities and resources supported your learning?",
-  Q22: "How clear is it that students’ feedback has been acted on?",
-  Q23: "How well does the students’ union represent students’ academic interests?",
-  Q24: "How well communicated was information about your university’s mental wellbeing services?",
-  Q25: "How well communicated was information about how to access your university’s mental wellbeing services?",
-  Q26: "How well communicated was information about your university’s academic support services?"
-};
+  const questionTextMap = {
+    Q01: "How good are teaching staff at explaining things?",
+    Q02: "How often do teaching staff make the subject engaging?",
+    Q03: "How often is the course intellectually stimulating?",
+    Q04: "How often does your course challenge you to achieve your best work?",
+    Q05: "To what extent have you had the chance to explore ideas and concepts in depth?",
+    Q06: "How well does your course introduce subjects and skills in a way that builds on what you have already learned?",
+    Q07: "To what extent have you had the chance to bring together information and ideas from different topics?",
+    Q08: "To what extent does your course have the right balance of directed and independent study?",
+    Q09: "How well has your course developed your knowledge and skills that you think you will need for your future?",
+    Q10: "How clear were the marking criteria used to assess your work?",
+    Q11: "How fair has the marking and assessment been on your course?",
+    Q12: "How well have assessments allowed you to demonstrate what you have learned?",
+    Q13: "How often have you received assessment feedback on time?",
+    Q14: "How often does feedback help you to improve your work?",
+    Q15: "How easy is it to contact teaching staff when you needed to?",
+    Q16: "How well have teaching staff supported your learning?",
+    Q17: "How well organised is your course?",
+    Q18: "How well were any changes to teaching communicated?",
+    Q19: "How well have the library resources supported your learning?",
+    Q20: "How well have the IT resources and facilities supported your learning?",
+    Q21: "How well have the course-specific facilities and resources supported your learning?",
+    Q22: "How clear is it that students’ feedback has been acted on?",
+    Q23: "How well does the students’ union represent students’ academic interests?",
+    Q24: "How well communicated was information about your university’s mental wellbeing services?",
+    Q25: "How well communicated was information about how to access your university’s mental wellbeing services?",
+    Q26: "How well communicated was information about your university’s academic support services?"
+  };
 
-let allData = [];
-let defaultRanks = {};
-let questions = [];
+  let allData = [];
+  let defaultRanks = {};
+  let questions = [];
 
-fetch("../assets/tables/All-Subjects-Formatted.json")
-  .then(res => res.json())
-  .then(data => {
-    allData = data;
+  fetch("../assets/tables/All-Subjects-Formatted.json")
+    .then(res => res.json())
+    .then(data => {
+      allData = data;
 
-    const subjectSelect = document.getElementById("subject-select");
-    const tbody = document.getElementById("question-body");
-    const btn = document.getElementById("submit-btn");
+      const subjectSelect = document.getElementById("subject-select");
+      const tbody = document.getElementById("question-body");
+      const btn = document.getElementById("submit-btn");
 
-    const subjects = [...new Set(data.map(row => row.Subject))].sort();
-    subjects.forEach(subject => {
-      const option = document.createElement("option");
-      option.value = subject;
-      option.textContent = subject;
-      subjectSelect.appendChild(option);
-    });
-
-    const sample = data.find(r => r.Subject);
-    questions = Object.keys(sample).filter(k => /^Q\d+/.test(k));
-
-    tbody.innerHTML = "";
-    questions.forEach(q => {
-      const tr = document.createElement("tr");
-      const tdLabel = document.createElement("td");
-      tdLabel.textContent = questionTextMap[q] || q;
-
-      const tdInput = document.createElement("td");
-      const slider = document.createElement("input");
-      slider.type = "range";
-      slider.min = -2;
-      slider.max = 2;
-      slider.value = 0;
-      slider.step = 1;
-      slider.className = "slider";
-      slider.name = q;
-      slider.disabled = true;
-
-      tdInput.appendChild(slider);
-      tr.appendChild(tdLabel);
-      tr.appendChild(tdInput);
-      tbody.appendChild(tr);
-    });
-
-    subjectSelect.addEventListener("change", () => {
-      const selected = subjectSelect.value;
-      btn.style.display = selected ? "inline-block" : "none";
-      document.querySelectorAll("input.slider").forEach(slider => {
-        slider.disabled = !selected;
-      });
-    });
-
-    document.getElementById("weights-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const subject = subjectSelect.value;
-      const subjectData = allData.filter(row => row.Subject === subject);
-
-      const weights = {};
-      document.querySelectorAll("input.slider").forEach(input => {
-        weights[input.name] = parseInt(input.value) * 25;
+      const subjects = [...new Set(data.map(row => row.Subject))].sort();
+      subjects.forEach(subject => {
+        const option = document.createElement("option");
+        option.value = subject;
+        option.textContent = subject;
+        subjectSelect.appendChild(option);
       });
 
-      subjectData.forEach(row => {
-        let total = 0, count = 0;
-        questions.forEach(q => {
-          if (typeof row[q] === "number") {
-            total += row[q];
-            count++;
-          }
+      const sample = data.find(r => r.Subject);
+      questions = Object.keys(sample).filter(k => /^Q\d+/.test(k));
+
+      tbody.innerHTML = "";
+      questions.forEach(q => {
+        const tr = document.createElement("tr");
+        const tdLabel = document.createElement("td");
+        tdLabel.textContent = questionTextMap[q] || q;
+
+        const tdInput = document.createElement("td");
+        const slider = document.createElement("input");
+        slider.type = "range";
+        slider.min = -2;
+        slider.max = 2;
+        slider.value = 0;
+        slider.step = 1;
+        slider.className = "slider";
+        slider.name = q;
+        slider.disabled = true;
+
+        tdInput.appendChild(slider);
+        tr.appendChild(tdLabel);
+        tr.appendChild(tdInput);
+        tbody.appendChild(tr);
+      });
+
+      subjectSelect.addEventListener("change", () => {
+        const selected = subjectSelect.value;
+        btn.style.display = selected ? "inline-block" : "none";
+        document.querySelectorAll("input.slider").forEach(slider => {
+          slider.disabled = !selected;
         });
-        row.originalScore = count ? total / count : 0;
       });
 
-      const originalSorted = [...subjectData].sort((a, b) => b.originalScore - a.originalScore);
-      originalSorted.forEach((row, idx) => {
-        defaultRanks[row.Provider] = idx + 1;
-      });
+      document.getElementById("weights-form").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const subject = subjectSelect.value;
+        const subjectData = allData.filter(row => row.Subject === subject);
 
-      subjectData.forEach(row => {
-        let total = 0, count = 0;
-        questions.forEach(q => {
-          if (typeof row[q] === "number") {
-            const weightFactor = 1 + (weights[q] || 0) / 100;
-            total += row[q] * weightFactor;
-            count++;
-          }
+        const weights = {};
+        document.querySelectorAll("input.slider").forEach(input => {
+          weights[input.name] = parseInt(input.value) * 25;
         });
-        row.weightedScore = count ? total / count : 0;
+
+        subjectData.forEach(row => {
+          let total = 0, count = 0;
+          questions.forEach(q => {
+            if (typeof row[q] === "number") {
+              total += row[q];
+              count++;
+            }
+          });
+          row.originalScore = count ? total / count : 0;
+        });
+
+        const originalSorted = [...subjectData].sort((a, b) => b.originalScore - a.originalScore);
+        originalSorted.forEach((row, idx) => {
+          defaultRanks[row.Provider] = idx + 1;
+        });
+
+        subjectData.forEach(row => {
+          let total = 0, count = 0;
+          questions.forEach(q => {
+            if (typeof row[q] === "number") {
+              const weightFactor = 1 + (weights[q] || 0) / 100;
+              total += row[q] * weightFactor;
+              count++;
+            }
+          });
+          row.weightedScore = count ? total / count : 0;
+        });
+
+        const sorted = [...subjectData].sort((a, b) => b.weightedScore - a.weightedScore);
+
+        const resultsHTML = `
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Change</th>
+                <th>University</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${sorted.map((row, i) => {
+                const newRank = i + 1;
+                const originalRank = defaultRanks[row.Provider];
+                const diff = originalRank - newRank;
+                const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
+                const rowClass = diff > 0 ? "row-up" : diff < 0 ? "row-down" : "";
+                return `
+                  <tr class="${rowClass}">
+                    <td>${newRank}</td>
+                    <td>${changeText}</td>
+                    <td>${row.Provider}</td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>
+        `;
+        document.getElementById("results").innerHTML = resultsHTML;
       });
-
-      const sorted = [...subjectData].sort((a, b) => b.weightedScore - a.weightedScore);
-
-      const resultsHTML = `
-        <table class="results-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Change</th>
-              <th>University</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${sorted.map((row, i) => {
-              const newRank = i + 1;
-              const originalRank = defaultRanks[row.Provider];
-              const diff = originalRank - newRank;
-              const changeText = diff > 0 ? `+${diff}` : diff < 0 ? `${diff}` : "0";
-              const rowClass = diff > 0 ? "row-up" : diff < 0 ? "row-down" : "";
-              return `
-                <tr class="${rowClass}">
-                  <td>${newRank}</td>
-                  <td>${changeText}</td>
-                  <td>${row.Provider}</td>
-                </tr>
-              `;
-            }).join("")}
-          </tbody>
-        </table>
-      `;
-      document.getElementById("results").innerHTML = resultsHTML;
     });
-  });
 </script>
