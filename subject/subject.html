@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 10:40
+title: ""
 ---
 
 <!-- Load Tabulator -->
@@ -335,26 +335,57 @@ document.addEventListener('DOMContentLoaded', function () {
         const tbody = document.querySelector("#modal-comparison-table tbody");
         tbody.innerHTML = "";
 
+        const questionLabels = [
+  "How good are teaching staff at explaining things?",
+  "How often do teaching staff make the subject engaging?",
+  "How often is the course intellectually stimulating?",
+  "How often does your course challenge you to achieve your best work?",
+  "To what extent have you had the chance to explore ideas and concepts in depth?",
+  "How well does your course introduce subjects and skills in a way that builds on what you have already learned?",
+  "To what extent have you had the chance to bring together information and ideas from different topics?",
+  "To what extent does your course have the right balance of directed and independent study?",
+  "How well has your course developed your knowledge and skills that you think you will need for your future?",
+  "How clear were the marking criteria used to assess your work?",
+  "How fair has the marking and assessment been on your course?",
+  "How well have assessments allowed you to demonstrate what you have learned?",
+  "How often have you received assessment feedback on time?",
+  "How often does feedback help you to improve your work?",
+  "How easy was it to contact teaching staff when you needed to?",
+  "How well have teaching staff supported your learning?",
+  "How well organised is your course?",
+  "How well were any changes to teaching on your course communicated?",
+  "How well have the IT resources and facilities supported your learning?",
+  "How well have the library resources (e.g., books, online services and learning spaces) supported your learning?",
+  "How easy is it to access subject specific resources (e.g., equipment, facilities, software) when you need them?",
+  "To what extent do you get the right opportunities to give feedback on your course?",
+  "To what extent are students' opinions about the course valued by staff?",
+  "How clear is it that students' feedback on the course is acted on?",
+  "How well does the students' union (association or guild) represent students' academic interests?",
+  "How well communicated was information about your university/college's mental wellbeing support services?"
+];
+        
         questions.forEach(q => {
-          const topVal = isNaN(topUni[q]) ? "-" : Math.round(topUni[q]);
-          const uniVal = isNaN(uniData[q]) ? "-" : Math.round(uniData[q]);
+  const topVal = isNaN(topUni[q]) ? "-" : Math.round(topUni[q]);
+  const uniVal = isNaN(uniData[q]) ? "-" : Math.round(uniData[q]);
 
-          const getColorClass = val => {
-            if (typeof val !== "number") return "";
-            if (val >= 85) return "score-green";
-            if (val >= 70) return "score-orange";
-            return "score-red";
-          };
+  const getColorClass = val => {
+    if (typeof val !== "number") return "";
+    if (val >= 85) return "score-green";
+    if (val >= 70) return "score-orange";
+    return "score-red";
+  };
 
-          const rowHTML = `
-            <tr>
-              <td>${q}</td>
-              <td class="${getColorClass(topVal)}">${topVal}%</td>
-              <td class="${getColorClass(uniVal)}">${uniVal}%</td>
-            </tr>
-          `;
-          tbody.insertAdjacentHTML("beforeend", rowHTML);
-        });
+  const questionText = questionLabels[parseInt(q.replace("Q", "")) - 1];
+
+  const rowHTML = `
+    <tr>
+      <td>${questionText}</td>
+      <td class="${getColorClass(topVal)}">${topVal}%</td>
+      <td class="${getColorClass(uniVal)}">${uniVal}%</td>
+    </tr>
+  `;
+  tbody.insertAdjacentHTML("beforeend", rowHTML);
+});
 
         document.getElementById("modal-university-name").textContent = `Comparison: ${uniData.Provider}`;
         document.getElementById("top-provider-label").textContent = `Top University (${topUni.Provider})`;
