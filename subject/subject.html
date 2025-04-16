@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const selectedSubject = urlParams.get('subject');
   if (!selectedSubject) return;
 
-  document.title = `${selectedSubject} Subject League Table`;
+  document.title = `${selectedSubject} Subject League Table | University Ranking | Real Students. Real Rankings.`;
   document.getElementById("subject-title").textContent = `${selectedSubject} Subject League Table`;
 
   fetch("/assets/tables/2023-2024-JSON-FILE.json")
