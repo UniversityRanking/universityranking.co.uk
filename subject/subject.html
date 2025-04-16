@@ -271,17 +271,27 @@ document.addEventListener('DOMContentLoaded', function () {
   document.title = `${selectedSubject} Subject League Table`;
   document.getElementById("subject-title").textContent = `${selectedSubject} Subject League Table`;
 
-  fetch("../assets/tables/2023-2024-JSON-FILE.json")
-    .then(response => response.json())
-    .then(data => {
-      const filtered = data.filter(row => row.Subject === selectedSubject);
-     const sorted = filtered.sort((a, b) => {
-  const rankA = parseInt((a["Rank 2024"] || "").toString().trim()) || 9999;
-  const rankB = parseInt((b["Rank 2024"] || "").toString().trim()) || 9999;
-  return rankA - rankB;
-});
-      const topUni = sorted[0];
-      const questions = Object.keys(topUni).filter(key => key.startsWith("Q"));
+fetch("../assets/tables/2023_2024_data.json")
+  .then(response => {
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  })
+  .then(data => {
+    const filtered = data.filter(row => row.Subject === selectedSubject);
+    const sorted = filtered.sort((a, b) => {
+      const rankA = parseInt((a["Rank 2024"] || "").toString().trim()) || 9999;
+      const rankB = parseInt((b["Rank 2024"] || "").toString().trim()) || 9999;
+      return rankA - rankB;
+    });
+
+    const topUni = sorted[0];
+    const questions = Object.keys(topUni).filter(key => key.startsWith("Q"));
+
+    // 💡 Add the rest of your code that uses topUni, questions, etc. here
+  })
+  .catch(error => {
+    console.error("Failed to fetch or process JSON:", error);
+  });
 
       // Detect if mobile
       const isMobile = window.innerWidth <= 768;
