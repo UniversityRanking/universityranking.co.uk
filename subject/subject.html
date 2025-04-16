@@ -275,7 +275,11 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(response => response.json())
     .then(data => {
       const filtered = data.filter(row => row.Subject === selectedSubject);
-      const sorted = filtered.sort((a, b) => a.Rank - b.Rank);
+      const sorted = filtered.sort((a, b) => {
+  const rankA = parseInt(a["Rank 2024"]);
+  const rankB = parseInt(b["Rank 2024"]);
+  return rankA - rankB;
+});
       const topUni = sorted[0];
       const questions = Object.keys(topUni).filter(key => key.startsWith("Q"));
 
@@ -287,31 +291,38 @@ document.addEventListener('DOMContentLoaded', function () {
         layout: "fitColumns",
         responsiveLayout: "collapse",
         columns: [
-          {
-            title: "Rank",
-            field: "Rank",
-            width: isMobile ? 60 : 100,
-            hozAlign: "center",
-            headerSort: false
-          },
-          {
-            title: "University",
-            field: "Provider",
-            widthGrow: 3,
-            headerSort: false
-          },
-          {
-            title: "Score",
-            field: "AVERAGE",
-            width: isMobile ? 80 : 100,
-            hozAlign: "center",
-            headerSort: false,
-            formatter: function(cell) {
-              const value = cell.getValue();
-              return typeof value === 'number' ? value.toFixed(2) : value;
-            }
-          }
-        ]
+  {
+    title: "2024",
+    field: "Rank 2024",
+    width: isMobile ? 60 : 80,
+    hozAlign: "center",
+    headerSort: false
+  },
+  {
+    title: "2023",
+    field: "Rank 2023",
+    width: isMobile ? 60 : 80,
+    hozAlign: "center",
+    headerSort: false
+  },
+  {
+    title: "University",
+    field: "Provider",
+    widthGrow: 3,
+    headerSort: false
+  },
+  {
+    title: "Score",
+    field: "Average",
+    width: isMobile ? 80 : 100,
+    hozAlign: "center",
+    headerSort: false,
+    formatter: function(cell) {
+      const value = cell.getValue();
+      return typeof value === 'number' ? value.toFixed(2) : value;
+    }
+  }
+]
       });
 
       table.on("rowClick", function (e, row) {
