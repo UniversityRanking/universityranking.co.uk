@@ -269,6 +269,38 @@ document.addEventListener('DOMContentLoaded', function () {
   const selectedSubject = urlParams.get('subject');
   if (!selectedSubject) return;
 
+  if (selectedSubject) {
+  // Update <title>
+  document.title = `Best University for ${selectedSubject} 2025 | University Ranking`;
+
+  // Update <meta name="description">
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) {
+    metaDesc.setAttribute(
+      "content",
+      `Find the best UK universities for ${selectedSubject} in 2025 based on real student experiences. Compare teaching, feedback, support and more.`
+    );
+  }
+
+  // Update Open Graph meta tags
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  const ogDesc = document.querySelector('meta[property="og:description"]');
+  if (ogTitle) ogTitle.setAttribute("content", document.title);
+  if (ogDesc) ogDesc.setAttribute(
+    "content",
+    `Real student feedback on ${selectedSubject} degrees. Teaching, assessment and support – ranked by students, not marketing.`
+  );
+
+  // Update Twitter tags
+  const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+  const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+  if (twitterTitle) twitterTitle.setAttribute("content", document.title);
+  if (twitterDesc) twitterDesc.setAttribute(
+    "content",
+    `Explore the best UK universities for ${selectedSubject} based on student satisfaction in 2025.`
+  );
+}
+  
   document.title = `${selectedSubject} Subject League Table | University Ranking | Real Students. Real Rankings.`;
   document.getElementById("subject-title").textContent = `${selectedSubject} Subject League Table`;
 
