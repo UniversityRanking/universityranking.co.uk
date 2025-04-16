@@ -286,34 +286,42 @@ document.addEventListener('DOMContentLoaded', function () {
       // Detect if mobile
       const isMobile = window.innerWidth <= 768;
 
+      const cleanedData = sorted.map(row => ({
+  rank2024: parseInt(row["Rank 2024"]) || null,
+  rank2023: isNaN(parseInt(row["Rank 2023"])) ? "-" : parseInt(row["Rank 2023"]),
+  provider: row.Provider,
+  average: typeof row.Average === "number" ? row.Average : parseFloat(row.Average),
+  original: row
+}));
+      
       const table = new Tabulator("#subject-table", {
-        data: sorted,
+        data: cleanedData,
         layout: "fitColumns",
         responsiveLayout: "collapse",
         columns: [
   {
     title: "2024",
-    field: "Rank 2024",
+    field: "rank2024",
     width: isMobile ? 60 : 80,
     hozAlign: "center",
     headerSort: false
   },
   {
     title: "2023",
-    field: "Rank 2023",
+    field: "rank2023",
     width: isMobile ? 60 : 80,
     hozAlign: "center",
     headerSort: false
   },
   {
     title: "University",
-    field: "Provider",
+    field: "provider",
     widthGrow: 3,
     headerSort: false
   },
   {
     title: "Score",
-    field: "Average",
+    field: "average",
     width: isMobile ? 80 : 100,
     hozAlign: "center",
     headerSort: false,
@@ -326,19 +334,20 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       table.on("rowClick", function (e, row) {
-        const uniData = row.getData();
+        const uniData = row.getData().original;
         const tbody = document.querySelector("#modal-comparison-table tbody");
         tbody.innerHTML = "";
 
         questions.forEach(q => {
-          const topVal = Math.round(topUni[q]);
-          const uniVal = Math.round(uniData[q]);
+          const topVal = isNaN(topUni[q]) ? "-" : Math.round(topUni[q]);
+const uniVal = isNaN(uniData[q]) ? "-" : Math.round(uniData[q]);
 
           const getColorClass = val => {
-            if (val >= 85) return "score-green";
-            if (val >= 70) return "score-orange";
-            return "score-red";
-          };
+  if (typeof val !== "number") return "";
+  if (val >= 85) return "score-green";
+  if (val >= 70) return "score-orange";
+  return "score-red";
+};
 
           const rowHTML = `
             <tr>
