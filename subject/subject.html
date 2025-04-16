@@ -276,8 +276,8 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
       const filtered = data.filter(row => row.Subject === selectedSubject);
       const sorted = filtered.sort((a, b) => {
-  const rankA = parseInt(a["Rank 2024"]);
-  const rankB = parseInt(b["Rank 2024"]);
+  const rankA = parseInt((a["Rank 2024"] || "").toString().trim()) || 9999;
+  const rankB = parseInt((b["Rank 2024"] || "").toString().trim()) || 9999;
   return rankA - rankB;
 });
       const topUni = sorted[0];
@@ -286,13 +286,19 @@ document.addEventListener('DOMContentLoaded', function () {
       // Detect if mobile
       const isMobile = window.innerWidth <= 768;
 
-      const cleanedData = sorted.map(row => ({
-  rank2024: parseInt(row["Rank 2024"]) || null,
-  rank2023: isNaN(parseInt(row["Rank 2023"])) ? "-" : parseInt(row["Rank 2023"]),
-  provider: row.Provider,
-  average: typeof row.Average === "number" ? row.Average : parseFloat(row.Average),
-  original: row
-}));
+      const cleanedData = sorted.map(row => {
+  const raw2024 = (row["Rank 2024"] || "").toString().trim();
+  const raw2023 = (row["Rank 2023"] || "").toString().trim();
+  const rawAverage = (row["Average"] || "").toString().trim();
+
+  return {
+    rank2024: /^\d+$/.test(raw2024) ? parseInt(raw2024) : "-",
+    rank2023: /^\d+$/.test(raw2023) ? parseInt(raw2023) : "-",
+    provider: row.Provider,
+    average: !isNaN(parseFloat(rawAverage)) ? parseFloat(rawAverage) : "-",
+    original: row
+  };
+});
       
       const table = new Tabulator("#subject-table", {
         data: cleanedData,
