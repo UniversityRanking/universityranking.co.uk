@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.title = `${selectedSubject} Subject League Table`;
   document.getElementById("subject-title").textContent = `${selectedSubject} Subject League Table`;
 
-  fetch("../assets/tables/2023-2024 JSON FILE.json")
+  fetch("../assets/tables/2023-2024-JSON-FILE.json")
     .then(response => response.json())
     .then(data => {
       const filtered = data.filter(row => row.Subject === selectedSubject);
