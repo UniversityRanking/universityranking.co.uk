@@ -287,14 +287,20 @@ document.addEventListener('DOMContentLoaded', function () {
       const isMobile = window.innerWidth <= 768;
 
       const cleanedData = sorted.map(row => {
-  const raw2024 = (row["Rank 2024"] || "").toString().trim();
-  const raw2023 = (row["Rank 2023"] || "").toString().trim();
-  const rawAverage = (row["Average"] || "").toString().trim();
+  // Fix hidden characters in keys
+  const keys = Object.keys(row).reduce((acc, key) => {
+    acc[key.replace(/\u00a0/g, " ").trim()] = row[key];
+    return acc;
+  }, {});
+
+  const raw2024 = (keys["Rank 2024"] || "").toString().trim();
+  const raw2023 = (keys["Rank 2023"] || "").toString().trim();
+  const rawAverage = (keys["Average"] || "").toString().trim();
 
   return {
     rank2024: /^\d+$/.test(raw2024) ? parseInt(raw2024) : "-",
     rank2023: /^\d+$/.test(raw2023) ? parseInt(raw2023) : "-",
-    provider: row.Provider,
+    provider: keys["Provider"],
     average: !isNaN(parseFloat(rawAverage)) ? parseFloat(rawAverage) : "-",
     original: row
   };
