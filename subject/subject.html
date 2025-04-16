@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.title = `${selectedSubject} Subject League Table`;
   document.getElementById("subject-title").textContent = `${selectedSubject} Subject League Table`;
 
-  fetch("/assets/tables/2023_2024_data.json")
+  fetch("/assets/tables/2023-2024-JSON-FILE.json")
     .then(response => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
