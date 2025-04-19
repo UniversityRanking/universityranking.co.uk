@@ -2,7 +2,7 @@
 layout: default
 title: "Entry Requirements – The Numbers Don't Add Up"
 description: "We explain why 'Qualifications on Entry' in league tables can be misleading – using the University of Glasgow as an example."
-image: /_posts/images/Guardian-Glasgow-227.png
+image: https://universityranking.co.uk/assets/images/Guardian-Glasgow-227.png
 ---
 
 <section class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem; font-family: 'Helvetica Neue', sans-serif; font-size: 1.1rem; line-height: 1.7;">
