@@ -12,7 +12,7 @@ image: /_posts/images/Guardian-Glasgow-227.png
 
   <p>Sounds impressive, right? But what does that number actually mean? <strong>It makes up 15% of Glasgow’s entire Guardian ranking — despite being based on data that can be wildly misleading.</strong></p>
 
-  <img src="/_posts/images/Guardian-Glasgow-227.png" alt="Guardian League Table showing Glasgow at 227 points" style="max-width:100%; margin: 1rem 0; border: 1px solid #ccc; border-radius: 8px;">
+  <img src="[https://universityranking.co.uk/assets/images/Guardian-Glasgow-227.png" alt="Guardian League Table showing Glasgow at 227 points" style="max-width:100%; margin: 1rem 0; border: 1px solid #ccc; border-radius: 8px;">
 
   <h2 style="font-size: 1.5rem; margin-top: 2rem;">Let’s Break It Down</h2>
 
@@ -39,7 +39,7 @@ image: /_posts/images/Guardian-Glasgow-227.png
 
   <p>Even more telling: the <strong>lowest accepted profile</strong> was <strong>BBC</strong>. That’s a total of <strong>112 UCAS points</strong> — <em>less than half</em> the supposed average.</p>
 
-  <img src="/_posts/images/UCAS-AnF.png" alt="UCAS showing accepted grades for Glasgow Accounting and Finance" style="max-width:100%; margin: 1rem 0; border: 1px solid #ccc; border-radius: 8px;">
+  <img src="https://universityranking.co.uk/assets/images/UCAS-AnF.png" alt="UCAS showing accepted grades for Glasgow Accounting and Finance" style="max-width:100%; margin: 1rem 0; border: 1px solid #ccc; border-radius: 8px;">
 
   <p>So… what’s going on?</p>
 
